@@ -9,3 +9,4 @@ Description: Collection of functions useful for Dectech Analysts, such as gettin
 Imports: XML
 License: GPL-2
 LazyData: TRUE
+Suggests: testthat
