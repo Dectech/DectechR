@@ -4,6 +4,11 @@ dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels
     ################################################################################################
 
     startTime <- proc.time()
+    # make sure file exists, before starting...
+    if (file.exists(filePath) == FALSE) {
+        stop("-- Couldn't find that file! Make sure you have the correct path and file name")
+    }
+
 
     # ----- (1) output for user   -----------------------------------
     print("------- GlobalPark XML to dataframe ----------------")
