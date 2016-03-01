@@ -35,9 +35,7 @@ cc2(data, destination = NA, includeRowNames = FALSE)
 
 
 }
-\author{
-Keith Simpson
-}
+
 \note{
 cc is just a simple wrapper to the write.table function, whereas cc2 uses writeClipboard but first manipulates the data into a useful format.
 }

@@ -1,1 +1,6 @@
 exportPattern("^[[:alpha:]]+")
+S3method(getOutputTable,lm)
+S3method(getOutputTable,glm)
+S3method(getOutputTable,mlogit)
+S3method(getOutputTable,polr)
+S3method(getOutputTable,default)
