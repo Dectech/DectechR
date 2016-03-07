@@ -26,7 +26,7 @@ getOutput(mod, performanceTableAtTop = TRUE, ...)
 }
 }
 \details{
-    Coefficient tables are relatively easy to extract from a fitted model, but this function aims to combine this table with various performance statistics e.g. AIC, and copy the results directly to the clipboard.\cr\cr
+    Coefficient tables are relatively easy to extract from a fitted model, but this function aims to combine this table with a range of performance statistics e.g. AIC, and then copy the results directly to the clipboard.\cr\cr
     For some models, additional columns are added to the coefficient table. For linear regressions, standardised betas are included. For lm and glm models, tolerance (1/VIF) is added (but can be removed by setting the \code{tolerance} parameter to \code{FALSE}. For ordinal logit models (polr) a column of p-values is added.\cr\cr
 
 
