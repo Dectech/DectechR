@@ -1,0 +1,1390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export date="2016-01-14 15:35:16">
+<missings numeric="-77" text="-66" text_empty="-99" timestamp="0" datetime="0000-00-00 00:00:00" />
+<variables>
+<variable name="lfdn" type="integer">
+<label>number</label>
+</variable>
+<variable name="external_lfdn" type="integer">
+<label>external lfdn</label>
+</variable>
+<variable name="tester" type="integer">
+<label>tester</label>
+<codes>
+<code key="0">no tester</code>
+<code key="1">tester</code>
+</codes>
+</variable>
+<variable name="dispcode" type="integer">
+<label>disposition code</label>
+<codes>
+<code key="11">Not yet invited (11)</code>
+<code key="12">Active (12)</code>
+<code key="13">Inactive (13)</code>
+<code key="14">E-mail could not be delivered (14)</code>
+<code key="15">Cannot be reached (15)</code>
+<code key="20">Not yet started (20)</code>
+<code key="21">Currently responding (21)</code>
+<code key="22">Suspended (22)</code>
+<code key="23">Resumed (23)</code>
+<code key="31">Completed (31)</code>
+<code key="32">Completed after break (32)</code>
+<code key="35">Rejected at login (quota closed) (35)</code>
+<code key="36">Rejected (quota closed) (36)</code>
+<code key="37">Screened out (37)</code>
+<code key="41">Quota full (41)</code>
+</codes>
+</variable>
+<variable name="lastpage" type="character">
+<label>last page</label>
+</variable>
+<variable name="quality" type="decimal">
+<label>quality</label>
+</variable>
+<variable name="duration" type="integer">
+<label>time to complete survey</label>
+</variable>
+<variable name="p_0001" type="character">
+<label>User ID</label>
+</variable>
+<variable name="v_76" type="character">
+<label>is person in list</label>
+</variable>
+<variable name="v_77" type="character">
+<label>are we past date</label>
+</variable>
+<variable name="v_26" type="character">
+<label>Transport ()</label>
+</variable>
+<variable name="v_31" type="character">
+<label>Fuel and power ()</label>
+</variable>
+<variable name="v_36" type="character">
+<label>Recreation and culture ()</label>
+</variable>
+<variable name="v_41" type="character">
+<label>Food and non-alcoholic drinks ()</label>
+</variable>
+<variable name="v_46" type="character">
+<label>Restaurants and hotels ()</label>
+</variable>
+<variable name="v_51" type="character">
+<label>Miscellaneous goods and services ()</label>
+</variable>
+<variable name="v_56" type="character">
+<label>Household goods and services ()</label>
+</variable>
+<variable name="v_61" type="character">
+<label>Clothing and footwear ()</label>
+</variable>
+<variable name="v_66" type="character">
+<label>Communication ()</label>
+</variable>
+<variable name="v_71" type="character">
+<label>Alcoholic drinks and tobacco ()</label>
+</variable>
+<variable name="ext_host" type="character">
+<label>external host</label>
+</variable>
+<variable name="ip_addr" type="character">
+<label>remote address</label>
+</variable>
+<variable name="browser" type="character">
+<label>browser-id</label>
+</variable>
+<variable name="referer" type="character">
+<label>http-referer</label>
+</variable>
+<variable name="participant_browser" type="integer">
+<label>participant_browser</label>
+</variable>
+<variable name="participant_browser_version" type="text">
+<label>participant_browser_version</label>
+</variable>
+<variable name="participant_os" type="integer">
+<label>participant_os</label>
+</variable>
+<variable name="participant_device" type="integer">
+<label>participant_device</label>
+</variable>
+<variable name="participant_brand" type="integer">
+<label>participant_brand</label>
+</variable>
+<variable name="participant_model" type="integer">
+<label>participant_model</label>
+</variable>
+<variable name="participant_isbot" type="integer">
+<label>participant_isbot</label>
+</variable>
+<variable name="participant_continent" type="integer">
+<label>participant_continent</label>
+</variable>
+<variable name="participant_country" type="integer">
+<label>participant_country</label>
+</variable>
+<variable name="participant_region" type="text">
+<label>participant_region</label>
+</variable>
+<variable name="participant_city" type="text">
+<label>participant_city</label>
+</variable>
+<variable name="participant_latitude" type="text">
+<label>participant_latitude</label>
+</variable>
+<variable name="participant_longitude" type="text">
+<label>participant_longitude</label>
+</variable>
+<variable name="quota" type="integer">
+<label>quota</label>
+</variable>
+<variable name="quota_assignment" type="character">
+<label>quota_assignment</label>
+</variable>
+<variable name="page_history" type="text">
+<label>page history</label>
+</variable>
+<variable name="hflip" type="integer">
+<label>hflip</label>
+<codes>
+<code key="0">Not flipped</code>
+<code key="1">Flipped</code>
+</codes>
+</variable>
+<variable name="vflip" type="integer">
+<label>vflip</label>
+<codes>
+<code key="0">Not flipped</code>
+<code key="1">Flipped</code>
+</codes>
+</variable>
+<variable name="output_mode" type="integer">
+<label>output mode</label>
+<codes>
+<code key="0">HTML</code>
+<code key="1">XHTML</code>
+<code key="2">WML</code>
+<code key="3">Offline</code>
+</codes>
+</variable>
+<variable name="javascript" type="integer">
+<label>javascript</label>
+<codes>
+<code key="10">javascript 1.0</code>
+<code key="11">javascript 1.1</code>
+<code key="12">javascript 1.2</code>
+<code key="13">javascript 1.3</code>
+<code key="14">javascript 1.4</code>
+<code key="15">javascript 1.5</code>
+<code key="16">javascript 1.6</code>
+<code key="17">javascript 1.7</code>
+<code key="18">javascript 1.8</code>
+<code key="20">javascript 2.0</code>
+</codes>
+</variable>
+<variable name="flash" type="integer">
+<label>flash</label>
+</variable>
+<variable name="session_id" type="character">
+<label>session id</label>
+</variable>
+<variable name="language" type="integer">
+<label>language</label>
+<codes>
+<code key="1">English</code>
+</codes>
+</variable>
+<variable name="cleaned" type="integer">
+<label>datacleaning</label>
+<codes>
+<code key="0">Not cleaned</code>
+<code key="1">Cleaned</code>
+<code key="2">Checked but not cleaned</code>
+</codes>
+</variable>
+<variable name="ats" type="absolute timestamp">
+<label>absolute timestamp</label>
+</variable>
+<variable name="datetime" type="datetime">
+<label>datetime of survey start</label>
+</variable>
+<variable name="date_of_last_access" type="datetime">
+<label>date of last access</label>
+</variable>
+<variable name="date_of_first_mail" type="datetime">
+<label>date of first mail</label>
+</variable>
+<variable name="rts136829" type="relative timestamp">
+<label>relative timestamp for page 136829</label>
+</variable>
+<variable name="rts136831" type="relative timestamp">
+<label>relative timestamp for page 136831</label>
+</variable>
+<variable name="rts136834" type="relative timestamp">
+<label>relative timestamp for page 136834</label>
+</variable>
+<variable name="rts136835" type="relative timestamp">
+<label>relative timestamp for page 136835</label>
+</variable>
+</variables>
+<data>
+<row index="1">
+<lfdn>1</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>70</duration>
+<p_0001>111</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>0</v_26>
+<v_31>10</v_31>
+<v_36>20</v_36>
+<v_41>30</v_41>
+<v_46>0</v_46>
+<v_51>20</v_51>
+<v_56>20</v_56>
+<v_61>0</v_61>
+<v_66>0</v_66>
+<v_71>3</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Windows NT 10.0; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0</browser>
+<referer>http://newnextbutton.pureprofile.com/uk/en/intro/6F79595A3574776B4C386A4F6C352B746836475A65673D3D/3761492F755242585A45392B316435625A45576D55773D3D/49306A4A744D2F2F6778444C7978356271544C4145413D3D</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>0</hflip>
+<vflip>0</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>f41cbcdef494d706ccd17afee30c5f2c</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452470447</ats>
+<datetime>2016-01-11 00:00:47</datetime>
+<date_of_last_access>2016-01-11 00:01:57</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>4</rts136829>
+<rts136831>0</rts136831>
+<rts136834>8</rts136834>
+<rts136835>70</rts136835>
+</row>
+<row index="2">
+<lfdn>2</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>38</duration>
+<p_0001>222</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>0</v_26>
+<v_31>20</v_31>
+<v_36>0</v_36>
+<v_41>20</v_41>
+<v_46>0</v_46>
+<v_51>0</v_51>
+<v_56>0</v_56>
+<v_61>0</v_61>
+<v_66>0</v_66>
+<v_71>10</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36</browser>
+<referer>https://my.pureprofile.com/feed/surveys</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>1</hflip>
+<vflip>1</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>ebc9648288b48e2beefe20a9333ef421</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452471191</ats>
+<datetime>2016-01-11 00:13:11</datetime>
+<date_of_last_access>2016-01-11 00:13:49</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>2</rts136829>
+<rts136831>0</rts136831>
+<rts136834>8</rts136834>
+<rts136835>38</rts136835>
+</row>
+<row index="3">
+<lfdn>3</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>53</duration>
+<p_0001>333</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>0</v_26>
+<v_31>0</v_31>
+<v_36>10</v_36>
+<v_41>40</v_41>
+<v_46>0</v_46>
+<v_51>0</v_51>
+<v_56>0</v_56>
+<v_61>50</v_61>
+<v_66>0</v_66>
+<v_71>0</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Windows NT 6.1; rv:43.0) Gecko/20100101 Firefox/43.0</browser>
+<referer>http://newnextbutton.pureprofile.com/uk/en/intro/6B547546533867614C6A4B4F7634595653506F5A4A513D3D/4261564E4D6B5A754D4164684346735A4C4D576430413D3D/59766C583252704A37476C7570725762536C714453413D3D</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>1</hflip>
+<vflip>0</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>47db13f52c4b4773529aa68f3d5fbbb9</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452492143</ats>
+<datetime>2016-01-11 06:02:23</datetime>
+<date_of_last_access>2016-01-11 06:03:16</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>1</rts136829>
+<rts136831>0</rts136831>
+<rts136834>8</rts136834>
+<rts136835>53</rts136835>
+</row>
+<row index="4">
+<lfdn>4</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>22</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>26</duration>
+<p_0001>444</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>0</v_26>
+<v_31>0</v_31>
+<v_36>10</v_36>
+<v_41>40</v_41>
+<v_46>0</v_46>
+<v_51>0</v_51>
+<v_56>0</v_56>
+<v_61>50</v_61>
+<v_66>0</v_66>
+<v_71>0</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Windows NT 6.1; rv:43.0) Gecko/20100101 Firefox/43.0</browser>
+<referer>https://my.pureprofile.com/feed/all</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>1</hflip>
+<vflip>0</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>2699bde44d5170a2a4b584c113187650</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452492230</ats>
+<datetime>2016-01-11 06:03:50</datetime>
+<date_of_last_access>2016-01-11 06:04:16</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>0</rts136829>
+<rts136831>0</rts136831>
+<rts136834>3</rts136834>
+<rts136835>26</rts136835>
+</row>
+<row index="5">
+<lfdn>5</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>70</duration>
+<p_0001>555</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>15</v_26>
+<v_31>10</v_31>
+<v_36>0</v_36>
+<v_41>25</v_41>
+<v_46>0</v_46>
+<v_51>0</v_51>
+<v_56>0</v_56>
+<v_61>0</v_61>
+<v_66>5</v_66>
+<v_71>0</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko</browser>
+<referer>https://my.pureprofile.com/feed/all</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>1</hflip>
+<vflip>1</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>9e003802864e290ec8f5a11093db04bf</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452492507</ats>
+<datetime>2016-01-11 06:08:27</datetime>
+<date_of_last_access>2016-01-11 06:09:37</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>2</rts136829>
+<rts136831>0</rts136831>
+<rts136834>11</rts136834>
+<rts136835>70</rts136835>
+</row>
+<row index="6">
+<lfdn>7</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>38</duration>
+<p_0001>666</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>0</v_26>
+<v_31>30</v_31>
+<v_36>0</v_36>
+<v_41>0</v_41>
+<v_46>0</v_46>
+<v_51>0</v_51>
+<v_56>0</v_56>
+<v_61>0</v_61>
+<v_66>0</v_66>
+<v_71>0</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36</browser>
+<referer>http://newnextbutton.pureprofile.com/uk/en/intro/6F79595A3574776B4C38693673365A617379583249773D3D/4172564C424D6A646237562B316435625A45576D55773D3D/41327133726341783547786E627A78485165767142773D3D</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>1</hflip>
+<vflip>0</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>0cab53fb3b6e233347db48df2ccbd20b</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452492850</ats>
+<datetime>2016-01-11 06:14:10</datetime>
+<date_of_last_access>2016-01-11 06:14:48</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>3</rts136829>
+<rts136831>0</rts136831>
+<rts136834>7</rts136834>
+<rts136835>38</rts136835>
+</row>
+<row index="7">
+<lfdn>8</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>25</duration>
+<p_0001>777</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>0</v_26>
+<v_31>30</v_31>
+<v_36>0</v_36>
+<v_41>0</v_41>
+<v_46>0</v_46>
+<v_51>0</v_51>
+<v_56>0</v_56>
+<v_61>0</v_61>
+<v_66>0</v_66>
+<v_71>0</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36</browser>
+<referer>https://my.pureprofile.com/feed/all</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>0</hflip>
+<vflip>1</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>d7b2f45d53189c090138f7523b3a8804</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452492923</ats>
+<datetime>2016-01-11 06:15:23</datetime>
+<date_of_last_access>2016-01-11 06:15:48</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>1</rts136829>
+<rts136831>0</rts136831>
+<rts136834>5</rts136834>
+<rts136835>25</rts136835>
+</row>
+<row index="8">
+<lfdn>9</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>37</duration>
+<p_0001>888</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>0</v_26>
+<v_31>0</v_31>
+<v_36>0</v_36>
+<v_41>0</v_41>
+<v_46>0</v_46>
+<v_51>0</v_51>
+<v_56>0</v_56>
+<v_61>0</v_61>
+<v_66>0</v_66>
+<v_71>0</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (iPad; CPU OS 9_2 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13C75 Safari/601.1</browser>
+<referer>http://newnextbutton.pureprofile.com/uk/en/intro/3951472B615A76615835304A7A2B4F647872674245513D3D/577470347272784D554B452F70417247444D67445A413D3D/384A4175324C6E635A5845746E71544B6E524B5478773D3D</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>1</hflip>
+<vflip>1</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>de71e6468e4f81887c7ed96021f986b1</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452494560</ats>
+<datetime>2016-01-11 06:42:40</datetime>
+<date_of_last_access>2016-01-11 06:43:17</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>6</rts136829>
+<rts136831>0</rts136831>
+<rts136834>9</rts136834>
+<rts136835>37</rts136835>
+</row>
+<row index="9">
+<lfdn>11</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>39</duration>
+<p_0001>999</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>35</v_26>
+<v_31>80</v_31>
+<v_36>45</v_36>
+<v_41>130</v_41>
+<v_46>0</v_46>
+<v_51>0</v_51>
+<v_56>120</v_56>
+<v_61>35</v_61>
+<v_66>15</v_66>
+<v_71>0</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36</browser>
+<referer>https://my.pureprofile.com/feed/all</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>1</hflip>
+<vflip>1</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>1d9e1dbe9650d89490a1f6389a5b7d98</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452496880</ats>
+<datetime>2016-01-11 07:21:20</datetime>
+<date_of_last_access>2016-01-11 07:21:59</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>0</rts136829>
+<rts136831>0</rts136831>
+<rts136834>4</rts136834>
+<rts136835>39</rts136835>
+</row>
+<row index="10">
+<lfdn>12</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>136</duration>
+<p_0001>34563</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>0</v_26>
+<v_31>0</v_31>
+<v_36>0</v_36>
+<v_41>10</v_41>
+<v_46>0</v_46>
+<v_51>0</v_51>
+<v_56>260</v_56>
+<v_61>0</v_61>
+<v_66>0</v_66>
+<v_71>9</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Windows NT 10.0; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0</browser>
+<referer>https://my.pureprofile.com/feed/all</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>1</hflip>
+<vflip>1</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>842c85e3ba5e8a687430fd5225ff78f2</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452498041</ats>
+<datetime>2016-01-11 07:40:41</datetime>
+<date_of_last_access>2016-01-11 07:42:57</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>1</rts136829>
+<rts136831>0</rts136831>
+<rts136834>14</rts136834>
+<rts136835>136</rts136835>
+</row>
+<row index="11">
+<lfdn>14</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>80</duration>
+<p_0001>264</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>0</v_26>
+<v_31>0</v_31>
+<v_36>0</v_36>
+<v_41>4</v_41>
+<v_46>0</v_46>
+<v_51>6</v_51>
+<v_56>0</v_56>
+<v_61>37</v_61>
+<v_66>0</v_66>
+<v_71>0</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Linux; U; Android 4.0.3; en-gb; KFTT Build/IML74K) AppleWebKit/537.36 (KHTML, like Gecko) Silk/3.70 like Chrome/39.0.2171.93 Safari/537.36</browser>
+<referer>https://my.pureprofile.com/feed/all</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>1</hflip>
+<vflip>1</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>ad9cf1a04b8110a21f00d8de12a2e6d1</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452498700</ats>
+<datetime>2016-01-11 07:51:40</datetime>
+<date_of_last_access>2016-01-11 07:53:00</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>2</rts136829>
+<rts136831>0</rts136831>
+<rts136834>19</rts136834>
+<rts136835>80</rts136835>
+</row>
+<row index="12">
+<lfdn>15</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>34</duration>
+<p_0001>2461</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>0</v_26>
+<v_31>0</v_31>
+<v_36>0</v_36>
+<v_41>4</v_41>
+<v_46>0</v_46>
+<v_51>6</v_51>
+<v_56>0</v_56>
+<v_61>37</v_61>
+<v_66>0</v_66>
+<v_71>0</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Linux; U; Android 4.0.3; en-gb; KFTT Build/IML74K) AppleWebKit/537.36 (KHTML, like Gecko) Silk/3.70 like Chrome/39.0.2171.93 Safari/537.36</browser>
+<referer>https://my.pureprofile.com/feed/all</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>1</hflip>
+<vflip>0</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>bddf980005a2a245a20f9c1acffdcb23</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452498811</ats>
+<datetime>2016-01-11 07:53:31</datetime>
+<date_of_last_access>2016-01-11 07:54:05</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>1</rts136829>
+<rts136831>0</rts136831>
+<rts136834>4</rts136834>
+<rts136835>34</rts136835>
+</row>
+<row index="13">
+<lfdn>16</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>113</duration>
+<p_0001>117783</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>0</v_26>
+<v_31>20</v_31>
+<v_36>20</v_36>
+<v_41>15</v_41>
+<v_46>0</v_46>
+<v_51>5</v_51>
+<v_56>0</v_56>
+<v_61>0</v_61>
+<v_66>0</v_66>
+<v_71>5</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36</browser>
+<referer>http://newnextbutton.pureprofile.com/uk/en/intro/3951472B615A7661583533354F666344654A463256673D3D/37426C504B556E4D61505A2B316435625A45576D55773D3D/586B6A6D5A4548435369716649564D6E5A4A376F72673D3D</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>0</hflip>
+<vflip>0</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>82119fcb61349576e9cd4816da2b4379</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452499858</ats>
+<datetime>2016-01-11 08:10:58</datetime>
+<date_of_last_access>2016-01-11 08:12:51</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>1</rts136829>
+<rts136831>0</rts136831>
+<rts136834>12</rts136834>
+<rts136835>113</rts136835>
+</row>
+<row index="14">
+<lfdn>17</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>40</duration>
+<p_0001>33277</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>0</v_26>
+<v_31>5</v_31>
+<v_36>0</v_36>
+<v_41>10</v_41>
+<v_46>0</v_46>
+<v_51>5</v_51>
+<v_56>0</v_56>
+<v_61>0</v_61>
+<v_66>2</v_66>
+<v_71>0</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36</browser>
+<referer>http://newnextbutton.pureprofile.com/uk/en/intro/6F79595A3574776B4C38694C3248675446427A4F53513D3D/6B4570586A3779594F4E43556C55754D364A746B78773D3D/796D37704E64644E6C7776774E5531484C51374C64673D3D</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>1</hflip>
+<vflip>0</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>c17ced2536196e566df63325ca2bb902</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452500059</ats>
+<datetime>2016-01-11 08:14:19</datetime>
+<date_of_last_access>2016-01-11 08:14:59</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>1</rts136829>
+<rts136831>0</rts136831>
+<rts136834>4</rts136834>
+<rts136835>40</rts136835>
+</row>
+<row index="15">
+<lfdn>18</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>37</duration>
+<p_0001>99887</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>0</v_26>
+<v_31>10</v_31>
+<v_36>0</v_36>
+<v_41>5</v_41>
+<v_46>0</v_46>
+<v_51>2</v_51>
+<v_56>0</v_56>
+<v_61>0</v_61>
+<v_66>2</v_66>
+<v_71>0</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36</browser>
+<referer>https://my.pureprofile.com/feed/all</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>1</hflip>
+<vflip>1</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>68d1e5e8772e5ec82b4ec1b5fc48c97a</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452500119</ats>
+<datetime>2016-01-11 08:15:19</datetime>
+<date_of_last_access>2016-01-11 08:15:56</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>1</rts136829>
+<rts136831>0</rts136831>
+<rts136834>8</rts136834>
+<rts136835>37</rts136835>
+</row>
+<row index="16">
+<lfdn>19</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>67</duration>
+<p_0001>54829</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>0</v_26>
+<v_31>0</v_31>
+<v_36>0</v_36>
+<v_41>18.00</v_41>
+<v_46>0</v_46>
+<v_51>0</v_51>
+<v_56>0</v_56>
+<v_61>0</v_61>
+<v_66>0</v_66>
+<v_71>0</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Windows NT 6.3; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0</browser>
+<referer>http://newnextbutton.pureprofile.com/uk/en/intro/3951472B615A7661583530655136774530356F6244773D3D/36427245637343773871715346714A72773665712F673D3D</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>0</hflip>
+<vflip>1</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>794c459a7026bdcf1feecf64f7d0a97a</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452500140</ats>
+<datetime>2016-01-11 08:15:40</datetime>
+<date_of_last_access>2016-01-11 08:16:47</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>1</rts136829>
+<rts136831>0</rts136831>
+<rts136834>10</rts136834>
+<rts136835>67</rts136835>
+</row>
+<row index="17">
+<lfdn>20</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>41</duration>
+<p_0001>957459</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>0</v_26>
+<v_31>0</v_31>
+<v_36>0</v_36>
+<v_41>18.00</v_41>
+<v_46>0</v_46>
+<v_51>0</v_51>
+<v_56>0</v_56>
+<v_61>0</v_61>
+<v_66>0</v_66>
+<v_71>0</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Windows NT 6.3; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0</browser>
+<referer>https://my.pureprofile.com/feed/all</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>0</hflip>
+<vflip>0</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>3adc0090b265def9d124ebd0d6c3430a</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452500244</ats>
+<datetime>2016-01-11 08:17:24</datetime>
+<date_of_last_access>2016-01-11 08:18:05</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>1</rts136829>
+<rts136831>0</rts136831>
+<rts136834>5</rts136834>
+<rts136835>41</rts136835>
+</row>
+<row index="18">
+<lfdn>21</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>80</duration>
+<p_0001>6462</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>0</v_26>
+<v_31>25</v_31>
+<v_36>0</v_36>
+<v_41>10</v_41>
+<v_46>0</v_46>
+<v_51>3</v_51>
+<v_56>0</v_56>
+<v_61>0</v_61>
+<v_66>0</v_66>
+<v_71>0</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Windows NT 6.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36</browser>
+<referer>http://newnextbutton.pureprofile.com/uk/en/intro/3951472B615A76615835306F67734B4962326C7659773D3D/4172564C424D6A64623756684346735A4C4D576430413D3D/3052746944726B323273336951336669766D6A6334413D3D</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>0</hflip>
+<vflip>1</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>dd27853c89a5a583159f20549ba3f46f</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452500288</ats>
+<datetime>2016-01-11 08:18:08</datetime>
+<date_of_last_access>2016-01-11 08:19:28</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>1</rts136829>
+<rts136831>0</rts136831>
+<rts136834>6</rts136834>
+<rts136835>80</rts136835>
+</row>
+<row index="19">
+<lfdn>22</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>74</duration>
+<p_0001>8679</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>3</v_26>
+<v_31>4</v_31>
+<v_36>0</v_36>
+<v_41>10</v_41>
+<v_46>0</v_46>
+<v_51>0</v_51>
+<v_56>2</v_56>
+<v_61>0</v_61>
+<v_66>0</v_66>
+<v_71>9</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Windows NT 6.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36</browser>
+<referer>http://newnextbutton.pureprofile.com/uk/en/intro/3951472B615A76615835314F746D417345792B4D4E513D3D/43617878632F31786E6334467074636D717544344B513D3D/514354765276393379365A2B54735334792B336447413D3D</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136834,136835,136836</page_history>
+<hflip>1</hflip>
+<vflip>1</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>d0e51b975993e456313a4db454af7f8e</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452501074</ats>
+<datetime>2016-01-11 08:31:14</datetime>
+<date_of_last_access>2016-01-11 08:32:28</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>2</rts136829>
+<rts136831>0</rts136831>
+<rts136834>9</rts136834>
+<rts136835>74</rts136835>
+</row>
+<row index="20">
+<lfdn>23</lfdn>
+<external_lfdn>0</external_lfdn>
+<tester>0</tester>
+<dispcode>31</dispcode>
+<lastpage>136836</lastpage>
+<quality>-77</quality>
+<duration>49</duration>
+<p_0001>11419</p_0001>
+<v_76>1</v_76>
+<v_77>1</v_77>
+<v_26>1</v_26>
+<v_31>2</v_31>
+<v_36>0</v_36>
+<v_41>20</v_41>
+<v_46>0</v_46>
+<v_51>0</v_51>
+<v_56>0</v_56>
+<v_61>0</v_61>
+<v_66>0</v_66>
+<v_71>0</v_71>
+<ext_host>-99</ext_host>
+<ip_addr>-99</ip_addr>
+<browser>Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36</browser>
+<referer>https://my.pureprofile.com/feed/all</referer>
+<participant_browser>0</participant_browser>
+<participant_browser_version>-99</participant_browser_version>
+<participant_os>0</participant_os>
+<participant_device>0</participant_device>
+<participant_brand>0</participant_brand>
+<participant_model>0</participant_model>
+<participant_isbot>0</participant_isbot>
+<participant_continent>0</participant_continent>
+<participant_country>0</participant_country>
+<participant_region>-99</participant_region>
+<participant_city>-99</participant_city>
+<participant_latitude>-66</participant_latitude>
+<participant_longitude>-66</participant_longitude>
+<quota>0</quota>
+<quota_assignment>-99</quota_assignment>
+<page_history>136829,136830,136832,136829,136829,136829,136829,136829,136834,136835,136836</page_history>
+<hflip>1</hflip>
+<vflip>1</vflip>
+<output_mode>0</output_mode>
+<javascript>-77</javascript>
+<flash>-77</flash>
+<session_id>0ba84ef5a6f60265b930642ddadb311b</session_id>
+<language>1</language>
+<cleaned>0</cleaned>
+<ats>1452501089</ats>
+<datetime>2016-01-11 08:31:29</datetime>
+<date_of_last_access>2016-01-11 08:32:18</date_of_last_access>
+<date_of_first_mail>0000-00-00 00:00:00</date_of_first_mail>
+<rts136829>1</rts136829>
+<rts136831>0</rts136831>
+<rts136834>4</rts136834>
+<rts136835>49</rts136835>
+</row>
+</data></export>
