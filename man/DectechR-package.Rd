@@ -14,7 +14,7 @@ Package: \tab DectechR\cr
 Type: \tab Package\cr
 Version: \tab 0.1\cr
 Date: \tab 2016-02-09\cr
-License: \tab MIT\cr
+License: \tab GPL-2\cr
 }
 Useful functions to have loaded during general data analysis at Dectech.
 }
