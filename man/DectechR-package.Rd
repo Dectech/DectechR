@@ -6,7 +6,7 @@
 Useful functions for Dectech analysts
 }
 \description{
-Collection of functions useful for Dectech analysts, such as getting extracting survey data from Questback output, and getting consistent coefficient tables from regressions.\cr \cr
+Collection of functions useful for Dectech analysts, such as extracting survey data from Questback output, and getting consistent coefficient tables from regressions.\cr \cr
 The main functions are:
 \itemize{
     \item \code{\link{getOutput}} (extract regression output)
