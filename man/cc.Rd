@@ -10,8 +10,7 @@
   Copy a table to the clipboard for transferring to excel.
 }
 \usage{
-cc(data, destination = "clipboard-128")
-cc2(data, destination = NA, includeRowNames = FALSE)
+cc(data, destination = NA, includeRowNames = FALSE, nestedOrderOutToIn = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -24,20 +23,19 @@ cc2(data, destination = NA, includeRowNames = FALSE)
   (optional) output file, in case the data is to be written to a file rather than the clipboard.
 }
 \item{includeRowNames}{
-  (optional) parameter to save the row names for cc2. Generally row names don't contain useful information, so be default they are dropped by cc2. But if required they can be kept by setting this value to TRUE.
+  (optional) parameter to save the row names. Generally row names don't contain useful information, so by default they are dropped. But if required they can be kept by setting this value to TRUE.
+}
+\item{nestedOrderOutToIn}{
+  (optional) parameter to determine the order of levels for a nested table. By default it is ordered first by te outer variable, then the next outer most variable, etc. This is reveresed if set to FALSE.
 }
 }
 \details{
     A quick and simple way to transfer data to excel. A table or data frame can copied directly to the clipboard, so you can just switch to Excel and hit paste (or ctrl+v).\cr\cr
-    cc2 is generally the better function to use.\cr\cr
-    cc should work in most occasions but has a memory limit, so may fail for big tables or data frames. Cross tabulations may loss variable names, with when there is more that two variables the table will be flattened into a long format.\cr\cr
-    cc2 has no memory limit, and gives a more intuitive result for cross tabulations.\cr\cr
-
 
 }
 
 \note{
-cc is just a simple wrapper to the write.table function, whereas cc2 uses writeClipboard but first manipulates the data into a useful format.
+cc2 is indentical, but exists for compatibility with older versions of DectechR package.
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
@@ -52,25 +50,17 @@ cc is just a simple wrapper to the write.table function, whereas cc2 uses writeC
 gearsTable = with(mtcars, table(gear))
 
 # Copy the table to clipboard...
-cc(gearsTable)
+cc2(gearsTable)
 # ...Now go to Excel and paste!
 
 ## Two variable cross tab...
 gearsVsCylindersTab = with(mtcars, table(gear,cyl))
-
-# first try cc, when pasted to excel structure retained, but variable names dropped
 cc(gearsVsCylindersTab)
-# compare with cc2, where variable names retained...
-cc2(gearsVsCylindersTab)
 
 
 ## Three variable cross tab...
 threeWayTable = with(mtcars, table(gear,cyl,carb))
-
-# with a three way table, cc will flaten output into long format...
 cc(threeWayTable)
-#...while cc2 should retain the shape with last variable used as columns
-cc2(threeWayTable)
 
 
 }

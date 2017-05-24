@@ -1,8 +1,4 @@
-cc <- function(data, destination = "clipboard-128") {
-    write.table(data, destination, sep = "\t", col.names = NA)
-}
-
-cc2 <- function(data, destination = NA, includeRowNames = FALSE) {
+cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutToIn = TRUE) {
     ####################################################
     ### Fucntion to write an object to the clipboard ###
     ###  ...making allowance for nested tables       ###
@@ -59,6 +55,13 @@ cc2 <- function(data, destination = NA, includeRowNames = FALSE) {
             # now reshape so "myColumnVar" is switched to wide format...
             data <- reshape(data, v.names = myValues,timevar = myColumnVar,
                          idvar = myOtherVars, direction = "wide")
+
+            if (nestedOrderOutToIn == TRUE) {
+                for (v in myOtherVars[length(myOtherVars):1]) {
+                    data = data[order(data[,v]),]
+                }
+
+            }
             # ...and use orginal levels for column headings
             names(data) <- c(myOtherVars, myColumnVarNames)
 
@@ -88,3 +91,5 @@ cc2 <- function(data, destination = NA, includeRowNames = FALSE) {
         writeClipboard(outputVector)
     }
 }
+
+cc2 <- cc
