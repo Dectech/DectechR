@@ -25,7 +25,8 @@ getOutputTable.lm <- function(mod,tolerance = TRUE,...){
 
 
     # if required, also include the tolerance...
-    if ((nrow(outTable)>2) & (tolerance == TRUE)){
+    nTerms <- length(labels(terms(mod)))
+    if ((nTerms > 1) & (tolerance == TRUE)){
         outTable$Tolerance <- getCoeffTolerance(mod)
     }
 
@@ -78,7 +79,8 @@ getOutputTable.glm <- function(mod,tolerance = TRUE,...){
         outTable <- as.data.frame(coef(summary(mod)))
 
         # if required, also include the tolerance...
-        if ((nrow(outTable)>2) & (tolerance == TRUE)){
+        nTerms <- length(labels(terms(mod)))
+        if ((nTerms > 1) & (tolerance == TRUE)){
             outTable$Tolerance <- getCoeffTolerance(mod)
         }
 
@@ -227,6 +229,7 @@ getOutput <- function(mod, performanceTableAtTop = TRUE,...){
 
 
 getCoeffTolerance <- function(mod) {
+
 
     vifTable <- car::vif(mod)
 
