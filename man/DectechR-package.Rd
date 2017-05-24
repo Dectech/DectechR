@@ -12,7 +12,7 @@ The main functions are:
     \item \code{\link{getOutput}} (extract regression output)
     \item \code{\link{getScreePlot}}
     \item \code{\link{getFactorLoadingsTable}}
-    \item \code{\link{cc}}, \code{\link{cc2}} (copy to clipboard)
+    \item \code{\link{cc}} (copy to clipboard)
     \item \code{\link{dectechXmlToDataframe}} (convert Questback output to a dataframe)
 }
 
