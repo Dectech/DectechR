@@ -1,0 +1,27 @@
+# DectechR
+
+Collection of functions useful for Dectech analysts, such as extracting survey data from Questback output, and getting consistent coefficient tables from regressions.
+
+
+### Installation
+
+You can install DectechR from github with:
+
+```{r gh-installation, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("Dectech/DectechR")
+```
+
+### Main functions
+
+The main functions are:
+
+* getOutput (extract regression output)
+* getScreePlot
+* getFactorLoadingsTable
+* cc (copy to clipboard)
+* dectechXmlToDataframe (convert Questback output to a dataframe)
+
+
+
+
