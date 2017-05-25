@@ -17,8 +17,8 @@ test_that("dectechXmlToDataframe() loads data correctly", {
     # make sure the file exists...
     expect_true(file.exists("test_data.xml"))
 
-    test_df = dectechXmlToDataframe(filePath = "test_data.xml")
-    #test_df = dectechXmlToDataframe(filePath = "tests/testthat/test_data.xml")
+    test_df = dectechXmlToDataframe(filePath = "test_data.xml", verbose = FALSE)
+    #test_df = dectechXmlToDataframe(filePath = "tests/testthat/test_data.xml", verbose = FALSE)
 
     # are the loaded dimensions correct...
     expect_equal(dim(test_df), c(19,52))
@@ -76,7 +76,8 @@ test_that("dectechXmlToDataframe() loads data correctly", {
     #test_df_2 = dectechXmlToDataframe(filePath = "tests/testthat/test_data.xml",
     test_df_2 = dectechXmlToDataframe(filePath = "test_data.xml",
                                     removeIncompletes = FALSE,
-                                    dropTimeStamps = FALSE)
+                                    dropTimeStamps = FALSE,
+                                    verbose = FALSE)
 
     # are the loaded dimensions correct...
     expect_equal(dim(test_df_2), c(20,56))
