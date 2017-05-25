@@ -22,6 +22,18 @@ The main functions are:
 * cc (copy to clipboard)
 * dectechXmlToDataframe (convert Questback output to a dataframe)
 
+### Style guide
 
+When adding functions to this library, we should mostly stick to the following guide: http://adv-r.had.co.nz/Style.html
+
+The key points being:
+* Use descriptive meaningful variable/function names
+* Generally, variable names should be nouns, and function names should be verbs
+* Use the "<-" assignment operator, rather than "="
+* leave space between operators e.g. "(x - 3) / 2" rather than "(x-3)/2"
+
+One difference from the above is that for functions we should use camelCase, as this is statistically the most common style across R packages on CRAN. 
+For variables we can use lowercase, with an underscore to seperate words (as suggested in the style guide) 
+    e.g. some_result <- getResult(some_input)
 
 
