@@ -6,7 +6,7 @@ Date: 2016-02-09
 Author: Keith Simpson
 Maintainer: Keith Simpson <k.simpson@dectech.co.uk>
 Description: Collection of functions useful for Dectech Analysts, such as getting extracting survey data from Questback output, and getting consistent coefficient tables from regressions.
-Imports: XML, car
+Imports: XML
 License: GPL-2
 LazyData: TRUE
 Suggests: testthat

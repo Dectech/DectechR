@@ -21,7 +21,7 @@ getCoeffTolerance(mod)
 }
 \details{
     Tolerance is 1/VIF. VIF is a measure of multicolinearity. See \url{https://en.wikipedia.org/wiki/Variance_inflation_factor} for more details.\cr\cr
-    This function relies on the \code{\link{vif}} function from the \code{\link{car}} package to do the main calculation. However when there are categorical/factor variables in the regresion, the \code{\link{vif}} function returns the value for categorical variable, but doesn't repeat across the levels. Hence the resulting vector is a different length as the coefficient table.\cr\cr
+    This function relies on the \code{\link{getVif}} function which has been adpated from \code{\link{car::vif}}. When there are categorical/factor variables in the regresion, the \code{\link{car}} version returns one value for categorical variable as a whole, hence the resulting vector is a different length to the coefficient table.\cr\cr
     This function simple expands that result so it can be added to the coefficient table.
 
 
