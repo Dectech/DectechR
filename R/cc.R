@@ -8,7 +8,7 @@ cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutTo
     if (!is.na(destination)) {
 
         # if file name given then write to file...
-        write.table(data, destination,sep = "\t", row.names = FALSE)
+        write.table(data, destination, sep = "\t", row.names = FALSE)
 
     } else {
         #---(2) will use the "writeClipboard" function, however...
@@ -16,16 +16,16 @@ cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutTo
 
         # if desired, save the row names...
         if (includeRowNames == TRUE) {
-            originalRowNames <- rownames(data)
+            original_row_names <- rownames(data)
         }
 
 
         #---(3) we will treat nested tables differently, so check status..
-        isNestedTable <- FALSE
+        is_nested_table <- FALSE
         if (class(data) == "table") {
             # only care if there is more than one dimension
             if (length(dim(data)) > 1) {
-                isNestedTable <- TRUE
+                is_nested_table <- TRUE
             }
         }
 
@@ -36,59 +36,59 @@ cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutTo
 
         #---(5) for multi dimensional nested tables...
         #  ...want to reshape into usable format
-        if (isNestedTable) {
+        if (is_nested_table) {
             nvars <- length(data)
 
             # create an extra header row, so show name of variable that will span columns
-            extraRow <- paste(array("\t",nvars - 2), collapse = "")
-            extraRow <- paste0(extraRow, names(data)[nvars - 1])
+            extra_row <- paste(array("\t", nvars - 2), collapse = "")
+            extra_row <- paste0(extra_row, names(data)[nvars - 1])
 
 
             #-- reshape so that last variable is split into columns...
             # first get some details about current shape...
-            numCols <- ncol(data)
-            myValues <- names(data)[numCols]
-            myColumnVar <- names(data)[numCols - 1]
-            myColumnVarNames <- as.character(unique(data[, myColumnVar]))
-            myOtherVars <- names(data)[-c(numCols - 1,numCols)]
+            num_cols <- ncol(data)
+            value_names <- names(data)[num_cols]
+            horizontal_variable_name <- names(data)[num_cols - 1]
+            horizontal_variable_levels <- as.character(unique(data[, horizontal_variable_name]))
+            vertical_variable_names <- names(data)[-c(num_cols - 1, num_cols)]
 
-            # now reshape so "myColumnVar" is switched to wide format...
-            data <- reshape(data, v.names = myValues,timevar = myColumnVar,
-                         idvar = myOtherVars, direction = "wide")
+            # now reshape so "horizontal_variable_name" is switched to wide format...
+            data <- reshape(data, v.names = value_names, timevar = horizontal_variable_name,
+                         idvar = vertical_variable_names, direction = "wide")
 
             if (nestedOrderOutToIn == TRUE) {
-                for (v in myOtherVars[length(myOtherVars):1]) {
-                    data = data[order(data[,v]),]
+                for (v in vertical_variable_names[length(vertical_variable_names):1]) {
+                    data <- data[order(data[, v]), ]
                 }
 
             }
             # ...and use orginal levels for column headings
-            names(data) <- c(myOtherVars, myColumnVarNames)
+            names(data) <- c(vertical_variable_names, horizontal_variable_levels)
 
         }
 
         #---(6) get column headings for table...
 
-        colHeadings <- paste(names(data),collapse = "\t")
-        if (isNestedTable) {
-            colHeadings <- append(extraRow,colHeadings)
+        col_headings <- paste(names(data), collapse = "\t")
+        if (is_nested_table) {
+            col_headings <- append(extra_row, col_headings)
         }
 
         #---(7) Go through every row, make it a string sep. by tabs..
-        outputVector <- apply(data, 1, paste, collapse = "\t")
-        outputVector <- append(colHeadings, outputVector)
+        output_vector <- apply(data, 1, paste, collapse = "\t")
+        output_vector <- append(col_headings, output_vector)
 
         #--- if desired, include original row names....
-        if ((includeRowNames == TRUE) & (isNestedTable == FALSE)) {
-            NextraRows <- length(outputVector) - length(originalRowNames)
-            originalRowNames <- append(rep("", NextraRows), originalRowNames)
-            outputVector <- paste0(originalRowNames, "\t", outputVector)
+        if ((includeRowNames == TRUE) & (is_nested_table == FALSE)) {
+            num_extra_rows <- length(output_vector) - length(original_row_names)
+            original_row_names <- append(rep("", num_extra_rows), original_row_names)
+            output_vector <- paste0(original_row_names, "\t", output_vector)
         }
 
 
 
         #---(8) then write to clipboard
-        writeClipboard(outputVector)
+        writeClipboard(output_vector)
     }
 }
 
