@@ -9,18 +9,18 @@ getScreePlot <- function(data, toClipboard = TRUE) {
     variance_table$Variance <- variance_table$EigenValue/sum(variance_table$EigenValue)
     variance_table$CumulativeVariance <- cumsum(variance_table$Variance)
 
+    # disply scree plot...
+    par(pch = 20, col = "black")
+    plot(variance_table$EigenValue, type = "o")
+    abline(a = 1, b = 0, col = "lightgray",lty = "dashed")
+
     if (toClipboard == TRUE) {
         # copy table to clipboard...
         write.table(variance_table, "clipboard", sep = "\t", col.names = NA)
         print("Table written to clipboard")
     } else {
-        print(variance_table)
+        return(variance_table)
     }
-
-    # disply scree plot...
-    par(pch = 20, col = "black")
-    plot(variance_table$EigenValue, type = "o")
-    abline(a = 1, b = 0, col = "lightgray",lty = "dashed")
 }
 
 
@@ -43,7 +43,7 @@ getFactorLoadingsTable <- function(FAResult, toClipboard = TRUE){
         write.table(factor_loadings, "clipboard", sep = "\t", col.names = NA)
         print("Factor Loadings table written to clipboad")
     } else {
-        print(factor_loadings)
+        return(factor_loadings)
     }
 
 }

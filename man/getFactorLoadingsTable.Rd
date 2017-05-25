@@ -31,7 +31,7 @@ getFactorLoadingsTable(FAResult, toClipboard = TRUE)
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-    See also \code{\link{...}}
+    See also \code{\link{getScreePlot}}
 }
 \examples{
 # Using the built in data frame, mtcars:
