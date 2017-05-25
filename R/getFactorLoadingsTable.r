@@ -1,49 +1,49 @@
 
 getScreePlot <- function(data, toClipboard = TRUE) {
 
-    #--- Determine Number of Factors to Extract
-    ev <- eigen(cor(data)) # get eigenvalues
+    # Determine Number of Factors to Extract
+    eigen_values <- eigen(cor(data)) # get eigenvalues
 
-    VarianceTable <- as.data.frame(ev$values)
-    names(VarianceTable) <- c("EigenValue")
-    VarianceTable$Variance <- VarianceTable$EigenValue/sum(VarianceTable$EigenValue)
-    VarianceTable$CumVar <- cumsum(VarianceTable$Variance)
+    variance_table <- as.data.frame(eigen_values$values)
+    names(variance_table) <- c("EigenValue")
+    variance_table$Variance <- variance_table$EigenValue/sum(variance_table$EigenValue)
+    variance_table$CumulativeVariance <- cumsum(variance_table$Variance)
 
     if (toClipboard == TRUE) {
         # copy table to clipboard...
-        write.table(VarianceTable, "clipboard", sep = "\t", col.names = NA)
+        write.table(variance_table, "clipboard", sep = "\t", col.names = NA)
         print("Table written to clipboard")
     } else {
-        print(VarianceTable)
+        print(variance_table)
     }
 
-    #disply scree plot...
+    # disply scree plot...
     par(pch = 20, col = "black")
-    plot(VarianceTable$EigenValue, type = "o")
+    plot(variance_table$EigenValue, type = "o")
     abline(a = 1, b = 0, col = "lightgray",lty = "dashed")
 }
 
 
 getFactorLoadingsTable <- function(FAResult, toClipboard = TRUE){
     # extract loadings
-    fTable <- as.data.frame(FAResult$loadings[,])
+    factor_loadings <- as.data.frame(FAResult$loadings[,])
 
     # get maximum loading factor for each row
-    maxFac <- apply(abs(fTable),1,which.max)
-    maxValue <- apply(abs(fTable),1,max) # also store max value
+    max_loading_factor <- apply(abs(factor_loadings),1,which.max)
+    max_value <- apply(abs(factor_loadings),1,max) # also store max value
 
     # sort table by maximum factor...
-    fTable <- fTable[order(maxFac,1-maxValue),]
+    factor_loadings <- factor_loadings[order(max_loading_factor,1-max_value),]
 
     # add uniqueness
-    fTable$Uniqueness <- FAResult$uniquenesses
+    factor_loadings$Uniqueness <- FAResult$uniquenesses
 
     if (toClipboard == TRUE) {
         # and write to clipboard...
-        write.table(fTable, "clipboard", sep = "\t", col.names = NA)
+        write.table(factor_loadings, "clipboard", sep = "\t", col.names = NA)
         print("Factor Loadings table written to clipboad")
     } else {
-        print(fTable)
+        print(factor_loadings)
     }
 
 }
