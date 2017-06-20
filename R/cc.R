@@ -22,7 +22,7 @@ cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutTo
 
         #---(3) we will treat nested tables differently, so check status..
         is_nested_table <- FALSE
-        if (class(data) == "table") {
+        if (class(data)[1] == "table") {
             # only care if there is more than one dimension
             if (length(dim(data)) > 1) {
                 is_nested_table <- TRUE
@@ -30,7 +30,7 @@ cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutTo
         }
 
         #---(4) convert all objects to dataframes if not already
-        if (class(data) != "data.frame") {
+        if (class(data)[1] != "data.frame") {
             data <- as.data.frame(data)
         }
 
