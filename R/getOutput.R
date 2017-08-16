@@ -71,8 +71,13 @@ getOutputTable.lm <- function(mod, tolerance = TRUE, ...) {
 
     performance_table <- as.data.frame(c("Model", "N", "D.o.F.",
                                  "Log-likelihood", "AIC", "BIC", "R-squared", "Adj. R-squared", "F-test (p value)"))
-    names(performance_table) <- names(mod$model)[1]
-    performance_table$value <- c(model_type, num_rows, dof, ll, aic, bic, r_squared, adjusted_r_squared, ftest_p)
+    DVname <- names(mod$model)[1]
+    secondColName <- "value"
+    if (DVname == secondColName) {
+        secondColName = "perfValue"
+    }
+    names(performance_table) <- DVname
+    performance_table[,secondColName] <- c(model_type, num_rows, dof, ll, aic, bic, r_squared, adjusted_r_squared, ftest_p)
 
     out_table_list <- list("out_table" = out_table, "performance_table" = performance_table)
 
@@ -109,8 +114,14 @@ getOutputTable.glm <- function(mod, tolerance = TRUE, ...) {
         bic <- extractAIC(mod, k = kpenalty)[2]
 
         performance_table <- as.data.frame(c("Model", "N", "D.o.F.", "Log-likelihood", "AIC", "BIC"))
-        names(performance_table) <- names(mod$model)[1]
-        performance_table$value <- c(model_type, num_rows, dof, ll, aic, bic)
+
+        DVname <- names(mod$model)[1]
+        secondColName <- "value"
+        if (DVname == secondColName) {
+            secondColName = "perfValue"
+        }
+        names(performance_table) <- DVname
+        performance_table[,secondColName] <- c(model_type, num_rows, dof, ll, aic, bic)
 
         out_table_list <- list("out_table" = out_table, "performance_table" = performance_table)
     }
@@ -132,8 +143,13 @@ getOutputTable.mlogit <- function(mod, ...) {
 
 
     performance_table <- as.data.frame(c("Model", "N", "D.o.F.", "Log-likelihood", "AIC", "BIC", "McFadden R^2"))
-    names(performance_table) <- names(mod$model)[1]
-    performance_table$value <- c(model_type, num_rows, dof, mod$logLik, aic, bic, r_squared)
+    DVname <- names(mod$model)[1]
+    secondColName <- "value"
+    if (DVname == secondColName) {
+        secondColName = "perfValue"
+    }
+    names(performance_table) <- DVname
+    performance_table[,secondColName] <- c(model_type, num_rows, dof, mod$logLik, aic, bic, r_squared)
 
     out_table_list <- list("out_table" = out_table, "performance_table" = performance_table)
 
@@ -161,8 +177,41 @@ getOutputTable.polr <- function(mod, ...) {
     bic <- extractAIC(mod, k = kpenalty)[2]
 
     performance_table <- as.data.frame(c("Model", "N", "D.o.F.", "Log-likelihood", "AIC", "BIC"))
-    names(performance_table) <- names(mod$model)[1]
-    performance_table$value <- c(model_type, num_rows, dof, ll, aic, bic)
+    DVname <- names(mod$model)[1]
+    secondColName <- "value"
+    if (DVname == secondColName) {
+        secondColName = "perfValue"
+    }
+    names(performance_table) <- DVname
+    performance_table[,secondColName] <- c(model_type, num_rows, dof, ll, aic, bic)
+
+    out_table_list <- list("out_table" = out_table, "performance_table" = performance_table)
+
+    return(out_table_list)
+}
+
+getOutputTable.biglm <- function(mod, ...) {
+    summaryMod = summary(mod)
+    out_table <- summaryMod$mat
+
+    # (2) get performance table...
+    num_rows <- mod$n
+    dof <- mod$n - mod$df.resid
+    #ll <- logLik(mod)
+    r_squared <- summaryMod$rsq
+    aic <- AIC(mod)
+    kpenalty <- log(num_rows)
+    bic <- AIC(mod, k = kpenalty)
+
+    performance_table <- as.data.frame(c("N", "D.o.F.", "AIC", "BIC", "r-squared"))
+
+    DVname <- paste0(mod$terms)[2]
+    secondColName <- "value"
+    if (DVname == secondColName) {
+        secondColName = "perfValue"
+    }
+    names(performance_table) <- DVname
+    performance_table[,secondColName] <- c(num_rows, dof, aic, bic, r_squared)
 
     out_table_list <- list("out_table" = out_table, "performance_table" = performance_table)
 
@@ -181,8 +230,13 @@ getOutputTable.default <- function(mod, ...) {
     bic <- extractAIC(mod, k = kpenalty)[2]
 
     performance_table <- as.data.frame(c("N", "D.o.F.", "Log-likelihood", "AIC", "BIC"))
-    names(performance_table) <- names(mod$model)[1]
-    performance_table$value <- c(num_rows, dof, ll, aic, bic)
+    DVname <- names(mod$model)[1]
+    secondColName <- "value"
+    if (DVname == secondColName) {
+        secondColName = "perfValue"
+    }
+    names(performance_table) <- DVname
+    performance_table[,secondColName] <- c(num_rows, dof, ll, aic, bic)
 
     out_table_list <- list("out_table" = out_table, "performance_table" = performance_table)
 
@@ -213,7 +267,8 @@ getOutput <- function(mod, performanceTableAtTop = TRUE, ...) {
     #-- merge tables and paste to clipboard
     if (performanceTableAtTop == TRUE) {
         rownames(formatted_perf_table) <- c("Dep. Var.", "", as.character(performance_table[, 1]), "")
-        formatted_perf_table[1, 1] <- names(mod$model)[1]
+        #formatted_perf_table[1, 1] <- paste(mod$terms)[2]
+        formatted_perf_table[1, 1] <- paste(mod$call[[2]])[2]
         formatted_perf_table[c(1:nrow(performance_table)) + 2, 1] <- performance_table[, 2]
 
         # when merging performance table first, rbind doesn't like adding output_table as a data.frame

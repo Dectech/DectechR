@@ -140,3 +140,39 @@ test_that("getOutput() polr regression output", {
 })
 
 
+#---- biglm -----------------
+test_that("getOutput() biglm regression output - simple", {
+    m1 = biglm::biglm( mpg ~ cyl, data = mtcars)
+    getOutput(m1)
+    ccContents = readClipboard()
+
+    expect_identical(ccContents[1],  "\"Dep. Var.\"\t\"mpg\"\t\"\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[11],  "\"cyl\"\t\"-2.87579013906447\"\t\"-3.52060790438268\"\t\"-2.23097237374627\"\t\"0.322408882659104\"\t\"4.67557866045959e-19\"")
+
+
+})
+
+test_that("getOutput() biglm regression output - simple, factor", {
+    m1 = biglm::biglm( mpg ~ factor(cyl), data = mtcars)
+    getOutput(m1)
+    ccContents = readClipboard()
+    #ccContents[1]
+
+    expect_identical(ccContents[1],  "\"Dep. Var.\"\t\"mpg\"\t\"\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[11],  "\"factor(cyl)6\"\t\"-6.92077922077923\"\t\"-10.0374755877775\"\t\"-3.80408285378092\"\t\"1.55834818349916\"\t\"8.95004278086054e-06\"")
+
+
+})
+
+test_that("getOutput() biglm regression output - full", {
+    m1 = biglm::biglm( mpg ~ factor(cyl) + disp + hp + gear + carb + gear*carb, data = mtcars)
+    getOutput(m1)
+    ccContents = readClipboard()
+    #ccContents[1]
+
+    expect_identical(ccContents[1],  "\"Dep. Var.\"\t\"mpg\"\t\"\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[11],  "\"factor(cyl)6\"\t\"-2.07688391540811\"\t\"-6.1756817137716\"\t\"2.02191388295538\"\t\"2.04939889918175\"\t\"0.310863764501063\"")
+    expect_identical(ccContents[17], "\"gear:carb\"\t\"0.0693820744876062\"\t\"-0.836794527442439\"\t\"0.975558676417652\"\t\"0.453088300965023\"\t\"0.87829460442902\"")
+
+
+})
