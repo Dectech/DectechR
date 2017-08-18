@@ -1,4 +1,4 @@
-cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutToIn = TRUE) {
+cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutToIn = TRUE, forceNested = FALSE) {
     ####################################################
     ### Fucntion to write an object to the clipboard ###
     ###  ...making allowance for nested tables       ###
@@ -22,7 +22,7 @@ cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutTo
 
         #---(3) we will treat nested tables differently, so check status..
         is_nested_table <- FALSE
-        if (class(data)[1] == "table") {
+        if ((class(data)[1] == "table") | forceNested == TRUE) {
             # only care if there is more than one dimension
             if (length(dim(data)) > 1) {
                 is_nested_table <- TRUE
