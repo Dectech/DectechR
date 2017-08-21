@@ -196,7 +196,8 @@ getOutputTable.biglm <- function(mod, ...) {
 
     # (2) get performance table...
     num_rows <- mod$n
-    dof <- mod$n - mod$df.resid
+    #dof <- mod$n - mod$df.resid
+    dof <- length(mod$names)
     #ll <- logLik(mod)
     r_squared <- summaryMod$rsq
     aic <- AIC(mod)
