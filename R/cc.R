@@ -17,6 +17,9 @@ cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutTo
         # if desired, save the row names...
         if (includeRowNames == TRUE) {
             original_row_names <- rownames(data)
+            if (is.null(original_row_names)) {
+                original_row_names <- names(data)
+            }
         }
 
 
