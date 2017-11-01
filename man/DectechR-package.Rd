@@ -14,6 +14,7 @@ The main functions are:
     \item \code{\link{getFactorLoadingsTable}}
     \item \code{\link{cc}} (copy to clipboard)
     \item \code{\link{dectechXmlToDataframe}} (convert Questback output to a dataframe)
+    \item \code{\link{unpackUserVariable}} (Split a custom variable (e.g. "1*3*5*7") into multiple columns)
 }
 
 }

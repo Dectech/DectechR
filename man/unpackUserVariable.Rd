@@ -6,7 +6,7 @@
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
-  Unpack a user defined variable (output from a QuestBack custom question), where multiple responses are stored in one column e.g. "1*3*5*7"
+  Split a user defined variable (from a QuestBack custom question), where multiple responses are stored in one column (e.g. "1*3*5*7") into multiple columns (e.g. 1, 3, 5, 7)
 }
 \usage{
 unpackUserVariable(rawText, maxCols = NULL, emptyReplacement = -99, numeric = FALSE, delimiter = "*")
