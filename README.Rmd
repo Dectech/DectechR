@@ -21,6 +21,7 @@ The main functions are:
 * getFactorLoadingsTable
 * cc (copy to clipboard)
 * dectechXmlToDataframe (convert Questback output to a dataframe)
+* unpackUserVariable (Split a custom variable (e.g. "1\*3\*5\*7") into multiple columns)
 
 ### Style guide
 
