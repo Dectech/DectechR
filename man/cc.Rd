@@ -10,7 +10,7 @@
   Copy a table to the clipboard for transferring to excel.
 }
 \usage{
-cc(data, destination = NA, includeRowNames = FALSE, nestedOrderOutToIn = TRUE)
+cc(data, destination = NA, includeRowNames = FALSE, nestedOrderOutToIn = TRUE, forceNested = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -27,6 +27,9 @@ cc(data, destination = NA, includeRowNames = FALSE, nestedOrderOutToIn = TRUE)
 }
 \item{nestedOrderOutToIn}{
   (optional) parameter to determine the order of levels for a nested table. By default it is ordered first by te outer variable, then the next outer most variable, etc. This is reveresed if set to FALSE.
+}
+\item{forceNested}{
+  (optional) if input is not a nested table, then can still attempt to use the second last column to reshape into a wide format table.
 }
 }
 \details{
@@ -47,21 +50,29 @@ cc2 is indentical, but exists for compatibility with older versions of DectechR 
 # Using the built in data frame, mtcars:
 
 # make a frequency table of number of gears
-gearsTable = with(mtcars, table(gear))
+gearsTable <- with(mtcars, table(gear))
 
 # Copy the table to clipboard...
 cc2(gearsTable)
 # ...Now go to Excel and paste!
 
-## Two variable cross tab...
-gearsVsCylindersTab = with(mtcars, table(gear,cyl))
+# Two variable cross tab...
+gearsVsCylindersTab <- with(mtcars, table(gear,cyl))
 cc(gearsVsCylindersTab)
 
 
-## Three variable cross tab...
-threeWayTable = with(mtcars, table(gear,cyl,carb))
+# Three variable cross tab...
+threeWayTable <- with(mtcars, table(gear,cyl,carb))
 cc(threeWayTable)
 
+
+# Forcing a data.frame to be "nested"...
+# ...the following is a data.frame, so won't be automatically nested
+averageMpg <- with(mtcars, aggregate(mpg,list("cyl" = cyl,"gear" = gear),mean))
+# ...but compare the output of:
+cc(averageMpg)
+# ...to this:
+cc(averageMpg, forceNested = T)
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

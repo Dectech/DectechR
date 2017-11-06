@@ -25,9 +25,15 @@ cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutTo
 
         #---(3) we will treat nested tables differently, so check status..
         is_nested_table <- FALSE
-        if ((class(data)[1] == "table") | forceNested == TRUE) {
+        if ("table" %in% class(data)) {
             # only care if there is more than one dimension
             if (length(dim(data)) > 1) {
+                is_nested_table <- TRUE
+            }
+
+        } else if (forceNested == TRUE) { # if not a table, but want to force nesting...
+            # ...can only nest if have more that two additional columns
+            if (ncol(data) > 2) {
                 is_nested_table <- TRUE
             }
         }
