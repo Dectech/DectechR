@@ -268,8 +268,13 @@ getOutput <- function(mod, performanceTableAtTop = TRUE, ...) {
     #-- merge tables and paste to clipboard
     if (performanceTableAtTop == TRUE) {
         rownames(formatted_perf_table) <- c("Dep. Var.", "", as.character(performance_table[, 1]), "")
-        #formatted_perf_table[1, 1] <- paste(mod$terms)[2]
-        formatted_perf_table[1, 1] <- paste(mod$call[[2]])[2]
+        # get the dependent variable name...
+        if (class(mod)[1] == "mlogit") {
+            formatted_perf_table[1, 1] <- paste(mod$formula[2])
+        } else {
+            formatted_perf_table[1, 1] <- paste(mod$terms)[2]
+        }
+
         formatted_perf_table[c(1:nrow(performance_table)) + 2, 1] <- performance_table[, 2]
 
         # when merging performance table first, rbind doesn't like adding output_table as a data.frame
