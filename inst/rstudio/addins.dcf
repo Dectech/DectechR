@@ -1,0 +1,14 @@
+Name: runTable
+Description: Run table() on the current selection
+Binding: runTable
+Interactive: false
+
+Name: runTableCC
+Description: Run cc(table()) on the current selection
+Binding: runTableCC
+Interactive: false
+
+Name: runCC
+Description: Run cc() on the current selection
+Binding: runCC
+Interactive: false
