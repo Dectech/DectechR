@@ -7,7 +7,7 @@ Collection of functions useful for Dectech analysts, such as extracting survey d
 
 You can install DectechR from github with:
 
-```{r gh-installation, eval = FALSE}
+```r
 # install.packages("devtools")
 devtools::install_github("Dectech/DectechR")
 ```
@@ -28,6 +28,7 @@ The main functions are:
 When adding functions to this library, we should mostly stick to the following guide: http://adv-r.had.co.nz/Style.html
 
 The key points being:
+
 * Use descriptive meaningful variable/function names
 * Generally, variable names should be nouns, and function names should be verbs
 * Use the "<-" assignment operator, rather than "="
