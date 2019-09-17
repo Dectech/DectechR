@@ -1,11 +1,13 @@
 
 runUnivariate <- function(mod, ...) UseMethod("runUnivariate")
 
+
+
 runUnivariate.lm <- function(mod, returnIntercept = FALSE) { #mod = m1
     # run univariate regression for each input variable...
     # get all IV's in original call...
-    IV_list <- attr(mod$terms , "term.labels")
-    DV_name <- (mod$terms[[2]])
+    IV_list <- names(mod$model)[-1]
+    DV_name <- names(mod$model)[1]
 
     if (returnIntercept == TRUE) {
         intercept_terms <- "(Intercept)"
@@ -13,11 +15,13 @@ runUnivariate.lm <- function(mod, returnIntercept = FALSE) { #mod = m1
         intercept_terms <- NULL
     }
 
+    show_intercept_warning <- FALSE
+
     #---- loop through each variable...----------------
     result_matrix <- NULL
-    for (var in IV_list) { # var <- IV_list[2]
+    for (var in IV_list) { # var <- IV_list[1]
         # construct a formula for each variable and run model...
-        this_formula <- as.formula(paste0(DV_name," ~ `", var,"`")) # NB: include [`] to deal with variables declared as "factor(var)" etc.
+        this_formula <- as.formula(paste0("`",DV_name,"` ~ `", var,"`")) # NB: include [`] to deal with variables declared as "factor(var)" etc.
 
         this_mod <- lm(this_formula, data = mod$model)
 
@@ -31,27 +35,38 @@ runUnivariate.lm <- function(mod, returnIntercept = FALSE) { #mod = m1
         this_result <- NULL
 
         this_intercept <- coeff_table[1,"Estimate"]
-        for (i in 2:nrow(coeff_table)) {
+        for (i in 2:nrow(coeff_table)) { # i = 2
             if (returnIntercept == TRUE) {
-                this_subresult <- c(rownames(coeff_table)[i], this_intercept,coeff_table[i,"Estimate"],coeff_table[i,"Pr(>|t|)"])
+                this_subresult <- c(rownames(coeff_table)[i],
+                                    this_intercept,coeff_table[i,])
+                # if this is a factor/categorical variable and the intercept is shown...
+                # ...warn that it is repeated
+                if (nrow(coeff_table) > 2) {
+                    show_intercept_warning <- TRUE
+                }
             } else {
-                this_subresult <- c(rownames(coeff_table)[i], coeff_table[i,"Estimate"],coeff_table[i,"Pr(>|t|)"])
+                this_subresult <- c(rownames(coeff_table)[i], coeff_table[i,])
             }
             this_result <- rbind(this_result, this_subresult)
-            this_intercept <- NA
+            #this_intercept <- NA
+
         }
 
 
         result_matrix <- rbind(result_matrix, this_result)
     }
 
+    if (show_intercept_warning == T) {
+        print("NB: Intercept for factor/categorical variables are repeated")
+    }
+
     #---- format output -------------------
     rownames(result_matrix) <- 1:nrow(result_matrix)
     result_matrix <- as.data.frame(result_matrix, stringsAsFactors = FALSE)
-    names(result_matrix) <- c("IV", intercept_terms, "beta", "p-value")
+    names(result_matrix) <- c("IV", intercept_terms, "Beta", "Std. Error","t value","Pr(>|t|)")
 
     result_matrix[,-1] <- data.matrix(result_matrix[,-1])
-
+    # ...remove the ` symbol that was added earlier
     result_matrix[,1] <- gsub("`", "", result_matrix[,1])
 
     return(result_matrix)
@@ -61,8 +76,8 @@ runUnivariate.glm <- function(mod, returnIntercept = FALSE) {
     # run univariate regression for each input variable...
 
     # get all IV's in original call...
-    IV_list <- attr(mod$terms , "term.labels")
-    DV_name <- (mod$terms[[2]])
+    IV_list <- names(mod$model)[-1]
+    DV_name <- names(mod$model)[1]
     model_family <- as.character(mod$call["family"])
 
     if (returnIntercept == TRUE) {
@@ -71,11 +86,13 @@ runUnivariate.glm <- function(mod, returnIntercept = FALSE) {
         intercept_terms <- NULL
     }
 
+    show_intercept_warning <- FALSE
+
     #---- loop through each variable...----------------
     result_matrix <- NULL
     for (var in IV_list) { # var <- IV_list[1]
         # construct a formula for each variable and run model...
-        this_formula <- as.formula(paste0(DV_name," ~ `", var,"`")) # NB: include [`] to deal with variables declared as "factor(var)" etc.
+        this_formula <- as.formula(paste0("`",DV_name,"` ~ `", var,"`")) # NB: include [`] to deal with variables declared as "factor(var)" etc.
 
         this_mod <- glm(this_formula, data = mod$model, family = model_family)
 
@@ -91,12 +108,18 @@ runUnivariate.glm <- function(mod, returnIntercept = FALSE) {
         this_intercept <- coeff_table[1,"Estimate"]
         for (i in 2:nrow(coeff_table)) {
             if (returnIntercept == TRUE) {
-                this_subresult <- c(rownames(coeff_table)[i], this_intercept, coeff_table[i,"Estimate"],coeff_table[i,"Pr(>|z|)"])
+                this_subresult <- c(rownames(coeff_table)[i], this_intercept, coeff_table[i,])
+                # if this is a factor/categorical variable and the intercept is shown...
+                # ...warn that it is repeated
+                if (nrow(coeff_table) > 2) {
+                    show_intercept_warning <- TRUE
+                }
+
             } else {
-                this_subresult <- c(rownames(coeff_table)[i], coeff_table[i,"Estimate"], coeff_table[i,"Pr(>|z|)"])
+                this_subresult <- c(rownames(coeff_table)[i], coeff_table[i,])
             }
             this_result <- rbind(this_result,this_subresult)
-            this_intercept <- NA
+
         }
 
 
@@ -104,13 +127,18 @@ runUnivariate.glm <- function(mod, returnIntercept = FALSE) {
         result_matrix <- rbind(result_matrix, this_result)
     }
 
+    if (show_intercept_warning == T) {
+        print("NB: Intercept for factor/categorical variables is repeated")
+    }
+
     #---- format output -------------------
     rownames(result_matrix) <- 1:nrow(result_matrix)
     result_matrix <- as.data.frame(result_matrix,stringsAsFactors = FALSE)
-    names(result_matrix) <- c("IV",intercept_terms,"beta","p-value")
+    names(result_matrix) <- c("IV", intercept_terms, "Beta", "Std. Error","z value","Pr(>|z|)")
 
     result_matrix[,-1] <- data.matrix(result_matrix[,-1])
 
+    # ...remove the ` symbol that was added earlier
     result_matrix[,1] <- gsub("`","",result_matrix[,1])
 
     return(result_matrix)
@@ -120,8 +148,8 @@ runUnivariate.polr <- function(mod, returnIntercept = FALSE) { # mod = ol1
     # run univariate regression for each input variable...
 
     # get all IV's in original call...
-    IV_list <- attr(mod$terms , "term.labels")
-    DV_name <- (mod$terms[[2]])
+    IV_list <- names(mod$model)[-1]
+    DV_name <- names(mod$model)[1]
     DV_levels <- levels(mod$model[,which(colnames(mod$model) == DV_name)])
     n_levels <- length(DV_levels)
 
@@ -132,12 +160,14 @@ runUnivariate.polr <- function(mod, returnIntercept = FALSE) { # mod = ol1
         intercept_terms <- NULL
     }
 
+    show_intercept_warning <- FALSE
+
     #---- loop through each variable...----------------
     result_matrix <- NULL
     for (var in IV_list) { # var <- IV_list[1]
 
         # construct a formula for each variable and run model...
-        this_formula <- as.formula(paste0(DV_name," ~ `", var,"`")) # NB: include [`] to deal with variables declared as "factor(var)" etc.
+        this_formula <- as.formula(paste0("`",DV_name,"` ~ `", var,"`")) # NB: include [`] to deal with variables declared as "factor(var)" etc.
 
         this_mod <- polr(this_formula, data = mod$model,Hess = T)
 
@@ -160,25 +190,46 @@ runUnivariate.polr <- function(mod, returnIntercept = FALSE) { # mod = ol1
 
         for (i in 1:n_iv_levels) {
             if (returnIntercept == TRUE) {
-                this_subresult <- c(rownames(coeff_table)[i], this_intercept,coeff_table[i,"Value"],coeff_table[i,"p value"])
+                this_subresult <- c(rownames(coeff_table)[i], this_intercept,coeff_table[i,])
+                # if this is a factor/categorical variable and the intercept is shown...
+                # ...warn that it is repeated
+                if (nrow(coeff_table) > 2) {
+                    show_intercept_warning <- TRUE
+                }
             } else {
-                this_subresult <- c(rownames(coeff_table)[i], coeff_table[i,"Value"],coeff_table[i,"p value"])
+                this_subresult <- c(rownames(coeff_table)[i], coeff_table[i,])
             }
             this_result <- rbind(this_result,this_subresult)
-            this_intercept <- rep(NA,(n_levels - 1))
+
         }
 
 
 
         result_matrix <- rbind(result_matrix, this_result)
     }
+
+    if (show_intercept_warning == T) {
+        print("NB: Intercept for factor/categorical variables is repeated")
+    }
+
     rownames(result_matrix) <- 1:nrow(result_matrix)
     result_matrix <- as.data.frame(result_matrix,stringsAsFactors = FALSE)
-    names(result_matrix) <- c("IV",intercept_terms,"beta","p-value")
+    names(result_matrix) <- c("IV", intercept_terms, "Beta", "Std. Error","t value","p value")
 
     result_matrix[,-1] <- data.matrix(result_matrix[,-1])
 
+    # ...remove the ` symbol that was added earlier
     result_matrix[,1] <- gsub("`","",result_matrix[,1])
 
     return(result_matrix)
 }
+
+
+
+
+getUnivariate <- function(mod,returnIntercept = FALSE, ...) {
+    result_matrix <- runUnivariate(mod, returnIntercept, ...)
+    write.table(result_matrix, "clipboard-128", sep = "\t", row.names = F)
+}
+
+

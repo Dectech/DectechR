@@ -1,29 +1,25 @@
-\name{runUnivariate}
-\alias{runUnivariate}
-\alias{runUnivariate.lm}
-\alias{runUnivariate.glm}
-\alias{runUnivariate.polr}
+\name{getUnivariate}
 \title{
-  %%  ~~function to do ... ~~
-  Run "univarite" regressions for each variable in a model
+    %%  ~~function to do ... ~~
+        Run "univarite" regressions for each variable in a model, and copy to clipboard
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
-  Based on the input model, a series of models are run that predict the dependant variable using each of the independant variables, one at a time.
+    %%  ~~ A concise (1-5 lines) description of what the function does. ~~
+        Based on the input model, a series of models are run that predict the dependant variable using each of the independant variables, one at a time.
 }
 \usage{
-runUnivariate(mod, returnIntercept = TRUE)
+    getUnivariate(mod, returnIntercept = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{mod}{
-%%     ~~Describe \code{dframe} here~~
-  A model object. Support types include lm, glm, polr.
-}
-  \item{returnIntercept}{
-%%     ~~Describe \code{myfile} here~~
-  (optional) if set to \code{TRUE} will also include a column for the intercept value (or for an ordinal logit regression, it will return columns for each boundary)
-}
+    \item{mod}{
+        %%     ~~Describe \code{dframe} here~~
+            A model object. Support types include lm, glm, polr.
+    }
+    \item{returnIntercept}{
+        %%     ~~Describe \code{myfile} here~~
+            (optional) if set to \code{TRUE} will also include a column for the intercept value (or for an ordinal logit regression, it will return columns for each boundary)
+    }
 
 }
 \details{
@@ -37,20 +33,20 @@ runUnivariate(mod, returnIntercept = TRUE)
 
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-    See also \code{\link{getUnivariate}} which directly copies the result to the clipboard
+    See also \code{\link{runUnivariate}} which returns the result as a dataframe rather than copying to clipboard
 }
+
 
 \examples{
 
-# Running a linear regression using the built in mtcars data set...
-m1 = lm(mpg ~ gear + factor(carb) + hp, mtcars)
-# to run unvariate results for each IV:
-u1 = runUnivariate(m1)
+    # Running a linear regression using the built in mtcars data set...
+    m1 = lm(mpg ~ gear + factor(carb) + hp, mtcars)
+    # to run unvariate results for each IV and copy result to clipboard:
+    getUnivariate(m1)
 
-# to also return the intercept for each univariate model, run:
-u1 = runUnivariate(m1, returnIntercept = T)
+    # to also return the intercept for each univariate model, run:
+    getUnivariate(m1, returnIntercept = T)
 
 
 
