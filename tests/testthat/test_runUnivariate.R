@@ -218,18 +218,27 @@ test_that("getUnivariate() on a linear regression", {
     getUnivariate(m1)
     ccContents = readClipboard()
 
-    expect_identical(ccContents[1], "\"IV\"\t\"Beta\"\t\"Std. Error\"\t\"t value\"\t\"Pr(>|t|)\"")
-    expect_identical(ccContents[2], "\"gear\"\t3.92333333333333\t1.30813069909926\t2.99919062830252\t0.00540094822470767")
-    expect_identical(ccContents[3], "\"carb\"\t-2.05571870170016\t0.568545639590126\t-3.61574965763902\t0.00108444622049167")
-    expect_identical(ccContents[4],"\"hp\"\t-0.0682282780715636\t0.0101193038104228\t-6.74238854270679\t1.78783525412108e-07")
+    expect_identical(ccContents[2], "\"Dep. Var.\"\t\"mpg\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[3],  "\"Model\"\t\"Linear (lm)\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[4], "\"N\"\t\"32\"\t\"\"\t\"\"\t\"\"")
+
+    expect_identical(ccContents[5+1],  "\"\"\t\"Beta\"\t\"Std. Error\"\t\"t value\"\t\"Pr(>|t|)\"")
+    expect_identical(ccContents[5+2], "\"gear\"\t\" 3.92333333\"\t\"1.3081307\"\t\" 2.999191\"\t\"5.400948e-03\"")
+    expect_identical(ccContents[5+3],  "\"carb\"\t\"-2.05571870\"\t\"0.5685456\"\t\"-3.615750\"\t\"1.084446e-03\"")
+    expect_identical(ccContents[5+4],"\"hp\"\t\"-0.06822828\"\t\"0.0101193\"\t\"-6.742389\"\t\"1.787835e-07\"")
 
     getUnivariate(m1,returnIntercept = T)
     ccContents = readClipboard()
 
-    expect_identical(ccContents[1], "\"IV\"\t\"(Intercept)\"\t\"Beta\"\t\"Std. Error\"\t\"t value\"\t\"Pr(>|t|)\"")
-    expect_identical(ccContents[2], "\"gear\"\t5.62333333333333\t3.92333333333333\t1.30813069909926\t2.99919062830252\t0.00540094822470767")
-    expect_identical(ccContents[3], "\"carb\"\t25.8723338485317\t-2.05571870170016\t0.568545639590126\t-3.61574965763902\t0.00108444622049167")
-    expect_identical(ccContents[4], "\"hp\"\t30.0988605396225\t-0.0682282780715636\t0.0101193038104228\t-6.74238854270679\t1.78783525412108e-07")
+    expect_identical(ccContents[2], "\"Dep. Var.\"\t\"mpg\"\t\"\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[3],  "\"Model\"\t\"Linear (lm)\"\t\"\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[4], "\"N\"\t\"32\"\t\"\"\t\"\"\t\"\"\t\"\"")
+
+
+    expect_identical(ccContents[5+1], "\"\"\t\"(Intercept)\"\t\"Beta\"\t\"Std. Error\"\t\"t value\"\t\"Pr(>|t|)\"")
+    expect_identical(ccContents[5+2], "\"gear\"\t\" 5.623333\"\t\" 3.92333333\"\t\"1.3081307\"\t\" 2.999191\"\t\"5.400948e-03\"")
+    expect_identical(ccContents[5+3], "\"carb\"\t\"25.872334\"\t\"-2.05571870\"\t\"0.5685456\"\t\"-3.615750\"\t\"1.084446e-03\"")
+    expect_identical(ccContents[5+4], "\"hp\"\t\"30.098861\"\t\"-0.06822828\"\t\"0.0101193\"\t\"-6.742389\"\t\"1.787835e-07\"")
 
 
 

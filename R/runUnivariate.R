@@ -8,6 +8,8 @@ runUnivariate.lm <- function(mod, returnIntercept = FALSE) { #mod = m1
     # get all IV's in original call...
     IV_list <- names(mod$model)[-1]
     DV_name <- names(mod$model)[1]
+    original_N = nrow(mod$model)
+    #different_N_list = c()
 
     if (returnIntercept == TRUE) {
         intercept_terms <- "(Intercept)"
@@ -19,11 +21,17 @@ runUnivariate.lm <- function(mod, returnIntercept = FALSE) { #mod = m1
 
     #---- loop through each variable...----------------
     result_matrix <- NULL
-    for (var in IV_list) { # var <- IV_list[1]
+    for (var in IV_list) { # var <- IV_list[2]
         # construct a formula for each variable and run model...
         this_formula <- as.formula(paste0("`",DV_name,"` ~ `", var,"`")) # NB: include [`] to deal with variables declared as "factor(var)" etc.
 
         this_mod <- lm(this_formula, data = mod$model)
+
+        # check if N differs from original...
+        #this_N = nrow(this_mod$model)
+        #if (this_N != original_N) {
+        #    different_N_list = c(different_N_list, DV_name)
+        #}
 
         # extract the relevant information (beta, p-value)...
         coeff_table <- summary(this_mod)$coefficients
@@ -59,6 +67,10 @@ runUnivariate.lm <- function(mod, returnIntercept = FALSE) { #mod = m1
     if (show_intercept_warning == T) {
         print("NB: Intercept for factor/categorical variables are repeated")
     }
+
+    #if (length(different_N_list) > 0 ) {
+    #    warning(paste0(length(different_N_list), " univariate model(s) have differnt N: ", paste0(different_N_list, collapse = ", ")))
+    #}
 
     #---- format output -------------------
     rownames(result_matrix) <- 1:nrow(result_matrix)
@@ -228,8 +240,38 @@ runUnivariate.polr <- function(mod, returnIntercept = FALSE) { # mod = ol1
 
 
 getUnivariate <- function(mod,returnIntercept = FALSE, ...) {
-    result_matrix <- runUnivariate(mod, returnIntercept, ...)
-    write.table(result_matrix, "clipboard-128", sep = "\t", row.names = F)
+    output_table <- runUnivariate(mod, returnIntercept, ...)
+
+    DV_name <- names(mod$model)[1]
+
+    if (class(mod)[1] == "lm") {
+        model_family = "Linear (lm)"
+    } else if (class(mod)[1] == "glm") {
+        mod_family = as.character(mod$call["family"])
+        model_family = paste0(mod_family, " (glm)")
+    } else if (class(mod)[1] == "polr") {
+        model_family = "Ordinal Logit (polr)"
+    } else {
+        model_family = class(mod)[1]
+        warning("Model type not yet supported")
+    }
+    num_rows <- nrow(mod$model)
+
+    header_info = c("UNIVARIATE","Dep. Var.","Model", "N")
+    header_table <- (array("", dim = c(length(header_info)+1, ncol(output_table))))
+
+    header_table[1:4,1] = header_info
+    header_table[1:4,2] = c("",DV_name, model_family, num_rows)
+
+    colnames(header_table) = colnames(output_table)
+    output_col_names <- colnames(output_table)
+    output_col_names[1] = ""
+    output_table <- apply(output_table, 2, as.character)
+
+    final_table <- rbind(header_table,output_col_names, output_table)
+
+    write.table(final_table, "clipboard-128", sep = "\t", col.names = FALSE, row.names = F)
+
 }
 
 

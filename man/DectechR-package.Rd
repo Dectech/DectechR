@@ -15,7 +15,7 @@ The main functions are:
     \item \code{\link{dectechXmlToDataframe}} (convert Questback output to a dataframe)
     \item \code{\link{unpackUserVariable}} (Split a custom variable (e.g. "1*3*5*7") into multiple columns)
     \item \code{\link{addMobile}} (to identify mobile users)
-    \item \code{\link{runUnivariate}} (run a series of univariate models)
+    \item \code{\link{getUnivariate}} (run a series of univariates on a model)
 }
 
 }
