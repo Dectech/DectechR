@@ -1,48 +1,42 @@
-\name{addRespondentPlatformVars}
-\alias{addRespondentPlatformVars}
+\name{addMobile}
 \alias{addMobile}
 \title{
     %%  ~~function to do ... ~~
-        Add is_mobile variable
+        Add is_mobile variable to a data.frame. Returns the same data.frame with the added variable.
 }
 \description{
     %%  ~~ A concise (1-5 lines) description of what the function does. ~~
-        Create an "is_mobile" flag, as well as variables containing the operating system and browser a respondent is using. Returns original dataframe with an additional 3 variables (\code{operating_system, is_mobile, web_browser}). NB: These variables are not 100\% accurate
+        Takes in a data.frame and creates an "is_mobile" flag. The dataframe must contain a user agent string (this is outputted by default by EFS/Questback, and is usually called "browser"). NB: The is_mobile variable is an approximate guess, it is not 100\% accurate.
 }
 \usage{
-    df = addRespondentPlatformVars(df, detailed = TRUE, varname = NULL)
-    df = addMobile(df, detailed = TRUE, varname = NULL)
+    df = addMobile(df, varname = NULL)
 
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
     \item{df}{
         %%     ~~Describe \code{dframe} here~~
-            A dataframe from Questback. By default Questback output should contain a 'browser' variable. If not use \code{varname} to point towards the 'user agent string'.
+            A dataframe from Questback. By default Questback output should contain a 'browser' variable. If not use \code{varname} to identify the variable containing the 'user agent string'.
     }
-    \item{detailed}{
-        (optional) By default the \code{operating_system} variable returned will split windows OS into the seperate versions (e.g. XP, Vista, 7, 10). If \code{detailed = FALSE} then all windows OS will be combined.
-    }
+
     \item{varname}{
         (optional) By default the dataframe should contain a 'browser' variable corresponding to the respondents user agent string. If not, then use this parameter to declare the variable containing the user agent string.
     }
 }
 \details{
     Use this function to determine if the respondent was using mobile or not. This may be an important predictor in your analysis as the questions can appear differently across devices.\cr\cr
-    The function \code{addMobile} is identical to \code{addRespondentPlatformVars}, and is included as it may be an easier name to remember.\cr\cr
+
     All Questback surveys should store a respondents user agent string. It is usually stored in the "browser" variable. The user agent string is a peice of text that each browser gives to the websites it visits. It contains some information about their operating system and their browser version. \cr\cr
     The following is an example user agent string:\cr
     \code{Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.92 Safari/537.36}\cr
     It tells you that this respodent was using Windows 10 ("Windows NT 10.0") and Chrome v69.\cr\cr
-
-
 
 }
 
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 \section{Warning }{
-    User agent strings can easily manipulated (e.g. you can ask your browser to 'pretend' to be a different browser) and the format may change over time (as browsers and operating systems are updated), so the variables produced by this code shouldn't be considered 100\% accurate.
+    User agent strings can easily manipulated and you can ask your browser to 'pretend' to be a different browser (e.g. mobile browsers often give the option to display a site as it would appear as a desktop, for this they send a desktop-like user agent). Also the formats may change over time (as browsers and operating systems are updated), so the variables produced by this code shouldn't be considered 100\% accurate.
 }
 
 \examples{
@@ -55,24 +49,9 @@ df_test = data.frame("lfdn" = c(1,2,3,4), "browser" = c(
     "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36"))
 
 # to add the new variables, just run:
-df_test <- addRespondentPlatformVars(df_test)
-
-# OR, the following is identical to the above...
 df_test <- addMobile(df_test)
 
 
-
-
-# Consider the operating_system variable created from the above code...
-df_test$operating_system
-# [1] "Windows 10" "iPad"       "Android"    "Windows 7"
-
-# ...if you want to merge the Windows versions:
-df_test <- addRespondentPlatformVars(df_test, detailed = FALSE)
-
-# ...the operating_system variable now looks like:
-df_test$operating_system
-# [1] "Windows" "iPad"       "Android"    "Windows"
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

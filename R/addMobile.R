@@ -87,7 +87,28 @@ getRespondentBrowser <- function(df = NULL, useragent = NULL){
 }
 
 
-addRespondentPlatformVars <- function(df_in, detailed = TRUE, varname = NULL) {
+# addRespondentPlatformVars <- function(df_in, detailed = TRUE, varname = NULL) {
+#     if (!("data.frame" %in% class(df_in))) {
+#         stop("Please enter a data frame")
+#     }
+#
+#     if (is.null(varname)) {
+#         useragent = getUserAgentString(df = df_in)
+#     } else {
+#         useragent = df_in[,varname]
+#     }
+#     df_in$operating_system <- getRespondentOS(useragent = useragent, detailed = detailed)
+#     df_in$is_mobile <- (df_in$operating_system %in% c("Android","iPad","iPhone")) * 1
+#     df_in$web_browser <- getRespondentBrowser(useragent = useragent)
+#     cat("Added the following variables to the dataframe:\n")
+#     cat("    - operating_system\n")
+#     cat("    - is_mobile\n")
+#     cat("    - web_browser\n")
+#
+#     return(df_in)
+# }
+
+addMobile <- function(df_in, varname = NULL) {
     if (!("data.frame" %in% class(df_in))) {
         stop("Please enter a data frame")
     }
@@ -97,16 +118,11 @@ addRespondentPlatformVars <- function(df_in, detailed = TRUE, varname = NULL) {
     } else {
         useragent = df_in[,varname]
     }
-    df_in$operating_system <- getRespondentOS(useragent = useragent, detailed = detailed)
-    df_in$is_mobile <- (df_in$operating_system %in% c("Android","iPad","iPhone")) * 1
-    df_in$web_browser <- getRespondentBrowser(useragent = useragent)
-    cat("Added the following variables to the dataframe:\n")
-    cat("    - operating_system\n")
-    cat("    - is_mobile\n")
-    cat("    - web_browser\n")
+    operating_system = getRespondentOS(useragent = useragent, detailed = TRUE)
+    df_in$is_mobile <- (operating_system %in% c("Android","iPad","iPhone")) * 1
+
+    cat("Added the variable 'is_mobile' to the dataframe")
 
     return(df_in)
 }
-
-addMobile <- addRespondentPlatformVars
 
