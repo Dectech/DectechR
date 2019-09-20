@@ -205,7 +205,7 @@ runUnivariate.polr <- function(mod, returnIntercept = FALSE) { # mod = ol1
                 this_subresult <- c(rownames(coeff_table)[i], this_intercept,coeff_table[i,])
                 # if this is a factor/categorical variable and the intercept is shown...
                 # ...warn that it is repeated
-                if (nrow(coeff_table) > 2) {
+                if (n_iv_levels > 1) {
                     show_intercept_warning <- TRUE
                 }
             } else {
@@ -240,8 +240,10 @@ runUnivariate.polr <- function(mod, returnIntercept = FALSE) { # mod = ol1
 
 
 getUnivariate <- function(mod,returnIntercept = FALSE, ...) {
+    #--- First run the univariates...
     output_table <- runUnivariate(mod, returnIntercept, ...)
 
+    #--- next get some model details for the "header" table...
     DV_name <- names(mod$model)[1]
 
     if (class(mod)[1] == "lm") {
@@ -263,6 +265,7 @@ getUnivariate <- function(mod,returnIntercept = FALSE, ...) {
     header_table[1:4,1] = header_info
     header_table[1:4,2] = c("",DV_name, model_family, num_rows)
 
+    #--- combine the header and output tables...
     colnames(header_table) = colnames(output_table)
     output_col_names <- colnames(output_table)
     output_col_names[1] = ""
