@@ -1,3 +1,4 @@
+
 dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels = TRUE, dropTimeStamps = TRUE, verbose = TRUE) {
     #####################################################################################
     #  Function to convert an XML file exported from Questback into an R data frame
@@ -25,26 +26,26 @@ dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels
 
     # ----- (1) print some output for user echoing input params -----------------------------
     if (verbose == TRUE) {
-        print("------- Questback XML to dataframe ----------------")
-        print("-   With the following options:                    -")
+        cat("------- Questback XML to dataframe -----------------\n")
+        cat("-   With the following options:                    -\n")
         if (removeIncompletes) {
-            print("-       Remove incompetes: Yes                     -")
+            cat("-       Remove incompetes: Yes                     -\n")
         } else {
-            print("-       Remove incompetes: No                      -")
+            cat("-       Remove incompetes: No                      -\n")
         }
 
         if (saveLabels) {
-            print("-       Save labels as an attribute: Yes           -")
+            cat("-       Save labels as an attribute: Yes           -\n")
         } else {
-            print("-       Save labels as an attribute: No            -")
+            cat("-       Save labels as an attribute: No            -\n")
         }
 
         if (dropTimeStamps) {
-            print("-       Drop GP time stamp variables: Yes          -")
+            cat("-       Drop GP time stamp variables: Yes          -\n")
         } else {
-            print("-       Drop GP time stamp variables: No           -")
+            cat("-       Drop GP time stamp variables: No           -\n")
         }
-        print("----------------------------------------------------")
+        cat("----------------------------------------------------\n")
     }
 
 
@@ -56,7 +57,7 @@ dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels
                               options = (XML::HUGE) | (XML::RECOVER), encoding = "UTF-8")
 
     if (verbose == TRUE) {
-        print("---> Extracting variable labels...")
+        cat("---> Extracting variable labels...\n")
     }
     raw_var_list <- XML::getNodeSet(xml_data, "//variable[@name]")
     var_names <- sapply(raw_var_list, function(x) XML::xmlGetAttr(x, "name"))
@@ -87,7 +88,7 @@ dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels
 
     if (removeIncompletes == TRUE) {
         if (verbose == TRUE) {
-            print("---> Dropping incompletes...")
+            cat("---> Dropping incompletes...\n")
         }
         # questback completes are numbered 31 and 32
         main_xml_data_cube <- XML::getNodeSet(xml_data, "//row/dispcode[text()=31 or text()=32]/parent::*")
@@ -96,13 +97,13 @@ dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels
     }
 
     if (verbose == TRUE) {
-        print("---> Getting raw data (this bit can take a few mins!)")
+        cat("---> Getting raw data (this bit can take a few mins!)\n")
     }
 
     main_data <- XML::xmlToDataFrame(main_xml_data_cube, homogeneous = T, nodes = var_names, collectNames = F)
 
     if (verbose == TRUE) {
-        print("  -->time so far (minutes):")
+        cat("  -->time so far (minutes):\n")
         print((proc.time() - start_time)/ 60)
     }
 
@@ -111,7 +112,7 @@ dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels
     # -----   (b) if not, convert to the appropriate type...
 
     if (verbose == TRUE) {
-        print("---> Matching labels to values...")
+        cat("---> Matching labels to values...\n")
     }
 
     for (v in var_names) {
@@ -148,26 +149,26 @@ dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels
     }
 
     if (verbose == TRUE) {
-        print("  -->time so far (minutes):")
+        cat("  -->time so far (minutes):\n")
         print((proc.time() - start_time)/ 60)
     }
 
     if (dropTimeStamps == TRUE) {
         if (verbose == TRUE) {
-            print("---> Removing timestamps...")
+            cat("---> Removing timestamps...\n")
         }
         main_data <- main_data[, (var_type != "relative timestamp")]
         var_labels <- var_labels[(var_type != "relative timestamp")]
     }
 
     if (verbose == TRUE) {
-        print("---> Finished...")
+        cat("---> Finished...\n")
     }
 
     if (saveLabels == TRUE) {
         attr(main_data, "labels") <- var_labels
         if (verbose == TRUE) {
-            print("   ...to get full labels type something like: attr(df, 'labels')")
+            cat("   ...to get full labels type something like: attr(df, 'labels')\n")
         }
     }
 

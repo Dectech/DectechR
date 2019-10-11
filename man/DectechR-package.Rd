@@ -10,11 +10,12 @@ Collection of functions useful for Dectech analysts, such as extracting survey d
 The main functions are:
 \itemize{
     \item \code{\link{getOutput}} (extract regression output)
-    \item \code{\link{getScreePlot}}
-    \item \code{\link{getFactorLoadingsTable}}
+    \item \code{\link{getScreePlot}} and \code{\link{getFactorLoadingsTable}} (for factor analysis)
     \item \code{\link{cc}} (copy to clipboard)
     \item \code{\link{dectechXmlToDataframe}} (convert Questback output to a dataframe)
     \item \code{\link{unpackUserVariable}} (Split a custom variable (e.g. "1*3*5*7") into multiple columns)
+    \item \code{\link{addMobile}} (to identify mobile users)
+    \item \code{\link{getUnivariate}} (run a series of univariates on a model)
 }
 
 }
@@ -22,7 +23,7 @@ The main functions are:
 \tabular{ll}{
 Package: \tab DectechR\cr
 Type: \tab Package\cr
-Version: \tab 0.1\cr
+Version: \tab 0.3\cr
 Date: \tab 2016-02-09\cr
 License: \tab GPL-2\cr
 }

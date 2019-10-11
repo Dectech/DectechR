@@ -22,6 +22,8 @@ The main functions are:
 * cc (copy to clipboard)
 * dectechXmlToDataframe (convert Questback output to a dataframe)
 * unpackUserVariable (Split a custom variable (e.g. "1\*3\*5\*7") into multiple columns)
+* addMobile (to identify mobile users)
+* getUnivariate (run a series of univariates on a model)
 
 ### Style guide
 

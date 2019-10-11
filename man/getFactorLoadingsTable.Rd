@@ -18,7 +18,7 @@ getFactorLoadingsTable(FAResult, toClipboard = TRUE)
 %%     ~~Describe \code{dframe} here~~
   An object of class "factanal" i.e. the output from running the \code{\link{factanal}} function.
 }
-\item{FAResult}{
+\item{toClipboard}{
     Indicates if the table of variance should be written to the cliboard (default) or printed to the console.
 }
 }
