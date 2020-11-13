@@ -77,7 +77,7 @@ runUnivariate.lm <- function(mod, returnIntercept = FALSE) { #mod = m1
     result_matrix <- as.data.frame(result_matrix, stringsAsFactors = FALSE)
     names(result_matrix) <- c("IV", intercept_terms, "Beta", "Std. Error","t value","Pr(>|t|)")
 
-    result_matrix[,-1] <- data.matrix(result_matrix[,-1])
+    result_matrix[,-1] <- apply(result_matrix[,-1], 2,as.numeric)
     # ...remove the ` symbol that was added earlier
     result_matrix[,1] <- gsub("`", "", result_matrix[,1])
 
@@ -148,7 +148,7 @@ runUnivariate.glm <- function(mod, returnIntercept = FALSE) {
     result_matrix <- as.data.frame(result_matrix,stringsAsFactors = FALSE)
     names(result_matrix) <- c("IV", intercept_terms, "Beta", "Std. Error","z value","Pr(>|z|)")
 
-    result_matrix[,-1] <- data.matrix(result_matrix[,-1])
+    result_matrix[,-1] <- apply(result_matrix[,-1], 2,as.numeric)
 
     # ...remove the ` symbol that was added earlier
     result_matrix[,1] <- gsub("`","",result_matrix[,1])
@@ -228,7 +228,7 @@ runUnivariate.polr <- function(mod, returnIntercept = FALSE) { # mod = ol1
     result_matrix <- as.data.frame(result_matrix,stringsAsFactors = FALSE)
     names(result_matrix) <- c("IV", intercept_terms, "Beta", "Std. Error","t value","p value")
 
-    result_matrix[,-1] <- data.matrix(result_matrix[,-1])
+    result_matrix[,-1] <- apply(result_matrix[,-1], 2,as.numeric)
 
     # ...remove the ` symbol that was added earlier
     result_matrix[,1] <- gsub("`","",result_matrix[,1])
