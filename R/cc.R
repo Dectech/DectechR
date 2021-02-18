@@ -4,13 +4,26 @@ cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutTo
     ###  ...making allowance for nested tables       ###
     ####################################################
 
+    #--- get input variable name, in case we want to use later...
+    raw_input_data_name <-deparse(substitute(data))
+
+    #-- check if this is just a single object...
+    is_single_item <- (is.null(dim(data))) & (length(data) == 1)
+
     #--(1) If file name given, write to file, otherwise write to clipboard...
     if (!is.na(destination)) {
 
         # if file name given then write to file...
         write.table(data, destination, sep = "\t", row.names = FALSE)
 
+    } else if (is_single_item == TRUE) {
+        # if this is just a single number or a string, then send it straight to clipboard...
+        writeClipboard(as.character(data))
+
     } else {
+
+
+
         #---(2) will use the "writeClipboard" function, however...
         # ...this function only takes strings, so need to format data
 
@@ -40,8 +53,62 @@ cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutTo
 
         #---(4) convert all objects to dataframes if not already
         if (class(data)[1] != "data.frame") {
+            original_class = class(data)[1]
             data <- as.data.frame(data)
+
+            #as.data.frame(table(mtcars$vs))
+            #class(table(mtcars$vs))
+            # i
+
+            #--- if there is only one column of data...
+            #class(mtcars$mpg)
+            #class(as.Date(mtcars$carb))
+
+            if (ncol(data) == 1) {
+                #--- if the original wasn't a table or data frame, attempt to get the original name of it...
+                if (original_class %in% c("numeric", "character","integer","factor")) {
+
+                    # if this uses the default col name, then try and replace with a better one...
+                    if (names(data) == "data") {
+                        #print(raw_input_data_name)
+                        this_name = raw_input_data_name
+
+                        # if its in a simple recognisable format... then replace....
+
+                        #--- FORMAT A:   abc$var
+                        # example: raw_input_data_name = "abc_ABC.12$as1231"
+                        if (grepl("^[a-zA-Z0-9_.]*\\$[a-zA-Z0-9_.]*$",raw_input_data_name)) {
+                            this_name = gsub("^([a-zA-Z0-9_.]*)\\$([a-zA-Z0-9_.]*)$","\\2",raw_input_data_name)
+                        }
+
+                        #--- FORMAT B:   abc[,"var"] or abc[,'var']
+                        # example: raw_input_data_name = "abc_ABC.12[,\"as1231\"]"
+                        #raw_input_data_name = "iris[, \"Species\"]"
+                        # grepl("^[a-zA-Z0-9_.]*\\[, ?.\"",raw_input_data_name)
+
+                        # grepl("^[a-zA-Z0-9_.]*\\[, ?.\"",raw_input_data_name)
+                        # #      ....raw_input_data_name = "abc_ABC.12[,'as1231']"
+                        if (grepl("^[a-zA-Z0-9_.]*\\[, ?.[\"\'][a-zA-Z0-9_.]*[\"\']\\]$",raw_input_data_name)) {
+                            this_name = gsub("^([a-zA-Z0-9_.]*)\\[, ?.[\"\']([a-zA-Z0-9_.]*)[\"\']\\]$","\\2",raw_input_data_name)
+                        }
+
+
+
+                        names(data) = this_name
+                    }
+
+
+                } else {
+                    print(paste0("DEBUGING NOTE: input class is ", original_class))
+                }
+            }
+
+
+
         }
+
+
+
 
         #---(5) for multi dimensional nested tables...
         #  ...want to reshape into usable format
@@ -63,7 +130,7 @@ cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutTo
 
             # now reshape so "horizontal_variable_name" is switched to wide format...
             data <- reshape(data, v.names = value_names, timevar = horizontal_variable_name,
-                         idvar = vertical_variable_names, direction = "wide")
+                            idvar = vertical_variable_names, direction = "wide")
 
             if (nestedOrderOutToIn == TRUE) {
                 for (v in vertical_variable_names[length(vertical_variable_names):1]) {
