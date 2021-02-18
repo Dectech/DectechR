@@ -139,7 +139,14 @@ getOutputTable.mlogit <- function(mod, ...) {
     dof <- length(mod$coefficients)
     aic <- (-2 * mod$logLik) + 2 * dof
     bic <- (-2 * mod$logLik) + log(dim(mod$model)[1]) * dof
-    r_squared <- summary(mod)$mfR2[1] #
+    intercept_check = grep("(Intercept)",names(mod$coefficients),fixed = T)
+    if (length(intercept_check) == 0) {
+        # if no intercept then McFadden R^2 isn't calculated (as this measure is realative to intercept only model)
+        r_squared = NA
+    } else {
+        # ...otherwise get McFadden R^2
+        r_squared <- summary(mod)$mfR2[1]
+    }
 
 
     performance_table <- as.data.frame(c("Model", "N", "D.o.F.", "Log-likelihood", "AIC", "BIC", "McFadden R^2"))
@@ -281,12 +288,13 @@ getOutput <- function(mod, performanceTableAtTop = TRUE, ...) {
         # ...especially if it has factors, so convert to character matrix
         # ...but need to save row names as these get dropped by apply (!?)
         output_row_names <- row.names(output_table)
+        output_col_names <- colnames(output_table)
         output_table <- apply(output_table, 2, as.character)
 
 
         # merge tables together...
-        final_table <- rbind(formatted_perf_table, colnames(output_table), output_table)
-        row.names(final_table)[(1:nrow(output_table)) + nrow(formatted_perf_table) + 1] <- output_row_names
+        final_table <- rbind(formatted_perf_table, output_col_names, output_table)
+        row.names(final_table)[(1:length(output_row_names)) + nrow(formatted_perf_table) + 1] <- output_row_names
 
         write.table(final_table, "clipboard-128", sep = "\t", col.names = FALSE)
     } else {
