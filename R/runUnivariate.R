@@ -21,7 +21,7 @@ runUnivariate.lm <- function(mod, returnIntercept = FALSE) { #mod = m1
 
     #---- loop through each variable...----------------
     result_matrix <- NULL
-    for (var in IV_list) { # var <- IV_list[2]
+    for (var in IV_list) { # var <- IV_list[1]
         # construct a formula for each variable and run model...
         this_formula <- as.formula(paste0("`",DV_name,"` ~ `", var,"`")) # NB: include [`] to deal with variables declared as "factor(var)" etc.
 
@@ -77,8 +77,9 @@ runUnivariate.lm <- function(mod, returnIntercept = FALSE) { #mod = m1
     result_matrix <- as.data.frame(result_matrix, stringsAsFactors = FALSE)
     names(result_matrix) <- c("IV", intercept_terms, "Beta", "Std. Error","t value","Pr(>|t|)")
 
+
     result_matrix[,-1] <- apply(result_matrix[,-1], 2,as.numeric)
-    # ...remove the ` symbol that was added earlier
+
     result_matrix[,1] <- gsub("`", "", result_matrix[,1])
 
     return(result_matrix)
@@ -147,6 +148,7 @@ runUnivariate.glm <- function(mod, returnIntercept = FALSE) {
     rownames(result_matrix) <- 1:nrow(result_matrix)
     result_matrix <- as.data.frame(result_matrix,stringsAsFactors = FALSE)
     names(result_matrix) <- c("IV", intercept_terms, "Beta", "Std. Error","z value","Pr(>|z|)")
+
 
     result_matrix[,-1] <- apply(result_matrix[,-1], 2,as.numeric)
 
@@ -227,6 +229,7 @@ runUnivariate.polr <- function(mod, returnIntercept = FALSE) { # mod = ol1
     rownames(result_matrix) <- 1:nrow(result_matrix)
     result_matrix <- as.data.frame(result_matrix,stringsAsFactors = FALSE)
     names(result_matrix) <- c("IV", intercept_terms, "Beta", "Std. Error","t value","p value")
+
 
     result_matrix[,-1] <- apply(result_matrix[,-1], 2,as.numeric)
 

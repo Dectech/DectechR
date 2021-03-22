@@ -10,8 +10,7 @@ test_that("cc() writing something to clipboard", {
     cc(1)
     ccContents = readClipboard()
 
-    expect_identical(ccContents[1],  "data")
-    expect_identical(ccContents[2], "1")
+    expect_identical(ccContents[1],  "1")
 })
 
 test_that("cc() output as expected for 1 way table", {
@@ -108,6 +107,41 @@ test_that("cc() output as expected for 2 way data frame, force nested", {
     expect_identical(ccContents[2], "cyl\t3\t4\t5")
     expect_equal(nrow(reformedTable), 4)
     expect_equal(ncol(reformedTable), 4)
+
+})
+
+
+
+test_that("cc() output for single column of data", {
+
+    # cc_TEST(factor(mtcars$gear))
+
+
+    # $ dollar sign format
+    cc(mtcars$mpg)
+    ccContents = readClipboard()
+    expect_identical(ccContents[1], "mpg")
+    expect_identical(ccContents[2], "21")
+
+    # column name as character format
+    cc(iris[,"Species"])
+    ccContents = readClipboard()
+    expect_identical(ccContents[1], "Species")
+    expect_identical(ccContents[2], "setosa")
+
+    var_list = c("Species")
+    cc(iris[,var_list])
+    ccContents = readClipboard()
+    expect_identical(ccContents[1], "iris[, var_list]")
+    expect_identical(ccContents[2], "setosa")
+
+
+    # more complex formats
+    cc(as.integer(mtcars$gear))
+    ccContents = readClipboard()
+    expect_identical(ccContents[1], "as.integer(mtcars$gear)")
+    expect_identical(ccContents[2], "4")
+
 
 })
 

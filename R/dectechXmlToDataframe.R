@@ -125,14 +125,23 @@ dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels
             this_key <- raw_key_list[(label_list_index[vi] + 1):label_list_index[vi + 1]]
             this_label_list <- raw_label_list[(label_list_index[vi] + 1):label_list_index[vi + 1]]
 
-            #--- sometimes levels will not be in original order...
-            main_data[, v] <- factor(main_data[, v],
-                                  levels = sort(as.numeric(levels(main_data[, v]))))
+            #--- check variable class
+            # ...in older versions this might be a factor already...
+            v_data_class = class(main_data[, v])
 
-            #--- map labels onto values....
+            if (v_data_class == "factor") {
+                #--- sometimes levels will not be in original order...
+                main_data[, v] <- factor(main_data[, v],
+                                      levels = sort(as.numeric(levels(main_data[, v]))))
+            }
+
+
+            #--- deal with repeated labels by attaching the key
             if (sum(table(this_label_list) > 1) > 0) {
                 this_label_list <- paste(this_key, this_label_list)
             }
+
+            #--- map labels onto values....
             main_data[, v] <- factor(main_data[, v], levels = this_key,
                                   labels = this_label_list)
 
