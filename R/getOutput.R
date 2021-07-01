@@ -129,7 +129,7 @@ getOutputTable.glm <- function(mod, tolerance = TRUE, ...) {
     return(out_table_list)
 }
 
-getOutputTable.mlogit <- function(mod, ...) {
+getOutputTable.mlogit <- function(mod, reshape = TRUE, ...) {
     out_table <- summary(mod)$CoefTable
 
     # (2) get performance table...
@@ -148,6 +148,89 @@ getOutputTable.mlogit <- function(mod, ...) {
         r_squared <- summary(mod)$mfR2[1]
     }
 
+    if (reshape == TRUE) {
+        # reshape so that the N choices are spread over N columns, rather than on seperate rows
+
+        # separete out the choice names from the independant var names...
+        choice_tags = colnames(mod$probabilities) # drop the first choice as baseline
+
+        #choice_tags = unique(gsub("(.*):(.*)$","\\2",row.names(out_table)))
+
+        alt_specific_vars_indicies = grep(paste0(paste0(":",choice_tags,"$"),collapse = "|"),row.names(out_table),invert = T)
+        alt_specific_vars = row.names(out_table)[alt_specific_vars_indicies]
+
+        # an alternative way  to get alt specific would be to look at the formula
+
+
+        case_specific_vars = row.names(out_table)[-alt_specific_vars_indicies]
+        if (length(case_specific_vars) > 0) {
+            case_specific_choices = unique(gsub("(.*):(.*)$","\\2",case_specific_vars))
+            case_specific_vars = unique(gsub("(.*):(.*)$","\\1",case_specific_vars))
+
+            choice_tags = choice_tags[choice_tags %in% case_specific_choices]
+        } else {
+            #choice_tags = choice_tags[-1]
+        }
+
+
+
+        has_intercept = FALSE
+        if ("(Intercept)" %in% case_specific_vars) {
+            case_specific_vars = case_specific_vars[case_specific_vars != "(Intercept)"]
+            has_intercept = TRUE
+        }
+
+        # get the output order for row names, with intercept, followed by alt specific, followed by case specific...
+        var_tags = NULL
+        if (has_intercept) {
+            var_tags = "(Intercept)"
+        }
+        var_tags = c(var_tags, alt_specific_vars)
+        if (length(case_specific_vars) > 0){
+            var_tags = c(var_tags, case_specific_vars)
+        }
+
+        # ** WHAT ABOUT MODELS WITH INTERACTION TERMS!!!
+
+
+        # make a table that shows cols of betas followed by cols of p-values...
+        reshaped_betas = matrix(NA, nrow = length(var_tags),
+                                ncol = length(choice_tags))
+        reshaped_pvalues = matrix(NA, nrow = length(var_tags),
+                                  ncol = length(choice_tags))
+
+        # for each possible choice, get the appropriate var names...
+        for (c_i in 1:length(choice_tags)) { # c_i = 1
+            this_var_names =  NULL
+            if (has_intercept) {
+                this_var_names = paste0("(Intercept):",choice_tags[c_i])
+            }
+
+            this_var_names = c(this_var_names, alt_specific_vars)
+            if (length(case_specific_vars) > 0) {
+                this_var_names = c(this_var_names, paste0(case_specific_vars,":",choice_tags[c_i]))
+            }
+
+            reshaped_betas[,c_i] = out_table[match( this_var_names, row.names(out_table)),1]
+
+            reshaped_pvalues[,c_i] = out_table[match( this_var_names, row.names(out_table)),4]
+
+        }
+
+
+
+        row.names(reshaped_betas) = var_tags
+        row.names(reshaped_pvalues) = var_tags
+        colnames(reshaped_betas) = choice_tags
+        colnames(reshaped_pvalues) = paste0("p: ", choice_tags)
+
+        out_table = cbind(reshaped_betas,reshaped_pvalues)
+
+        if (length(alt_specific_vars) > 0) {
+            cat("NB: for alternative specific vars, betas are repeated across columns, but really there is just a single beta used across all choices\n")
+        }
+
+    }
 
     performance_table <- as.data.frame(c("Model", "N", "D.o.F.", "Log-likelihood", "AIC", "BIC", "McFadden R^2"))
     DVname <- names(mod$model)[1]

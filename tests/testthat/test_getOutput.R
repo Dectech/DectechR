@@ -99,20 +99,66 @@ test_that("getOutput() mlogit regression output", {
 
 
     ml.Fish <- mlogit::mlogit( mode ~ price , Fish)
-    getOutput(ml.Fish)
+    getOutput(ml.Fish, reshape = F)
     ccContents = readClipboard()
 
     expect_identical(ccContents[15],  "\"price\"\t\"-0.0252548790145471\"\t\"0.00171849029442108\"\t\"-14.6959683720849\"\t\"0\"")
 
 
     ml.Fish <- mlogit::mlogit(mode~price | income | catch, Fish)
-    getOutput(ml.Fish)
+    getOutput(ml.Fish, reshape = F)
     ccContents = readClipboard()
 
     expect_identical(ccContents[15],  "\"price\"\t\"-0.0252814455277226\"\t\"0.0017550980215734\"\t\"-14.404577531834\"\t\"0\"")
     expect_identical(ccContents[16],  "\"income:boat\"\t\"5.54279865435417e-05\"\t\"5.21299150541517e-05\"\t\"1.06326638909663\"\t\"0.287661162900088\"")
 
     expect_identical(ccContents[22],  "\"catch:pier\"\t\"2.85121542912833\"\t\"0.77463607845712\"\t\"3.68071602707588\"\t\"0.000232579916174647\"")
+
+
+
+
+})
+
+test_that("getOutput() mlogit regression output, reshaped", {
+
+    data("Fishing", package = "mlogit")
+    Fish <- mlogit::mlogit.data(Fishing, shape="wide", varying=2:9, choice="mode")
+
+    # ml.Fish <- mlogit::mlogit( mode ~ 1, Fish)
+    # summary(ml.Fish)
+    # getOutput(ml.Fish)
+    # ccContents = readClipboard()
+    #
+    # expect_identical(ccContents[1],  "\"Dep. Var.\"\t\"mode\"\t\"\"\t\"\"\t\"\"")
+    # expect_identical(ccContents[14],  "\"pier:(intercept)\"\t\"0.283943750065351\"\t\"0.114370730930667\"\t\"2.48266097239057\"\t\"0.0130405133530227\"")
+
+
+
+    ml.Fish <- mlogit::mlogit( mode ~ price , Fish)
+    getOutput(ml.Fish)
+    ccContents = readClipboard()
+
+    expect_identical(ccContents[13],  "\"price\"\t\"-0.0252548790145471\"\t\"-0.0252548790145471\"\t\"-0.0252548790145471\"\t\"0\"\t\"0\"\t\"0\"")
+
+
+    ml.Fish <- mlogit::mlogit(mode~price | income, Fish)
+    getOutput(ml.Fish)
+    ccContents = readClipboard()
+
+
+
+    expect_identical(ccContents[13],  "\"price\"\t\"-0.0255648288761739\"\t\"-0.0255648288761739\"\t\"-0.0255648288761739\"\t\"0\"\t\"0\"\t\"0\"")
+    expect_identical(ccContents[14],  "\"income\"\t\"9.33365874194238e-05\"\t\"-3.24829830225934e-05\"\t\"-0.000126715537529252\"\t\"0.0625790180491881\"\t\"0.518080972703957\"\t\"0.0123043926277129\"")
+
+
+    ml.Fish <- mlogit::mlogit(mode~price | income | catch, Fish)
+    getOutput(ml.Fish)
+    ccContents = readClipboard()
+
+    expect_identical(ccContents[12],  "\"(Intercept)\"\tNA\t\"0.841844985640212\"\t\"2.15486635778198\"\t\"1.04302556267659\"\tNA\t\"0.00500798454203633\"\t\"4.34763336443211e-13\"\t\"0.00041323863021292\"")
+    expect_identical(ccContents[14],  "\"income\"\tNA\t\"5.54279865435417e-05\"\t\"-7.23372544257705e-05\"\t\"-0.000135500664231565\"\tNA\t\"0.287661162900088\"\t\"0.168708839162969\"\t\"0.00809770752794159\"")
+
+    expect_identical(ccContents[15],  "\"catch\"\t\"3.1177105531067\"\t\"2.54248169242007\"\t\"0.759494299741477\"\t\"2.85121542912833\"\t\"1.22904706227889e-05\"\t\"1.15159957236877e-06\"\t\"8.41720624533693e-07\"\t\"0.000232579916174647\"")
 
 
 
@@ -129,11 +175,13 @@ test_that("getOutput() mlogit regression without intercept", {
     getOutput(ml.Fish)
     ccContents = readClipboard()
 
-    expect_identical(ccContents[9],  "\"McFadden R^2\"\tNA\t\"\"\t\"\"\t\"\"")
-    expect_identical(ccContents[12],  "\"price\"\t\"-0.0179501475826265\"\t\"0.00106937458163833\"\t\"-16.7856501275036\"\t\"0\"")
+    expect_identical(ccContents[9],  "\"McFadden R^2\"\tNA\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[12],  "\"price\"\t\"-0.0179501475826265\"\t\"-0.0179501475826265\"\t\"-0.0179501475826265\"\t\"-0.0179501475826265\"\t\"0\"\t\"0\"\t\"0\"\t\"0\"")
 
 
 })
+
+
 #---- polr -----------------
 test_that("getOutput() polr regression output", {
     m1 = MASS::polr( factor(gear) ~ cyl ,data=mtcars)
