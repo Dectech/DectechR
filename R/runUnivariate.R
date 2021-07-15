@@ -156,23 +156,63 @@ runUnivariate.glm <- function(mod, returnIntercept = FALSE) {
     return(result_matrix)
 }
 
-runUnivariate.polr <- function(mod, returnIntercept = FALSE) { # mod = ol1
+runUnivariate.polr <- function(mod = NULL, full_formula = NULL, df = NULL, returnIntercept = FALSE) { # mod = ol1
+
     # run univariate regression for each input variable...
 
+    # can either input an existing model
+    # ...or a formula and a data frame...
+
+    if (is.null(mod) == TRUE) {# if model has NOT been supplied....
+        #...then use full forumla and df
+
+        if (is.null(full_formula) & is.null(df)) {
+            stop("As input need either (a) a model object or (b) a formula + data.frame")
+        }
+
+    } else {
+        # if model has been supplied....
+
+        if (is.null(full_formula) == FALSE) {
+            warning("Using formula from model, rather than supplied full_formula")
+        }
+        # get forumla from supplied model
+        full_formula <- formula(mod$terms)
+
+
+        if (is.null(df) == FALSE) {
+            df = df
+        } else {
+            df = mod$model
+        }
+
+    }
+
+
+
+
+
     # get all IV's in original call...
-    IV_list <- names(mod$model)[-1]
-    DV_name <- names(mod$model)[1]
-    DV_levels <- levels(mod$model[,which(colnames(mod$model) == DV_name)])
+    IV_list <- all.vars(full_formula[[3]])
+    DV_name <- all.vars(full_formula[[2]])
+    DV_levels <- levels(df[,DV_name])
     n_levels <- length(DV_levels)
 
 
     if (returnIntercept == TRUE) {
-        intercept_terms <- names(mod$zeta)
+        if (is.null(mod) == FALSE) {
+            intercept_terms <- names(mod$zeta)
+        } else {
+            intercept_terms <- NULL
+        }
+
     } else {
         intercept_terms <- NULL
     }
 
     show_intercept_warning <- FALSE
+
+
 
     #---- loop through each variable...----------------
     result_matrix <- NULL
@@ -181,7 +221,7 @@ runUnivariate.polr <- function(mod, returnIntercept = FALSE) { # mod = ol1
         # construct a formula for each variable and run model...
         this_formula <- as.formula(paste0("`",DV_name,"` ~ `", var,"`")) # NB: include [`] to deal with variables declared as "factor(var)" etc.
 
-        this_mod <- polr(this_formula, data = mod$model,Hess = T)
+        this_mod <- polr(this_formula, data = df,Hess = T)
 
 
         # extract the relevant information (beta, p-value)...

@@ -212,6 +212,30 @@ test_that("runUnivariate() on a polr() with factor var", {
 })
 
 
+test_that("runUnivariate() on a polr() with a formula input", {
+    set.seed(123);
+
+    df1 = as.data.frame(matrix(rnorm(1000*3),1000,3))
+    df1$Y = 3*df1$V1 + 0.5*df1$V2 - df1$V3 + rnorm(1000)
+    df1$Y_bin = cut(df1$Y,breaks = quantile(df1$Y,c(0,0.333,0.667,1)),include.lowest = T)
+
+
+    this_formula = as.formula(Y_bin ~ V1 + V2 + V3)
+    #ol1 = polr(Y_bin ~ V1 + V2 + V3, df1)
+
+    u1 = runUnivariate.polr(full_formula = this_formula, df = df1)
+
+
+    expect_identical(u1$IV, c("V1","V2","V3"))
+    expect_equal(u1$Beta, c(3.54926206270649, 0.357406117502969, -0.542805602449396))
+    expect_equal(u1$`p value`, c(1.21785966391788e-94, 1.59227282826942e-09, 9.40244493102174e-18))
+    expect_equal(u1$`[-10.8,-1.35]|(-1.35,1.39]`, NULL)
+    expect_equal(u1$`(-1.35,1.39]|(1.39,10.2]`, NULL)
+
+
+
+})
+
 
 test_that("getUnivariate() on a linear regression", {
     m1 = lm(mpg ~ gear + carb + hp, mtcars)
