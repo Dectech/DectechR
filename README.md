@@ -3,14 +3,19 @@
 Collection of functions useful for Dectech analysts, such as extracting survey data from Questback output, and getting consistent coefficient tables from regressions.
 
 
-### Installation
+### Installation / Updating
 
-You can install DectechR from github with:
+You can install or update DectechR using the following:
 
 ```r
+#-- if DectechR is already loaded, then unload it using:
+detach(package:DectechR, unload = TRUE)
+
 # install.packages("devtools")
 devtools::install_github("Dectech/DectechR")
 ```
+
+If you get errors about "Error in fetch(key) : lazy-load database..." try restarting RStudio.
 
 ### Main functions
 
