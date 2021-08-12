@@ -105,6 +105,13 @@ test_that("getOutput() mlogit regression output", {
     expect_identical(ccContents[15],  "\"price\"\t\"-0.0252548790145471\"\t\"0.00171849029442108\"\t\"-14.6959683720849\"\t\"0\"")
 
 
+    ml.Fish <- mlogit::mlogit( mode ~ 1 | income , Fish)
+    getOutput(ml.Fish, reshape = F)
+    ccContents = readClipboard()
+
+    expect_identical(ccContents[15],  "\"income:boat\"\t\"9.19063628564497e-05\"\t\"4.06637402154583e-05\"\t\"2.26015517435141\"\t\"0.0238116218057445\"")
+
+
     ml.Fish <- mlogit::mlogit(mode~price | income | catch, Fish)
     getOutput(ml.Fish, reshape = F)
     ccContents = readClipboard()
@@ -139,6 +146,12 @@ test_that("getOutput() mlogit regression output, reshaped", {
     ccContents = readClipboard()
 
     expect_identical(ccContents[13],  "\"price\"\t\"-0.0252548790145471\"\t\"-0.0252548790145471\"\t\"-0.0252548790145471\"\t\"0\"\t\"0\"\t\"0\"")
+
+
+    ml.Fish <- mlogit::mlogit( mode ~ 1 | income , Fish)
+    getOutput(ml.Fish)
+    ccContents = readClipboard()
+    expect_identical(ccContents[13],  "\"income\"\t\"9.19063628564497e-05\"\t\"-3.16398780536123e-05\"\t\"-0.000143402914563964\"\t\"0.0238116218057445\"\t\"0.449590795838522\"\t\"0.00712229917164864\"")
 
 
     ml.Fish <- mlogit::mlogit(mode~price | income, Fish)

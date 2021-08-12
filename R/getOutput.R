@@ -162,7 +162,9 @@ getOutputTable.mlogit <- function(mod, reshape = TRUE, ...) {
         # an alternative way  to get alt specific would be to look at the formula
 
 
-        case_specific_vars = row.names(out_table)[-alt_specific_vars_indicies]
+        case_specific_vars = row.names(out_table)
+        case_specific_vars = case_specific_vars[case_specific_vars %in% alt_specific_vars == F]
+
         if (length(case_specific_vars) > 0) {
             case_specific_choices = unique(gsub("(.*):(.*)$","\\2",case_specific_vars))
             case_specific_vars = unique(gsub("(.*):(.*)$","\\1",case_specific_vars))
