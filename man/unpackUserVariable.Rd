@@ -19,7 +19,7 @@ unpackUserVariable(rawText, maxCols = NULL, emptyReplacement = -99, numeric = FA
 }
   \item{maxCols}{
 %%     ~~Describe \code{myfile} here~~
-  (optional) If rows have different lengths, then this should define the maximum number of columns returned
+  (optional) If rows have different lengths, then this should define the maximum number of columns returned. If missing this will be guessed.
 }
 \item{emptyReplacement}{
   (optional) value to use when some rows are shorter than maxCols (default is -99)
@@ -32,7 +32,7 @@ unpackUserVariable(rawText, maxCols = NULL, emptyReplacement = -99, numeric = FA
 }
 }
 \details{
-    Sometimes the output from a custom question on QuestBack is stored as a string representing multiple values e.g. "1*3*5*7". This function takes a vector of values stored in this format and splits them out into a matrix of values. If the rows have variable lengths, and maxCols has been set, then each row will be padded out using the emptyReplacement value.\cr\cr
+    Sometimes the output from a custom question on QuestBack is stored as a string representing multiple values e.g. "1*3*5*7". This function takes a vector of values stored in this format and splits them out into a matrix of values. If the rows have variable lengths, then each row will be padded out using the emptyReplacement value.\cr\cr
 
 }
 
@@ -56,6 +56,7 @@ unpackUserVariable(rawText, maxCols = NULL, emptyReplacement = -99, numeric = FA
 
     # if input has variable number of elements per row..
     # ...then set maxCols to match the longest row...
+    # ...but the function should guess maxCols if not provided...
     test3 = c("1*2*3","10*20","11*22*33","1*2*3")
     thisResult = unpackUserVariable(test3,numeric = T, maxCols = 3)
 
