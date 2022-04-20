@@ -169,3 +169,42 @@ cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutTo
 }
 
 cc2 <- cc
+
+
+cc_varlist <- function(var_list, is_formula = F, separate_lines = T) {
+    ###########################################################
+    ### Function to write a vector of strings to clipboard ###
+    ###  ...but nicely formatted for pasting into code     ###
+    ##########################################################
+
+    # the output can either have an item on each line...
+    # ...or everything on the same line
+    if (separate_lines == T) {
+        item_sep = "\n"
+    } else {
+        item_sep = ""
+    }
+    # Can output either as a list of quoted strings e.g.
+    #    "string 1",
+    #    "string 2",
+    #    "string 3"
+    #
+    # or as a list of vars for a formula e.g.
+    #    + string 1
+    #    + string 2
+    #    + string 3
+
+    if (is_formula == F) {
+        writeClipboard(paste0("\"",
+                              paste0(var_list,
+                                     collapse = paste0("\", ",item_sep,"\"")),
+                              "\""))
+
+    } else if (is_formula == T) {
+        writeClipboard(paste0(" + ",
+                              paste0(var_list,
+                                     collapse = paste0(item_sep, " + "))
+        ))
+    }
+    print("...var list copied to clipboard...")
+}

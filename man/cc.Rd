@@ -44,7 +44,8 @@ cc2 is indentical, but exists for compatibility with older versions of DectechR 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-    See also \code{\link{write.table}} and \code{\link{writeClipboard}}
+    See also \code{\link{write.table}} and \code{\link{writeClipboard}}.
+    See \code{\link{cc_varlist}} for getting a character vector in a nice format for use in a script.
 }
 \examples{
 # Using the built in data frame, mtcars:

@@ -25,6 +25,7 @@ The main functions are:
 * getScreePlot
 * getFactorLoadingsTable
 * cc (copy to clipboard)
+* cc_varlist (format a character string, for pasting into a script)
 * dectechXmlToDataframe (convert Questback output to a dataframe)
 * unpackUserVariable (Split a custom variable (e.g. "1\*3\*5\*7") into multiple columns)
 * addMobile (to identify mobile users)
