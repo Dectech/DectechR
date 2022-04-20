@@ -28,8 +28,8 @@ test_that("unpackUserVariable() numeric input", {
 
 
 test_that("unpackUserVariable() input with non-even rows", {
-    #test3 = c("1*2*3","10*20","11*22*33","1*2*3")
-    #expect_warning(unpackUserVariable(test3,numeric = T))
+    test3 = c("1*2*3","10*20","11*22*33","1*2*3")
+
 
     thisResult = unpackUserVariable(test3,numeric = T, maxCols = 3)
     expect_identical(thisResult[2,], c(10, 20, -99))
