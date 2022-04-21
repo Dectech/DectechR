@@ -143,6 +143,7 @@ test_that("getOutput() mlogit regression output, reshaped", {
 
     ml.Fish <- mlogit::mlogit( mode ~ price , Fish)
     getOutput(ml.Fish)
+    Sys.sleep(1)
     ccContents = readClipboard()
 
     expect_identical(ccContents[13],  "\"price\"\t\"-0.0252548790145471\"\t\"-0.0252548790145471\"\t\"-0.0252548790145471\"\t\"0\"\t\"0\"\t\"0\"")
@@ -150,12 +151,14 @@ test_that("getOutput() mlogit regression output, reshaped", {
 
     ml.Fish <- mlogit::mlogit( mode ~ 1 | income , Fish)
     getOutput(ml.Fish)
+    Sys.sleep(1)
     ccContents = readClipboard()
     expect_identical(ccContents[13],  "\"income\"\t\"9.19063628564497e-05\"\t\"-3.16398780536123e-05\"\t\"-0.000143402914563964\"\t\"0.0238116218057445\"\t\"0.449590795838522\"\t\"0.00712229917164864\"")
 
 
     ml.Fish <- mlogit::mlogit(mode~price | income, Fish)
     getOutput(ml.Fish)
+    Sys.sleep(1)
     ccContents = readClipboard()
 
 
@@ -166,6 +169,7 @@ test_that("getOutput() mlogit regression output, reshaped", {
 
     ml.Fish <- mlogit::mlogit(mode~price | income | catch, Fish)
     getOutput(ml.Fish)
+    Sys.sleep(1)
     ccContents = readClipboard()
 
     expect_identical(ccContents[12],  "\"(Intercept)\"\tNA\t\"0.841844985640212\"\t\"2.15486635778198\"\t\"1.04302556267659\"\tNA\t\"0.00500798454203633\"\t\"4.34763336443211e-13\"\t\"0.00041323863021292\"")
@@ -186,6 +190,7 @@ test_that("getOutput() mlogit regression without intercept", {
 
     ml.Fish <- mlogit::mlogit( mode ~ 0 + price , Fish)
     getOutput(ml.Fish)
+    Sys.sleep(1)
     ccContents = readClipboard()
 
     expect_identical(ccContents[9],  "\"McFadden R^2\"\tNA\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"")
@@ -199,6 +204,7 @@ test_that("getOutput() mlogit regression without intercept", {
 test_that("getOutput() polr regression output", {
     m1 = MASS::polr( factor(gear) ~ cyl ,data=mtcars)
     getOutput(m1)
+    Sys.sleep(1)
     ccContents = readClipboard()
 
 
@@ -223,6 +229,7 @@ test_that("getOutput() polr regression output", {
 test_that("getOutput() biglm regression output - simple", {
     m1 = biglm::biglm( mpg ~ cyl, data = mtcars)
     getOutput(m1)
+    Sys.sleep(1)
     ccContents = readClipboard()
 
     expect_identical(ccContents[1],  "\"Dep. Var.\"\t\"mpg\"\t\"\"\t\"\"\t\"\"\t\"\"")
