@@ -84,13 +84,55 @@ runUnivariate.lm <- function(mod, returnIntercept = FALSE) { #mod = m1
     return(result_matrix)
 }
 
-runUnivariate.glm <- function(mod, returnIntercept = FALSE) {
+runUnivariate.glm <- function(mod = NULL, full_formula = NULL, df = NULL, model_family = NULL, returnIntercept = FALSE) {
     # run univariate regression for each input variable...
 
+
+    # can either input an existing model
+    # ...or a formula and a data frame...
+
+    if (is.null(mod) == TRUE) {# if model has NOT been supplied....
+        #...then use full forumla and df
+
+        if (is.null(full_formula) | is.null(df)) {
+            stop("As input need either (a) a model object or (b) a formula + data.frame")
+        }
+
+        mod_data = df
+
+        if (is.null(model_family)) {
+            warning("model_family hasn't been stated, so assuming binomial")
+            model_family = "binomial"
+        }
+
+
+    } else {
+        # if model has been supplied....
+
+        if (is.null(full_formula) == FALSE) {
+            warning("Using formula from model, rather than supplied full_formula")
+        }
+        # get forumla from supplied model
+        full_formula <- formula(mod$terms)
+
+
+        if (is.null(df) == FALSE) {
+            mod_data = df
+        } else {
+            mod_data = mod$model
+        }
+
+        model_family <- as.character(mod$call["family"])
+
+    }
+
+
+
     # get all IV's in original call...
-    IV_list <- names(mod$model)[-1]
-    DV_name <- names(mod$model)[1]
-    model_family <- as.character(mod$call["family"])
+    IV_list <- all.vars(full_formula[[3]])
+    DV_name <- all.vars(full_formula[[2]])
+
+
 
     if (returnIntercept == TRUE) {
         intercept_terms <- "(Intercept)"
@@ -106,7 +148,7 @@ runUnivariate.glm <- function(mod, returnIntercept = FALSE) {
         # construct a formula for each variable and run model...
         this_formula <- as.formula(paste0("`",DV_name,"` ~ `", var,"`")) # NB: include [`] to deal with variables declared as "factor(var)" etc.
 
-        this_mod <- glm(this_formula, data = mod$model, family = model_family)
+        this_mod <- glm(this_formula, data = mod_data, family = model_family)
 
 
         # extract the relevant information (beta, p-value)...
