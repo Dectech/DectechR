@@ -1,5 +1,5 @@
 
-dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels = TRUE, dropTimeStamps = TRUE, verbose = TRUE) {
+dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels = TRUE, dropTimeStamps = TRUE, verbose = TRUE, USE_AT_NAME_IN_XPATH = TRUE) {
     #####################################################################################
     #  Function to convert an XML file exported from Questback into an R data frame
     #  -----------------------------------------------------------------------------
@@ -59,10 +59,24 @@ dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels
     if (verbose == TRUE) {
         cat("---> Extracting variable labels...\n")
     }
-    raw_var_list <- XML::getNodeSet(xml_data, "//variable[@name]")
+
+
+
+    if (USE_AT_NAME_IN_XPATH) {
+        raw_var_list <- XML::getNodeSet(xml_data, "//variable[@name]")
+    } else {
+        raw_var_list <- XML::getNodeSet(xml_data, "//variable")
+    }
+
     var_names <- sapply(raw_var_list, function(x) XML::xmlGetAttr(x, "name"))
     var_type <- sapply(raw_var_list, function(x) XML::xmlGetAttr(x, "type"))
-    var_labels <- XML::xpathSApply(xml_data, "//variable[@name]/label[text()]", XML::xmlValue)
+
+    if (USE_AT_NAME_IN_XPATH) {
+        var_labels <- XML::xpathSApply(xml_data, "//variable[@name]/label[text()]", XML::xmlValue)
+    } else {
+        var_labels <- XML::xpathSApply(xml_data, "//variable/label[text()]", XML::xmlValue)
+    }
+
 
 
     # some nodes also have a "code" that define the levels of the variable...
@@ -75,8 +89,15 @@ dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels
     # NB: keys are the numeric codes that questback uses, labels are the level labels
     #    ....so for a yes/no question: 1, 2 would be the keys, "No", "Yes" the levels
 
-    raw_key_list <- XML::xpathSApply(xml_data, "//variable[@name]/codes/code", XML::xmlGetAttr, "key")
-    raw_label_list <- XML::xpathSApply(xml_data, "//variable[@name]/codes/code", XML::xmlValue)
+    if (USE_AT_NAME_IN_XPATH) {
+        raw_key_list <- XML::xpathSApply(xml_data, "//variable[@name]/codes/code", XML::xmlGetAttr, "key")
+        raw_label_list <- XML::xpathSApply(xml_data, "//variable[@name]/codes/code", XML::xmlValue)
+    } else {
+        raw_key_list <- XML::xpathSApply(xml_data, "//variable/codes/code", XML::xmlGetAttr, "key")
+        raw_label_list <- XML::xpathSApply(xml_data, "//variable/codes/code", XML::xmlValue)
+    }
+
+
     # ...therefore we will also need an index to link labesl back to their variable...
     # ...this will be vector of the appropriate break points in raw_key_list and raw_label_list
     label_list_index  <- c(0, cumsum(sapply(raw_vars_with_code, function(x) {
