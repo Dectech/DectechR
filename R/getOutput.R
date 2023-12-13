@@ -41,8 +41,17 @@ getOutputTable.lm <- function(mod, tolerance = TRUE, ...) {
     # if required, also include the tolerance...
     num_terms <- length(labels(terms(mod)))
     if ((num_terms > 1) & (tolerance == TRUE)) {
-        out_table$Tolerance <- getCoeffTolerance(mod)
+        out_table$Tolerance <- tryCatch(getCoeffTolerance(mod),
+                                        error = function(e) {
+                                            warning("Couldn't add tolerance values")
+                                            return(NULL)
+                                        })
     }
+
+
+
+
+
 
 
     # (2) get performance table...
@@ -100,7 +109,11 @@ getOutputTable.glm <- function(mod, tolerance = TRUE, ...) {
         # if required, also include the tolerance...
         num_terms <- length(labels(terms(mod)))
         if ((num_terms > 1) & (tolerance == TRUE)) {
-            out_table$tolerance <- getCoeffTolerance(mod)
+            out_table$Tolerance <- tryCatch(getCoeffTolerance(mod),
+                                            error = function(e) {
+                                                warning("Couldn't add tolerance values")
+                                                return(NULL)
+                                            })
         }
 
         # (2) get performance table...
