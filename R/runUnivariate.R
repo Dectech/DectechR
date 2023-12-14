@@ -108,9 +108,8 @@ runUnivariate.glm <- function(mod = NULL, full_formula = NULL, df = NULL, model_
 
     } else {
         # if model has been supplied....
-
-        if (is.null(full_formula) == FALSE) {
-            warning("Using formula from model, rather than supplied full_formula")
+        if (is.null(full_formula) == TRUE) {
+            warning("You supplied a model object AND and formula. Using the formula from model, rather than supplied full_formula")
         }
         # get forumla from supplied model
         full_formula <- formula(mod$terms)
