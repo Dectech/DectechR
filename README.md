@@ -50,11 +50,11 @@ For variables we can use lowercase, with an underscore to seperate words (as sug
 ### Major changes in latest update (09-Jan-2024)
 
 #### getUnivariate() / runUnivariate():
-- can now handle formula entry i.e. if you want a univariate based on a formula rather than a fitted model
+- can now handle formula entry i.e. if you want to run a univariate based on a formula rather than a fitted model
 
 #### getOuput()
 - for multilogit models the beta and p-values are now outputted in a wide format, for easy comparison
 
 #### cc()
-- add cc_varlist() for easily pasting lists of variable names
-- changed output format to better pasting of unicode to excel (e.g. so that "£" doesn't get outputted as "Â£")
+- added cc_varlist() for easily pasting lists of variable names
+- changed the output encoding to avoid strange artefacts when pasting to excel (e.g. previous "£" was getting outputted as "Â£")
