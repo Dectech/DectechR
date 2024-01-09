@@ -12,6 +12,7 @@ The main functions are:
     \item \code{\link{getOutput}} (extract regression output)
     \item \code{\link{getScreePlot}} and \code{\link{getFactorLoadingsTable}} (for factor analysis)
     \item \code{\link{cc}} (copy to clipboard)
+    \item \code{\link{cc_varlist}} (format a character string, for pasting into a script)
     \item \code{\link{dectechXmlToDataframe}} (convert Questback output to a dataframe)
     \item \code{\link{unpackUserVariable}} (Split a custom variable (e.g. "1*3*5*7") into multiple columns)
     \item \code{\link{addMobile}} (to identify mobile users)

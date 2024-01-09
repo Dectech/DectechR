@@ -1,9 +1,8 @@
 library(DectechR)
-library(MASS)
 
 context("test runUnivariate()")
 
-
+#---- [1] testing lm ------------------------
 test_that("runUnivariate() gives an error when nothing sent", {
     expect_error(runUnivariate())
 })
@@ -71,8 +70,74 @@ test_that("runUnivariate() on a lm() with factor var declared in line", {
 })
 
 
+test_that("getUnivariate() on a linear regression", {
+    m1 = lm(mpg ~ gear + carb + hp, mtcars)
+    getUnivariate(m1)
+    ccContents = readClipboard()
+
+    expect_identical(ccContents[2], "\"Dep. Var.\"\t\"mpg\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[3],  "\"Model\"\t\"Linear (lm)\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[4], "\"N\"\t\"32\"\t\"\"\t\"\"\t\"\"")
+
+    expect_identical(ccContents[5+1],  "\"\"\t\"Beta\"\t\"Std. Error\"\t\"t value\"\t\"Pr(>|t|)\"")
+    expect_identical(ccContents[5+2], "\"gear\"\t\" 3.92333333\"\t\"1.3081307\"\t\" 2.999191\"\t\"5.400948e-03\"")
+    expect_identical(ccContents[5+3],  "\"carb\"\t\"-2.05571870\"\t\"0.5685456\"\t\"-3.615750\"\t\"1.084446e-03\"")
+    expect_identical(ccContents[5+4],"\"hp\"\t\"-0.06822828\"\t\"0.0101193\"\t\"-6.742389\"\t\"1.787835e-07\"")
+
+    getUnivariate(m1,returnIntercept = T)
+    ccContents = readClipboard()
+
+    expect_identical(ccContents[2], "\"Dep. Var.\"\t\"mpg\"\t\"\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[3],  "\"Model\"\t\"Linear (lm)\"\t\"\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[4], "\"N\"\t\"32\"\t\"\"\t\"\"\t\"\"\t\"\"")
 
 
+    expect_identical(ccContents[5+1], "\"\"\t\"(Intercept)\"\t\"Beta\"\t\"Std. Error\"\t\"t value\"\t\"Pr(>|t|)\"")
+    expect_identical(ccContents[5+2], "\"gear\"\t\" 5.623333\"\t\" 3.92333333\"\t\"1.3081307\"\t\" 2.999191\"\t\"5.400948e-03\"")
+    expect_identical(ccContents[5+3], "\"carb\"\t\"25.872334\"\t\"-2.05571870\"\t\"0.5685456\"\t\"-3.615750\"\t\"1.084446e-03\"")
+    expect_identical(ccContents[5+4], "\"hp\"\t\"30.098861\"\t\"-0.06822828\"\t\"0.0101193\"\t\"-6.742389\"\t\"1.787835e-07\"")
+
+
+
+})
+
+
+test_that("getUnivariate() on lm with formula", {
+    this_formula = mpg ~ gear + carb + hp
+    #m1 = lm(mpg ~ gear + carb + hp, mtcars)
+    getUnivariate(full_formula = this_formula,
+                  df = mtcars, model_class = "lm")
+    ccContents = readClipboard()
+
+    expect_identical(ccContents[2], "\"Dep. Var.\"\t\"mpg\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[3],  "\"Model\"\t\"Linear (lm)\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[4], "\"N\"\t\"32\"\t\"\"\t\"\"\t\"\"")
+
+    expect_identical(ccContents[5+1],  "\"\"\t\"Beta\"\t\"Std. Error\"\t\"t value\"\t\"Pr(>|t|)\"")
+    expect_identical(ccContents[5+2], "\"gear\"\t\" 3.92333333\"\t\"1.3081307\"\t\" 2.999191\"\t\"5.400948e-03\"")
+    expect_identical(ccContents[5+3],  "\"carb\"\t\"-2.05571870\"\t\"0.5685456\"\t\"-3.615750\"\t\"1.084446e-03\"")
+    expect_identical(ccContents[5+4],"\"hp\"\t\"-0.06822828\"\t\"0.0101193\"\t\"-6.742389\"\t\"1.787835e-07\"")
+
+    getUnivariate(full_formula = this_formula,
+                  df = mtcars, model_class = "lm",
+                  returnIntercept = T)
+    ccContents = readClipboard()
+
+    expect_identical(ccContents[2], "\"Dep. Var.\"\t\"mpg\"\t\"\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[3],  "\"Model\"\t\"Linear (lm)\"\t\"\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[4], "\"N\"\t\"32\"\t\"\"\t\"\"\t\"\"\t\"\"")
+
+
+    expect_identical(ccContents[5+1], "\"\"\t\"(Intercept)\"\t\"Beta\"\t\"Std. Error\"\t\"t value\"\t\"Pr(>|t|)\"")
+    expect_identical(ccContents[5+2], "\"gear\"\t\" 5.623333\"\t\" 3.92333333\"\t\"1.3081307\"\t\" 2.999191\"\t\"5.400948e-03\"")
+    expect_identical(ccContents[5+3], "\"carb\"\t\"25.872334\"\t\"-2.05571870\"\t\"0.5685456\"\t\"-3.615750\"\t\"1.084446e-03\"")
+    expect_identical(ccContents[5+4], "\"hp\"\t\"30.098861\"\t\"-0.06822828\"\t\"0.0101193\"\t\"-6.742389\"\t\"1.787835e-07\"")
+
+
+
+})
+
+#---- [2] testing glm ------------------------
 test_that("runUnivariate() on a simple binary logit regression, glm()", {
     mtcars2 = mtcars
     mtcars2$mpg_20 = (mtcars2$mpg > 20)*1
@@ -142,10 +207,83 @@ test_that("runUnivariate() on a glm() with factor var declared in line", {
 })
 
 
+test_that("getUnivariate() on a glm, binary logit", {
+    mtcars2 = mtcars
+    mtcars2$mpg_20 = (mtcars2$mpg > 20)*1
+
+    ml1 = glm(mpg_20 ~ gear + carb + disp, mtcars2, family = "binomial")
+
+    getUnivariate(ml1)
+    ccContents = readClipboard()
+
+    expect_identical(ccContents[2], "\"Dep. Var.\"\t\"mpg_20\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[3],  "\"Model\"\t\"binomial (glm)\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[4], "\"N\"\t\"32\"\t\"\"\t\"\"\t\"\"")
+
+    expect_identical(ccContents[5+1],  "\"\"\t\"Beta\"\t\"Std. Error\"\t\"z value\"\t\"Pr(>|z|)\"")
+    expect_identical(ccContents[5+2], "\"gear\"\t\" 1.14354383\"\t\"0.56300264\"\t\" 2.031152\"\t\"0.042239598\"")
+    expect_identical(ccContents[5+3],  "\"carb\"\t\"-1.12294816\"\t\"0.41186053\"\t\"-2.726525\"\t\"0.006400504\"")
+    expect_identical(ccContents[5+4],"\"disp\"\t\"-0.03084009\"\t\"0.01112159\"\t\"-2.772994\"\t\"0.005554319\"")
+
+    getUnivariate(ml1,returnIntercept = T)
+    ccContents = readClipboard()
+
+    expect_identical(ccContents[2], "\"Dep. Var.\"\t\"mpg_20\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[3],  "\"Model\"\t\"binomial (glm)\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[4], "\"N\"\t\"32\"\t\"\"\t\"\"\t\"\"")
 
 
+    expect_identical(ccContents[5+1], "\"\"\t\"Beta\"\t\"Std. Error\"\t\"z value\"\t\"Pr(>|z|)\"")
+    expect_identical(ccContents[5+2], "\"gear\"\t\" 1.14354383\"\t\"0.56300264\"\t\" 2.031152\"\t\"0.042239598\"")
+    expect_identical(ccContents[5+3], "\"carb\"\t\"-1.12294816\"\t\"0.41186053\"\t\"-2.726525\"\t\"0.006400504\"")
+    expect_identical(ccContents[5+4], "\"disp\"\t\"-0.03084009\"\t\"0.01112159\"\t\"-2.772994\"\t\"0.005554319\"")
+
+
+})
+
+
+test_that("getUnivariate() on a glm with formula", {
+    mtcars2 = mtcars
+    mtcars2$mpg_20 = (mtcars2$mpg > 20)*1
+
+    this_formula = mpg_20 ~ gear + carb + disp
+
+    getUnivariate(full_formula = this_formula,
+                  df = mtcars2, model_class = "glm",model_family = "binomial")
+
+    ccContents = readClipboard()
+
+    expect_identical(ccContents[2], "\"Dep. Var.\"\t\"mpg_20\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[3],  "\"Model\"\t\"binomial (glm)\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[4], "\"N\"\t\"32\"\t\"\"\t\"\"\t\"\"")
+
+    expect_identical(ccContents[5+1],  "\"\"\t\"Beta\"\t\"Std. Error\"\t\"z value\"\t\"Pr(>|z|)\"")
+    expect_identical(ccContents[5+2], "\"gear\"\t\" 1.14354383\"\t\"0.56300264\"\t\" 2.031152\"\t\"0.042239598\"")
+    expect_identical(ccContents[5+3],  "\"carb\"\t\"-1.12294816\"\t\"0.41186053\"\t\"-2.726525\"\t\"0.006400504\"")
+    expect_identical(ccContents[5+4],"\"disp\"\t\"-0.03084009\"\t\"0.01112159\"\t\"-2.772994\"\t\"0.005554319\"")
+
+    getUnivariate(full_formula = this_formula,
+                  df = mtcars2, model_class = "glm",model_family = "binomial",
+                  returnIntercept = T)
+    ccContents = readClipboard()
+
+
+    expect_identical(ccContents[2], "\"Dep. Var.\"\t\"mpg_20\"\t\"\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[3],  "\"Model\"\t\"binomial (glm)\"\t\"\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[4], "\"N\"\t\"32\"\t\"\"\t\"\"\t\"\"\t\"\"")
+
+
+    expect_identical(ccContents[5+1], "\"\"\t\"(Intercept)\"\t\"Beta\"\t\"Std. Error\"\t\"z value\"\t\"Pr(>|z|)\"")
+    expect_identical(ccContents[5+2], "\"gear\"\t\"-4.487170\"\t\" 1.14354383\"\t\"0.56300264\"\t\" 2.031152\"\t\"0.042239598\"")
+    expect_identical(ccContents[5+3], "\"carb\"\t\" 2.627802\"\t\"-1.12294816\"\t\"0.41186053\"\t\"-2.726525\"\t\"0.006400504\"")
+    expect_identical(ccContents[5+4], "\"disp\"\t\" 5.741562\"\t\"-0.03084009\"\t\"0.01112159\"\t\"-2.772994\"\t\"0.005554319\"")
+
+
+})
+
+#---- [3] testing polr ------------------------
 test_that("runUnivariate() on a simple ordinal logit regression, polr()", {
-
+    library(MASS)
     set.seed(123);
 
     df1 = as.data.frame(matrix(rnorm(1000*3),1000,3))
@@ -153,7 +291,7 @@ test_that("runUnivariate() on a simple ordinal logit regression, polr()", {
     df1$Y_bin = cut(df1$Y,breaks = quantile(df1$Y,c(0,0.333,0.667,1)),include.lowest = T)
 
 
-    ol1 = polr(Y_bin ~ V1 + V2 + V3, df1)
+    ol1 = MASS::polr(Y_bin ~ V1 + V2 + V3, df1)
 
     u1 = runUnivariate(ol1)
 
@@ -177,6 +315,7 @@ test_that("runUnivariate() on a simple ordinal logit regression, polr()", {
 })
 
 test_that("runUnivariate() on a polr() with factor var", {
+    library(MASS)
     set.seed(123);
 
     df1 = as.data.frame(matrix(rnorm(1000*3),1000,3))
@@ -184,7 +323,7 @@ test_that("runUnivariate() on a polr() with factor var", {
     df1$Y_bin = cut(df1$Y,breaks = quantile(df1$Y,c(0,0.333,0.667,1)),include.lowest = T)
 
     df1$V3_bin = cut(df1$V3, quantile(df1$V3, c(0,0.333,0.667,1)),include.lowest = T)
-    ol1 = polr(Y_bin ~ V1 + V2 + V3_bin, df1)
+    ol1 = MASS::polr(Y_bin ~ V1 + V2 + V3_bin, df1)
 
     u1 = runUnivariate(ol1)
 
@@ -212,34 +351,114 @@ test_that("runUnivariate() on a polr() with factor var", {
 })
 
 
+test_that("runUnivariate() on a polr() with a formula input", {
+    library(MASS)
+    set.seed(123);
 
-test_that("getUnivariate() on a linear regression", {
-    m1 = lm(mpg ~ gear + carb + hp, mtcars)
-    getUnivariate(m1)
-    ccContents = readClipboard()
-
-    expect_identical(ccContents[2], "\"Dep. Var.\"\t\"mpg\"\t\"\"\t\"\"\t\"\"")
-    expect_identical(ccContents[3],  "\"Model\"\t\"Linear (lm)\"\t\"\"\t\"\"\t\"\"")
-    expect_identical(ccContents[4], "\"N\"\t\"32\"\t\"\"\t\"\"\t\"\"")
-
-    expect_identical(ccContents[5+1],  "\"\"\t\"Beta\"\t\"Std. Error\"\t\"t value\"\t\"Pr(>|t|)\"")
-    expect_identical(ccContents[5+2], "\"gear\"\t\" 3.92333333\"\t\"1.3081307\"\t\" 2.999191\"\t\"5.400948e-03\"")
-    expect_identical(ccContents[5+3],  "\"carb\"\t\"-2.05571870\"\t\"0.5685456\"\t\"-3.615750\"\t\"1.084446e-03\"")
-    expect_identical(ccContents[5+4],"\"hp\"\t\"-0.06822828\"\t\"0.0101193\"\t\"-6.742389\"\t\"1.787835e-07\"")
-
-    getUnivariate(m1,returnIntercept = T)
-    ccContents = readClipboard()
-
-    expect_identical(ccContents[2], "\"Dep. Var.\"\t\"mpg\"\t\"\"\t\"\"\t\"\"\t\"\"")
-    expect_identical(ccContents[3],  "\"Model\"\t\"Linear (lm)\"\t\"\"\t\"\"\t\"\"\t\"\"")
-    expect_identical(ccContents[4], "\"N\"\t\"32\"\t\"\"\t\"\"\t\"\"\t\"\"")
+    df1 = as.data.frame(matrix(rnorm(1000*3),1000,3))
+    df1$Y = 3*df1$V1 + 0.5*df1$V2 - df1$V3 + rnorm(1000)
+    df1$Y_bin = cut(df1$Y,breaks = quantile(df1$Y,c(0,0.333,0.667,1)),include.lowest = T)
 
 
-    expect_identical(ccContents[5+1], "\"\"\t\"(Intercept)\"\t\"Beta\"\t\"Std. Error\"\t\"t value\"\t\"Pr(>|t|)\"")
-    expect_identical(ccContents[5+2], "\"gear\"\t\" 5.623333\"\t\" 3.92333333\"\t\"1.3081307\"\t\" 2.999191\"\t\"5.400948e-03\"")
-    expect_identical(ccContents[5+3], "\"carb\"\t\"25.872334\"\t\"-2.05571870\"\t\"0.5685456\"\t\"-3.615750\"\t\"1.084446e-03\"")
-    expect_identical(ccContents[5+4], "\"hp\"\t\"30.098861\"\t\"-0.06822828\"\t\"0.0101193\"\t\"-6.742389\"\t\"1.787835e-07\"")
+    this_formula = as.formula(Y_bin ~ V1 + V2 + V3)
+    #ol1 = MASS::polr(Y_bin ~ V1 + V2 + V3, df1)
+
+    u1 = runUnivariate.polr(full_formula = this_formula, df = df1)
+
+
+    expect_identical(u1$IV, c("V1","V2","V3"))
+    expect_equal(u1$Beta, c(3.54926206270649, 0.357406117502969, -0.542805602449396))
+    expect_equal(u1$`p value`, c(1.21785966391788e-94, 1.59227282826942e-09, 9.40244493102174e-18))
+    expect_equal(u1$`[-10.8,-1.35]|(-1.35,1.39]`, NULL)
+    expect_equal(u1$`(-1.35,1.39]|(1.39,10.2]`, NULL)
 
 
 
 })
+
+
+test_that("getUnivariate() on polr", {
+    library(MASS)
+    set.seed(123);
+
+    df1 = as.data.frame(matrix(rnorm(1000*3),1000,3))
+    df1$Y = 3*df1$V1 + 0.5*df1$V2 - df1$V3 + rnorm(1000)
+    df1$Y_bin = cut(df1$Y,breaks = quantile(df1$Y,c(0,0.333,0.667,1)),include.lowest = T)
+
+
+    ol1 = MASS::polr(Y_bin ~ V1 + V2 + V3, df1)
+
+    getUnivariate(ol1)
+    ccContents = readClipboard()
+
+    expect_identical(ccContents[2], "\"Dep. Var.\"\t\"Y_bin\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[3],  "\"Model\"\t\"Ordinal Logit (polr)\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[4], "\"N\"\t\"1000\"\t\"\"\t\"\"\t\"\"")
+
+    expect_identical(ccContents[5+1],  "\"\"\t\"Beta\"\t\"Std. Error\"\t\"t value\"\t\"p value\"")
+    expect_identical(ccContents[5+2], "\"V1\"\t\" 3.5492621\"\t\"0.17196611\"\t\"20.639311\"\t\"1.217860e-94\"")
+    expect_identical(ccContents[5+3],  "\"V2\"\t\" 0.3574061\"\t\"0.05922486\"\t\" 6.034731\"\t\"1.592273e-09\"")
+    expect_identical(ccContents[5+4],"\"V3\"\t\"-0.5428056\"\t\"0.06325644\"\t\"-8.581034\"\t\"9.402445e-18\"")
+
+    getUnivariate(ol1,returnIntercept = T)
+    ccContents = readClipboard()
+
+    expect_identical(ccContents[2], "\"Dep. Var.\"\t\"Y_bin\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[3],  "\"Model\"\t\"Ordinal Logit (polr)\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[4], "\"N\"\t\"1000\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"")
+
+
+    expect_identical(ccContents[5+1], "\"\"\t\"[-10.8,-1.35]|(-1.35,1.39]\"\t\"(-1.35,1.39]|(1.39,10.2]\"\t\"Beta\"\t\"Std. Error\"\t\"t value\"\t\"p value\"")
+    expect_identical(ccContents[5+2], "\"V1\"\t\"-1.6234700\"\t\"1.7144959\"\t\" 3.5492621\"\t\"0.17196611\"\t\"20.639311\"\t\"1.217860e-94\"")
+    expect_identical(ccContents[5+3], "\"V2\"\t\"-0.7033151\"\t\"0.7287217\"\t\" 0.3574061\"\t\"0.05922486\"\t\" 6.034731\"\t\"1.592273e-09\"")
+    expect_identical(ccContents[5+4], "\"V3\"\t\"-0.7370334\"\t\"0.7412720\"\t\"-0.5428056\"\t\"0.06325644\"\t\"-8.581034\"\t\"9.402445e-18\"")
+
+
+})
+
+
+test_that("getUnivariate() on polr with formula", {
+    library(MASS)
+    set.seed(123);
+
+    df1 = as.data.frame(matrix(rnorm(1000*3),1000,3))
+    df1$Y = 3*df1$V1 + 0.5*df1$V2 - df1$V3 + rnorm(1000)
+    df1$Y_bin = cut(df1$Y,breaks = quantile(df1$Y,c(0,0.333,0.667,1)),include.lowest = T)
+
+    this_formula = Y_bin ~ V1 + V2 + V3
+    #ol1 = MASS::polr(Y_bin ~ V1 + V2 + V3, df1)
+
+    getUnivariate(full_formula = this_formula,
+                  df = df1, model_class = "polr")
+    ccContents = readClipboard()
+
+    expect_identical(ccContents[2], "\"Dep. Var.\"\t\"Y_bin\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[3],  "\"Model\"\t\"Ordinal Logit (polr)\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[4], "\"N\"\t\"1000\"\t\"\"\t\"\"\t\"\"")
+
+    expect_identical(ccContents[5+1],  "\"\"\t\"Beta\"\t\"Std. Error\"\t\"t value\"\t\"p value\"")
+    expect_identical(ccContents[5+2], "\"V1\"\t\" 3.5492621\"\t\"0.17196611\"\t\"20.639311\"\t\"1.217860e-94\"")
+    expect_identical(ccContents[5+3],  "\"V2\"\t\" 0.3574061\"\t\"0.05922486\"\t\" 6.034731\"\t\"1.592273e-09\"")
+    expect_identical(ccContents[5+4],"\"V3\"\t\"-0.5428056\"\t\"0.06325644\"\t\"-8.581034\"\t\"9.402445e-18\"")
+
+    getUnivariate(full_formula = this_formula,
+                  df = df1, model_class = "polr",
+                  returnIntercept = T)
+    ccContents = readClipboard()
+
+
+    expect_identical(ccContents[2], "\"Dep. Var.\"\t\"Y_bin\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[3],  "\"Model\"\t\"Ordinal Logit (polr)\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"")
+    expect_identical(ccContents[4], "\"N\"\t\"1000\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"")
+
+
+    expect_identical(ccContents[5+1], "\"\"\t\"[-10.8,-1.35]|(-1.35,1.39]\"\t\"(-1.35,1.39]|(1.39,10.2]\"\t\"Beta\"\t\"Std. Error\"\t\"t value\"\t\"p value\"")
+    expect_identical(ccContents[5+2], "\"V1\"\t\"-1.6234700\"\t\"1.7144959\"\t\" 3.5492621\"\t\"0.17196611\"\t\"20.639311\"\t\"1.217860e-94\"")
+    expect_identical(ccContents[5+3], "\"V2\"\t\"-0.7033151\"\t\"0.7287217\"\t\" 0.3574061\"\t\"0.05922486\"\t\" 6.034731\"\t\"1.592273e-09\"")
+    expect_identical(ccContents[5+4], "\"V3\"\t\"-0.7370334\"\t\"0.7412720\"\t\"-0.5428056\"\t\"0.06325644\"\t\"-8.581034\"\t\"9.402445e-18\"")
+
+
+})
+
+
+

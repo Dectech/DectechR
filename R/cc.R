@@ -1,8 +1,14 @@
-cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutToIn = TRUE, forceNested = FALSE) {
+cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutToIn = TRUE, forceNested = FALSE, clipboard_format = 13) {
     ####################################################
     ### Fucntion to write an object to the clipboard ###
     ###  ...making allowance for nested tables       ###
     ####################################################
+
+    # NB: "clipboard_format" is used by writeClipboard()
+    # ...clipboard_format = 13 should handle unicode text better
+    # ...the original default is 1, but this turns "£" into "Â£"
+    # ...see ?writeClipboard for details
+
 
     #--- get input variable name, in case we want to use later...
     raw_input_data_name <-deparse(substitute(data))
@@ -18,7 +24,7 @@ cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutTo
 
     } else if (is_single_item == TRUE) {
         # if this is just a single number or a string, then send it straight to clipboard...
-        writeClipboard(as.character(data))
+        writeClipboard(as.character(data), format = clipboard_format)
 
     } else {
 
@@ -164,8 +170,47 @@ cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutTo
 
 
         #---(8) then write to clipboard
-        writeClipboard(output_vector)
+        writeClipboard(output_vector, format = clipboard_format)
     }
 }
 
 cc2 <- cc
+
+
+cc_varlist <- function(var_list, is_formula = F, separate_lines = T) {
+    ###########################################################
+    ### Function to write a vector of strings to clipboard ###
+    ###  ...but nicely formatted for pasting into code     ###
+    ##########################################################
+
+    # the output can either have an item on each line...
+    # ...or everything on the same line
+    if (separate_lines == T) {
+        item_sep = "\n"
+    } else {
+        item_sep = ""
+    }
+    # Can output either as a list of quoted strings e.g.
+    #    "string 1",
+    #    "string 2",
+    #    "string 3"
+    #
+    # or as a list of vars for a formula e.g.
+    #    + string 1
+    #    + string 2
+    #    + string 3
+
+    if (is_formula == F) {
+        writeClipboard(paste0("\"",
+                              paste0(var_list,
+                                     collapse = paste0("\", ",item_sep,"\"")),
+                              "\""))
+
+    } else if (is_formula == T) {
+        writeClipboard(paste0(" + ",
+                              paste0(var_list,
+                                     collapse = paste0(item_sep, " + "))
+        ))
+    }
+    print("...var list copied to clipboard...")
+}
