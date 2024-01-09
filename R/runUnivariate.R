@@ -472,11 +472,3 @@ getUnivariate <- function(mod = NULL,
 
 }
 
-
-
-runUnivariate.lm(full_formula = mpg ~ gear + factor(carb) + hp,
-                 df = mtcars)
-
-getUnivariate(full_formula = mpg ~ gear + factor(carb) + hp,
-              df = mtcars,
-              model_class = "lm")
