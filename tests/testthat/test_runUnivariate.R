@@ -1,5 +1,4 @@
 library(DectechR)
-library(MASS)
 
 context("test runUnivariate()")
 
@@ -284,7 +283,7 @@ test_that("getUnivariate() on a glm with formula", {
 
 #---- [3] testing polr ------------------------
 test_that("runUnivariate() on a simple ordinal logit regression, polr()", {
-
+    library(MASS)
     set.seed(123);
 
     df1 = as.data.frame(matrix(rnorm(1000*3),1000,3))
@@ -292,7 +291,7 @@ test_that("runUnivariate() on a simple ordinal logit regression, polr()", {
     df1$Y_bin = cut(df1$Y,breaks = quantile(df1$Y,c(0,0.333,0.667,1)),include.lowest = T)
 
 
-    ol1 = polr(Y_bin ~ V1 + V2 + V3, df1)
+    ol1 = MASS::polr(Y_bin ~ V1 + V2 + V3, df1)
 
     u1 = runUnivariate(ol1)
 
@@ -316,6 +315,7 @@ test_that("runUnivariate() on a simple ordinal logit regression, polr()", {
 })
 
 test_that("runUnivariate() on a polr() with factor var", {
+    library(MASS)
     set.seed(123);
 
     df1 = as.data.frame(matrix(rnorm(1000*3),1000,3))
@@ -323,7 +323,7 @@ test_that("runUnivariate() on a polr() with factor var", {
     df1$Y_bin = cut(df1$Y,breaks = quantile(df1$Y,c(0,0.333,0.667,1)),include.lowest = T)
 
     df1$V3_bin = cut(df1$V3, quantile(df1$V3, c(0,0.333,0.667,1)),include.lowest = T)
-    ol1 = polr(Y_bin ~ V1 + V2 + V3_bin, df1)
+    ol1 = MASS::polr(Y_bin ~ V1 + V2 + V3_bin, df1)
 
     u1 = runUnivariate(ol1)
 
@@ -352,6 +352,7 @@ test_that("runUnivariate() on a polr() with factor var", {
 
 
 test_that("runUnivariate() on a polr() with a formula input", {
+    library(MASS)
     set.seed(123);
 
     df1 = as.data.frame(matrix(rnorm(1000*3),1000,3))
@@ -360,7 +361,7 @@ test_that("runUnivariate() on a polr() with a formula input", {
 
 
     this_formula = as.formula(Y_bin ~ V1 + V2 + V3)
-    #ol1 = polr(Y_bin ~ V1 + V2 + V3, df1)
+    #ol1 = MASS::polr(Y_bin ~ V1 + V2 + V3, df1)
 
     u1 = runUnivariate.polr(full_formula = this_formula, df = df1)
 
@@ -377,6 +378,7 @@ test_that("runUnivariate() on a polr() with a formula input", {
 
 
 test_that("getUnivariate() on polr", {
+    library(MASS)
     set.seed(123);
 
     df1 = as.data.frame(matrix(rnorm(1000*3),1000,3))
@@ -384,7 +386,7 @@ test_that("getUnivariate() on polr", {
     df1$Y_bin = cut(df1$Y,breaks = quantile(df1$Y,c(0,0.333,0.667,1)),include.lowest = T)
 
 
-    ol1 = polr(Y_bin ~ V1 + V2 + V3, df1)
+    ol1 = MASS::polr(Y_bin ~ V1 + V2 + V3, df1)
 
     getUnivariate(ol1)
     ccContents = readClipboard()
@@ -416,6 +418,7 @@ test_that("getUnivariate() on polr", {
 
 
 test_that("getUnivariate() on polr with formula", {
+    library(MASS)
     set.seed(123);
 
     df1 = as.data.frame(matrix(rnorm(1000*3),1000,3))
@@ -423,7 +426,7 @@ test_that("getUnivariate() on polr with formula", {
     df1$Y_bin = cut(df1$Y,breaks = quantile(df1$Y,c(0,0.333,0.667,1)),include.lowest = T)
 
     this_formula = Y_bin ~ V1 + V2 + V3
-    #ol1 = polr(Y_bin ~ V1 + V2 + V3, df1)
+    #ol1 = MASS::polr(Y_bin ~ V1 + V2 + V3, df1)
 
     getUnivariate(full_formula = this_formula,
                   df = df1, model_class = "polr")
