@@ -12,6 +12,9 @@ cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutTo
 
     #--- get input variable name, in case we want to use later...
     raw_input_data_name <-deparse(substitute(data))
+    # ...in case this is a list of objects, then collapse into a single string...
+    # NB: since R4.0 could use deparse1, but use below for backwards compatibility
+    raw_input_data_name <- paste0(raw_input_data_name,collapse = " ")
 
     #-- check if this is just a single object...
     is_single_item <- (is.null(dim(data))) & (length(data) == 1)
