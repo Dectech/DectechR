@@ -19,17 +19,30 @@ If you get errors about "Error in fetch(key) : lazy-load database..." try restar
 
 ### Main functions
 
-The main functions are:
+Opening XML data:
 
-* getOutput (extract regression output)
-* getScreePlot
-* getFactorLoadingsTable
-* cc (copy to clipboard)
-* cc_varlist (format a character string, for pasting into a script)
-* dectechXmlToDataframe (convert Questback output to a dataframe)
-* unpackUserVariable (Split a custom variable (e.g. "1\*3\*5\*7") into multiple columns)
-* addMobile (to identify mobile users)
-* getUnivariate (run a series of univariates on a model)
+* dectechXmlToDataframe: for getting EFS data in XML format (recommended over csv!)
+
+Getting data to clipboard:
+
+* cc: copy anything to clipboard
+* cc_varlist: format a variable list with quotations etc. for pasting into a script
+
+Regression modelling:
+
+* getOutput: extract regression output to clipboad
+* getUnivariate: run a series of univariates on a model (and copy to clipboad)
+
+Factor analysis:
+
+* getScreePlot: get scree plot before running factor analysis (table copied to clipboard)
+* getFactorLoadingsTable: nicely format factor analysis results (and copy to clipboard)
+
+Data recoding:
+
+* unpackUserVariable: split a custom variable (e.g. "1\*3\*5\*7") into multiple columns
+* addMobile: identify mobile users from their browser
+
 
 ### Style guide
 
