@@ -121,7 +121,7 @@ addMobile <- function(df_in, varname = NULL) {
     operating_system = getRespondentOS(useragent = useragent, detailed = TRUE)
     df_in$is_mobile <- (operating_system %in% c("Android","iPad","iPhone")) * 1
 
-    cat("Added the variable 'is_mobile' to the dataframe")
+    cat("Added the variable 'is_mobile' to the dataframe\n")
 
     return(df_in)
 }
