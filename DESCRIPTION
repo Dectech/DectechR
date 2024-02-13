@@ -1,11 +1,11 @@
 Package: DectechR
 Type: Package
 Title: Collection of useful functions for Dectech Analysts
-Version: 0.3
-Date: 2017-05-17
+Version: 0.4
+Date: 2023-02-12
 Author: Keith Simpson
 Maintainer: Keith Simpson <k.simpson@dectech.co.uk>
-Description: Collection of functions useful for Dectech Analysts, such as extracting survey data from Questback output, and getting consistent coefficient tables from regressions.
+Description: Collection of functions useful for Dectech Analysts, such as extracting survey data from EFS output, and getting consistent coefficient tables from regressions.
 Imports: XML
 License: GPL-2
 LazyData: TRUE
