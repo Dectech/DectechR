@@ -399,7 +399,7 @@ getUnivariate <- function(mod = NULL,
         model_class = class(mod)[1]
 
         # get all IV's in original call...
-        this_formula_string = as.character(formula(mod$call))
+        this_formula_string = as.character(formula(mod))
         IV_list = trimws(strsplit(this_formula_string[3],"\\+")[[1]])
         DV_name = trimws((this_formula_string[2]))
 

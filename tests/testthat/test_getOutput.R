@@ -29,17 +29,20 @@ test_that("getOutput() linear regression output - simple, factor", {
     expect_identical(ccContents[15],  "\"factor(cyl)6\"\t\" -6.920779\"\t\"1.5583482\"\t\"-4.441099\"\t\"1.194696e-04\"\t\"-0.482303857166546\"")
 
 
+
+
 })
 
 test_that("getOutput() linear regression output - full", {
     m1 = lm( mpg ~ factor(cyl) + disp + hp + gear + carb + gear*carb, data = mtcars)
     getOutput(m1)
+    Sys.sleep(1)
     ccContents = readClipboard()
     #ccContents[1]
 
     expect_identical(ccContents[1],  "\"Dep. Var.\"\t\"mpg\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"")
     expect_identical(ccContents[15],  "\"factor(cyl)6\"\t\"-2.07688392\"\t\"2.04939890\"\t\"-1.0134113\"\t\"0.320972127\"\t\"-0.144736465553037\"\t\"0.0576328804207179\"")
-    expect_identical(ccContents[21], "\"gear:carb\"\t\" 0.06938207\"\t\"0.45308830\"\t\" 0.1531315\"\t\"0.879574833\"\t\"0.0906660117624984\"\t\"0.0196165508848338\"")
+    expect_identical(ccContents[21], "\"gear:carb\"\t\" 0.06938207\"\t\"0.45308830\"\t\" 0.1531315\"\t\"0.879574833\"\t\"0.0906660117624976\"\t\"0.0196165508848338\"")
 
 
 })
@@ -52,7 +55,7 @@ test_that("getOutput() glm regression output - simple", {
     #ccContents[1]
 
     expect_identical(ccContents[1],  "\"Dep. Var.\"\t\"am\"\t\"\"\t\"\"\t\"\"")
-    expect_identical(ccContents[12], "\"cyl\"\t\"-0.691175096215854\"\t\"0.253614480011746\"\t\"-2.72529824079383\"\t\"0.00642434271181205\"")
+    expect_identical(ccContents[12], "\"cyl\"\t\"-0.691175096215854\"\t\"0.253614480011746\"\t\"-2.72529824079383\"\t\"0.00642434271181208\"")
 
 
 })
@@ -64,7 +67,7 @@ test_that("getOutput() glm regression output - simple, factor", {
     #ccContents[1]
 
     expect_identical(ccContents[1],  "\"Dep. Var.\"\t\"am\"\t\"\"\t\"\"\t\"\"")
-    expect_identical(ccContents[12], "\"factor(cyl)6\"\t\"-1.26851132546093\"\t\"1.02062038204751\"\t\"-1.24288261117823\"\t\"0.213911094347626\"")
+    expect_identical(ccContents[12], "\"factor(cyl)6\"\t\"-1.26851132546093\"\t\"1.02062038204751\"\t\"-1.24288261117823\"\t\"0.213911094347627\"")
 
 
 })
@@ -77,7 +80,7 @@ test_that("getOutput() glm regression output - full", {
 
     expect_identical(ccContents[1],  "\"Dep. Var.\"\t\"am\"\t\"\"\t\"\"\t\"\"\t\"\"")
     expect_identical(ccContents[8],  "\"BIC\"\t\"30.0347437455948\"\t\"\"\t\"\"\t\"\"\t\"\"")
-    expect_identical(ccContents[14], "\"hp\"\t\" 0.1444261\"\t\"0.07987953\"\t\" 1.8080486\"\t\"0.07059894\"\t\"0.016488328897354\"")
+    expect_identical(ccContents[14], "\"hp\"\t\" 0.1444261\"\t\"0.07987953\"\t\" 1.8080486\"\t\"0.07059894\"\t\"0.0164883288973541\"")
 
 
 })
@@ -157,7 +160,7 @@ test_that("getOutput() mlogit regression output, reshaped", {
     getOutput(ml.Fish)
     Sys.sleep(1)
     ccContents = readClipboard()
-
+    Sys.sleep(1)
 
 
     expect_identical(ccContents[13],  "\"price\"\t\"-0.0255648288761739\"\t\"-0.0255648288761739\"\t\"-0.0255648288761739\"\t\"0\"\t\"0\"\t\"0\"")
@@ -206,18 +209,18 @@ test_that("getOutput() polr regression output", {
 
 
     expect_identical(ccContents[1],  "\"Dep. Var.\"\t\"factor(gear)\"\t\"\"\t\"\"\t\"\"")
-    expect_identical(ccContents[13],  "\"4|5\"\t\"-2.10778178293936\"\t\"1.28816053161331\"\t\"-1.63627260051163\"\t\"0.101782547836669\"")
+    expect_identical(ccContents[13],  "\"4|5\"\t\"-2.10778178293937\"\t\"1.28816053161238\"\t\"-1.63627260051283\"\t\"0.101782547836419\"")
 
     m1 = MASS::polr( factor(gear) ~ factor(cyl) ,data=mtcars)
     getOutput(m1)
     ccContents = readClipboard()
-    expect_identical(ccContents[12],  "\"factor(cyl)8\"\t\"-3.02000434647666\"\t\"0.999778153691301\"\t\"-3.02067447195804\"\t\"0.00252212354571777\"")
+    expect_identical(ccContents[12],  "\"factor(cyl)8\"\t\"-3.02000434647665\"\t\"0.999778153688731\"\t\"-3.0206744719658\"\t\"0.00252212354565319\"")
 
 
     m1 = MASS::polr( factor(gear) ~ am + carb + am*carb ,data=mtcars)
     getOutput(m1)
     ccContents = readClipboard()
-    expect_identical(ccContents[13],  "\"am:carb\"\t\"0.43966746501286\"\t\"0.675726797878391\"\t\"0.650658618828354\"\t\"0.515266881339311\"")
+    expect_identical(ccContents[13],  "\"am:carb\"\t\"0.439667354557427\"\t\"0.675728613079995\"\t\"0.650656707510738\"\t\"0.515268115416907\"")
 
 })
 
@@ -250,6 +253,7 @@ test_that("getOutput() biglm regression output - simple, factor", {
 test_that("getOutput() biglm regression output - full", {
     m1 = biglm::biglm( mpg ~ factor(cyl) + disp + hp + gear + carb + gear*carb, data = mtcars)
     getOutput(m1)
+    Sys.sleep(1)
     ccContents = readClipboard()
     #ccContents[1]
 
@@ -259,3 +263,4 @@ test_that("getOutput() biglm regression output - full", {
 
 
 })
+
