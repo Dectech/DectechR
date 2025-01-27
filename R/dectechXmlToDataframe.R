@@ -1,5 +1,5 @@
 
-dectechXmlToDataframe_FIX <- function(filePath, removeIncompletes = TRUE, saveLabels = TRUE, dropTimeStamps = TRUE, verbose = TRUE, USE_AT_NAME_IN_XPATH = TRUE, checkLabelMismatches = FALSE) {
+dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels = TRUE, dropTimeStamps = TRUE, verbose = TRUE, USE_AT_NAME_IN_XPATH = TRUE, checkLabelMismatches = FALSE) {
     #####################################################################################
     #  Function to convert an XML file exported from Questback into an R data frame
     #  -----------------------------------------------------------------------------
