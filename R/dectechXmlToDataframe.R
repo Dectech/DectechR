@@ -1,5 +1,5 @@
 
-dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels = TRUE, dropTimeStamps = TRUE, verbose = TRUE, USE_AT_NAME_IN_XPATH = TRUE) {
+dectechXmlToDataframe_FIX <- function(filePath, removeIncompletes = TRUE, saveLabels = TRUE, dropTimeStamps = TRUE, verbose = TRUE, USE_AT_NAME_IN_XPATH = TRUE, checkLabelMismatches = FALSE) {
     #####################################################################################
     #  Function to convert an XML file exported from Questback into an R data frame
     #  -----------------------------------------------------------------------------
@@ -136,9 +136,11 @@ dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels
         cat("---> Matching labels to values...\n")
     }
 
+
+    unmatch_var_table = data.frame()
+
     for (v in var_names) {
         if (v %in% var_names_with_codes) { #--- (a) if has a code....
-
 
             #--- get the keys and labels for this variable....
 
@@ -153,7 +155,7 @@ dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels
             if (v_data_class == "factor") {
                 #--- sometimes levels will not be in original order...
                 main_data[, v] <- factor(main_data[, v],
-                                      levels = sort(as.numeric(levels(main_data[, v]))))
+                                         levels = sort(as.numeric(levels(main_data[, v]))))
             }
 
 
@@ -162,9 +164,46 @@ dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels
                 this_label_list <- paste(this_key, this_label_list)
             }
 
-            #--- map labels onto values....
-            main_data[, v] <- factor(main_data[, v], levels = this_key,
-                                  labels = this_label_list)
+
+            APPLY_LABELS = TRUE
+
+            if (checkLabelMismatches == TRUE) {
+                #--- check for mismatches between labels key and raw values...
+
+                unique_raw_values = unique(main_data[, v])
+                # ignore NAs
+                unique_raw_values = unique_raw_values[!is.na(unique_raw_values)]
+
+                common_non_listed_values = c("0","-66","-77","-99")
+                additional_values = setdiff(unique_raw_values, c(this_key,common_non_listed_values))
+
+                if (length(additional_values) > 0) {
+
+                    unmatch_var_table = rbind(unmatch_var_table,
+                                              data.frame("var" = v,
+                                                         "N_expected" = length(this_key),
+                                                         "N_observed" = length(unique_raw_values),
+                                                         "examples" = paste0(head(additional_values,3),collapse = ", ")))
+
+                    APPLY_LABELS = FALSE
+                }
+            }
+
+            if (APPLY_LABELS) {
+                #--- map labels onto values....
+                main_data[, v] <- factor(main_data[, v], levels = this_key,
+                                         labels = this_label_list)
+            } else {
+                # otherwise treat as you would for vars without any codes...
+                this_var_type <- var_type[which(var_names == v)]
+                if (this_var_type %in% c("integer", "decimal")) {
+                    main_data[, v] <- as.numeric(as.character(main_data[, v]))
+                } else if (this_var_type %in% c("character", "blob")) {
+                    main_data[, v] <- as.character(main_data[, v])
+                }
+            }
+
+
 
 
         } else {#--- (b) if does not have a code....
@@ -175,6 +214,13 @@ dectechXmlToDataframe <- function(filePath, removeIncompletes = TRUE, saveLabels
             } else if (this_var_type %in% c("character", "blob")) {
                 main_data[, v] <- as.character(main_data[, v])
             }
+        }
+    } # end of loop through variables
+
+    if (checkLabelMismatches == TRUE) {
+        if (nrow(unmatch_var_table) > 0) {
+            cat("WARNING: The following variables had values that differed from the expected labels EFS provided (henve EFS labels were ignored:\n")
+            print(unmatch_var_table)
         }
     }
 
