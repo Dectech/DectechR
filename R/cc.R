@@ -173,7 +173,8 @@ cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutTo
 
 
         #---(8) then write to clipboard
-        writeClipboard(output_vector, format = clipboard_format)
+        #writeClipboard(output_vector, format = clipboard_format)
+        clipr::write_clip(output_vector, format = clipboard_format)
     }
 }
 
@@ -204,13 +205,13 @@ cc_varlist <- function(var_list, is_formula = F, separate_lines = T) {
     #    + string 3
 
     if (is_formula == F) {
-        writeClipboard(paste0("\"",
+        clipr::write_clip(paste0("\"",
                               paste0(var_list,
                                      collapse = paste0("\", ",item_sep,"\"")),
                               "\""))
 
     } else if (is_formula == T) {
-        writeClipboard(paste0(" + ",
+        clipr::write_clip(paste0(" + ",
                               paste0(var_list,
                                      collapse = paste0(item_sep, " + "))
         ))

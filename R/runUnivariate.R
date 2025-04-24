@@ -471,7 +471,7 @@ getUnivariate <- function(mod = NULL,
 
     final_table <- rbind(header_table,output_col_names, output_table)
 
-    write.table(final_table, "clipboard-128", sep = "\t", col.names = FALSE, row.names = F)
-
+    #write.table(final_table, "clipboard-128", sep = "\t", col.names = FALSE, row.names = F)
+    clipr::write_clip(final_table, col.names = FALSE, row.names = F)
 }
 

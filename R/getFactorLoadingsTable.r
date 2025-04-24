@@ -40,7 +40,8 @@ getFactorLoadingsTable <- function(FAResult, toClipboard = TRUE){
 
     if (toClipboard == TRUE) {
         # and write to clipboard...
-        write.table(factor_loadings, "clipboard", sep = "\t", col.names = NA)
+        #write.table(factor_loadings, "clipboard", sep = "\t", col.names = NA)
+        clipr::write_clip(factor_loadings, col.names = NA)
         print("Factor Loadings table written to clipboad")
     } else {
         return(factor_loadings)
