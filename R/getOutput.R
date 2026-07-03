@@ -394,8 +394,15 @@ getOutput <- function(mod, performanceTableAtTop = TRUE, ...) {
         final_table <- rbind(formatted_perf_table, output_col_names, output_table)
         row.names(final_table)[(1:length(output_row_names)) + nrow(formatted_perf_table) + 1] <- output_row_names
 
-        #write.table(final_table, "clipboard-128", sep = "\t", col.names = FALSE)
-        clipr::write_clip(final_table, col.names = FALSE)
+
+        if (.Platform$OS.type == "windows") {
+            # for windows use the original code:
+            write.table(final_table, "clipboard-128", sep = "\t", col.names = FALSE)
+        } else {
+            # for mac use clipr:
+            clipr::write_clip(final_table, col.names = FALSE)
+        }
+
     } else {
         rownames(formatted_perf_table) <- c("Dep. Var.", "", "Performance:", as.character(performance_table[, 1]))
         formatted_perf_table[1, 1] <- names(mod$model)[1]
@@ -404,8 +411,14 @@ getOutput <- function(mod, performanceTableAtTop = TRUE, ...) {
         # merge tables together...
         final_table <- rbind(output_table, formatted_perf_table)
 
-        #write.table(final_table, "clipboard-128", sep = "\t", col.names = NA)
-        clipr::write_clip(final_table, col.names = NA)
+
+        if (.Platform$OS.type == "windows") {
+            # for windows use the original code:
+            write.table(final_table, "clipboard-128", sep = "\t", col.names = NA)
+        } else {
+            # for mac use clipr:
+            clipr::write_clip(final_table, col.names = NA)
+        }
     }
 
 }

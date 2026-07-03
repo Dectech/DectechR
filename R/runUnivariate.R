@@ -471,7 +471,13 @@ getUnivariate <- function(mod = NULL,
 
     final_table <- rbind(header_table,output_col_names, output_table)
 
-    #write.table(final_table, "clipboard-128", sep = "\t", col.names = FALSE, row.names = F)
-    clipr::write_clip(final_table, col.names = FALSE, row.names = F)
+
+    if (.Platform$OS.type == "windows") {
+        # for windows use the original code:
+        write.table(final_table, "clipboard-128", sep = "\t", col.names = FALSE, row.names = F)
+    } else {
+        # for mac use clipr:
+        clipr::write_clip(final_table, col.names = FALSE, row.names = F)
+    }
 }
 

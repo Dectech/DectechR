@@ -173,8 +173,13 @@ cc <- function(data, destination = NA, includeRowNames = FALSE, nestedOrderOutTo
 
 
         #---(8) then write to clipboard
-        #writeClipboard(output_vector, format = clipboard_format)
-        clipr::write_clip(output_vector, format = clipboard_format)
+        if (.Platform$OS.type == "windows") {
+            # for windows use the original code:
+            writeClipboard(output_vector, format = clipboard_format)
+        } else {
+            # for mac use clipr:
+            clipr::write_clip(output_vector, format = clipboard_format)
+        }
     }
 }
 
@@ -205,16 +210,26 @@ cc_varlist <- function(var_list, is_formula = F, separate_lines = T) {
     #    + string 3
 
     if (is_formula == F) {
-        clipr::write_clip(paste0("\"",
+        this_output = paste0("\"",
                               paste0(var_list,
                                      collapse = paste0("\", ",item_sep,"\"")),
-                              "\""))
+                              "\"")
 
     } else if (is_formula == T) {
-        clipr::write_clip(paste0(" + ",
+        this_output = paste0(" + ",
                               paste0(var_list,
                                      collapse = paste0(item_sep, " + "))
-        ))
+        )
     }
+
+    if (.Platform$OS.type == "windows") {
+        # for windows use the original code:
+        writeClipboard(this_output)
+    } else {
+        # for mac use clipr:
+        clipr::write_clip(this_output)
+    }
+
+
     print("...var list copied to clipboard...")
 }

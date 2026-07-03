@@ -16,8 +16,14 @@ getScreePlot <- function(data, toClipboard = TRUE) {
 
     if (toClipboard == TRUE) {
         # copy table to clipboard...
-        #write.table(variance_table, "clipboard", sep = "\t", col.names = NA)
-        clipr::write_clip(variance_table)
+
+        if (.Platform$OS.type == "windows") {
+            write.table(variance_table, "clipboard", sep = "\t", col.names = NA)
+        } else {
+            clipr::write_clip(variance_table)
+        }
+
+
         print("Table written to clipboard")
     } else {
         return(variance_table)
@@ -41,8 +47,15 @@ getFactorLoadingsTable <- function(FAResult, toClipboard = TRUE){
 
     if (toClipboard == TRUE) {
         # and write to clipboard...
-        #write.table(factor_loadings, "clipboard", sep = "\t", col.names = NA)
-        clipr::write_clip(factor_loadings)
+        if (.Platform$OS.type == "windows") {
+            # for windows use the original code:
+            write.table(factor_loadings, "clipboard", sep = "\t", col.names = NA)
+        } else {
+            # for mac use clipr:
+            clipr::write_clip(factor_loadings)
+        }
+
+
         print("Factor Loadings table written to clipboad")
     } else {
         return(factor_loadings)
