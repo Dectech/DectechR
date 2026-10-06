@@ -1,12 +1,12 @@
 Package: DectechR
 Type: Package
 Title: Collection of useful functions for Dectech Analysts
-Version: 0.4
-Date: 2023-02-12
+Version: 0.5
+Date: 2026-10-06
 Author: Keith Simpson
 Maintainer: Keith Simpson <k.simpson@dectech.co.uk>
-Description: Collection of functions useful for Dectech Analysts, such as extracting survey data from EFS output, and getting consistent coefficient tables from regressions.
-Imports: XML
+Description: Collection of functions useful for Dectech Analysts, such as extracting survey data from IntelliSurvey output, and getting consistent coefficient tables from regressions.
+Imports: XML, xml2, utils, stats
 License: GPL-2
 LazyData: TRUE
 Suggests: testthat
