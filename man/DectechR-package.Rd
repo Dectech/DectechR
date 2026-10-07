@@ -14,6 +14,7 @@ The main functions are:
     \item \code{\link{cc}} (copy to clipboard)
     \item \code{\link{cc_varlist}} (format a character string, for pasting into a script)
     \item \code{\link{dectechXmlToDataframe}} (convert Questback output to a dataframe)
+    \item \code{\link{loadIntelliSurveyTripleS}} (convert IntelliSurvey TripleS output to a dataframe)
     \item \code{\link{unpackUserVariable}} (Split a custom variable (e.g. "1*3*5*7") into multiple columns)
     \item \code{\link{addMobile}} (to identify mobile users)
     \item \code{\link{getUnivariate}} (run a series of univariates on a model)

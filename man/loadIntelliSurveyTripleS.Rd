@@ -8,20 +8,24 @@ IntelliSurvey TripleS output to data frame
 Converts IntelliSurvey TripleS output to an R data frame, converting categorical data to 'factor' varibles.
 }
 \usage{
-loadIntelliSurveyTripleS(zipFilename = NULL,
-                         sssFilename = NULL,
-                         csvFilename = NULL)
+loadIntelliSurveyTripleS(zip_filename = NULL,
+                         sss_filename = NULL,
+                         csv_filename = NULL,
+                         add_total_duration = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{zipFilename}{
+  \item{zip_filename}{
     location of the TripleS file, in .zip format (this is the easiest format to use as its just one file)
 }
-  \item{sssFilename}{
+  \item{sss_filename}{
     (optional) location of .sss file, if you want to load seperately (if so, you must also provide a .csv file)
 }
-  \item{csvFilename}{
+  \item{csv_filename}{
     (optional) location of .csv file, if you want to load seperately (if so, you must also provide a .sss file)
+}
+  \item{add_total_duration}{
+    (optional) use the start and end date to add a total duration (assumes the df has 'resp_start_ts' and 'resp_last_ts')
 }
 }
 \details{

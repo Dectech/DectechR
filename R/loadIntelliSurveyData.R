@@ -10,9 +10,9 @@
 #---------------------------------------------------------------------
 
 # Parse the .sss (xml) file into a simple list describing the data layout
-read_sss_meta = function(sssFilename, encoding = "UTF-8", sep = "_") {
+read_sss_meta = function(sss_filename, encoding = "UTF-8", sep = "_") {
 
-    doc = xml2::read_xml(sssFilename, encoding = encoding)
+    doc = xml2::read_xml(sss_filename, encoding = encoding)
     rec = xml2::xml_find_first(doc, ".//record")
 
     # number of header rows to skip in the csv
@@ -103,17 +103,17 @@ repair_to_utf8 = function(infile) {
 
 
 # Read the csv and use the metadata to convert columns to the right types
-read_sss = function(sssFilename, csvFilename, sep = "_") {
+read_sss = function(sss_filename, csv_filename, sep = "_") {
 
     # make clean UTF-8 copies of both files (removed again on exit)
-    sss_clean = repair_to_utf8(sssFilename)
-    csv_clean = repair_to_utf8(csvFilename)
+    sss_clean = repair_to_utf8(sss_filename)
+    csv_clean = repair_to_utf8(csv_filename)
     on.exit(unlink(c(sss_clean, csv_clean)), add = TRUE)
 
     meta = read_sss_meta(sss_clean, encoding = "UTF-8", sep = sep)
 
     # the csv's own column headers (the last skipped line), which may be
-    # renamed versions of the .sss names (e.g. "Q0_2" -> "USResident")
+    # renamed versions of the .sss names (e.g. "Q0_1" -> "Age")
     csv_names = meta$col_names
     if (meta$skip >= 1) {
         hdr = read.csv(file = csv_clean, skip = meta$skip - 1, nrows = 1,
@@ -209,38 +209,76 @@ read_sss = function(sssFilename, csvFilename, sep = "_") {
 }
 
 
+addTotalDuration <- function(df, start_time = "resp_start_ts", end_time = "resp_last_ts") {
+
+
+    #--- check that the variables exist in the df
+
+    missing_vars = setdiff(c(start_time,end_time), names(df))
+    if (length(missing_vars) > 0) {
+        stop(paste0("The data frame does not contain the variable(s): ", paste0(missing_vars, collapse = ", ")))
+    }
+
+    #--- get the total duration
+    intelli_date_format = "%Y-%m-%d %H:%M:%OS"
+    df$total_duration_mins = difftime(as.POSIXct(df[,end_time], format = intelli_date_format),
+                                      as.POSIXct(df[,start_time], format = intelli_date_format),
+                                      units = "mins") |> as.numeric()
+
+
+    #--- give a warning if there is any less than zero durations
+    total_less_than_zero = sum(df$total_duration_mins < 0, na.rm = T)
+    if (total_less_than_zero > 0) {
+        warning(paste0(" -- There are ", total_less_than_zero, " total durations less than zero!"))
+    }
+
+
+    return(df)
+}
+
 # Main entry point: give either a zip file, or an sss file and a csv file
-loadIntelliSurveyTripleS = function(zipFilename = NULL,
-                                    sssFilename = NULL,
-                                    csvFilename = NULL) {
+loadIntelliSurveyTripleS = function(zip_filename = NULL,
+                                    sss_filename = NULL,
+                                    csv_filename = NULL,
+                                    add_total_duration = TRUE) {
 
-    if (!is.null(zipFilename)) {
-        if (!is.null(sssFilename) || !is.null(csvFilename)) {
-            stop("If zipFilename is provided, sssFilename and csvFilename should both be omitted")
+    if (!is.null(zip_filename)) {
+        if (!is.null(sss_filename) || !is.null(csv_filename)) {
+            stop("If zip_filename is provided, sss_filename and csv_filename should both be omitted")
         }
-        if (!file.exists(zipFilename)) {
-            stop("Zip file not found: ", zipFilename)
+        if (!file.exists(zip_filename)) {
+            stop("Zip file not found: ", zip_filename)
         }
 
+        print("-- loading data", quote = F)
         exdir = tempfile("sss_")
         dir.create(exdir, showWarnings = FALSE, recursive = TRUE)
         on.exit(unlink(exdir, recursive = TRUE, force = TRUE), add = TRUE)
 
-        unzip(zipfile = zipFilename, exdir = exdir)
+        unzip(zipfile = zip_filename, exdir = exdir)
         extracted_files = list.files(exdir, full.names = TRUE, recursive = TRUE)
 
-        sssFilename = extracted_files[grepl("\\.sss$", extracted_files, ignore.case = TRUE)]
-        csvFilename = extracted_files[grepl("\\.(asc|csv)$", extracted_files, ignore.case = TRUE)]
+        sss_filename = extracted_files[grepl("\\.sss$", extracted_files, ignore.case = TRUE)]
+        csv_filename = extracted_files[grepl("\\.(asc|csv)$", extracted_files, ignore.case = TRUE)]
 
-        if (length(sssFilename) != 1) {
-            stop("Expected exactly one .sss file in the zip, found ", length(sssFilename))
+        if (length(sss_filename) != 1) {
+            stop("Expected exactly one .sss file in the zip, found ", length(sss_filename))
         }
-        if (length(csvFilename) != 1) {
-            stop("Expected exactly one .asc/.csv file in the zip, found ", length(csvFilename))
+        if (length(csv_filename) != 1) {
+            stop("Expected exactly one .asc/.csv file in the zip, found ", length(csv_filename))
         }
-    } else if (is.null(sssFilename) || is.null(csvFilename)) {
-        stop("If zipFilename is NULL, both sssFilename and csvFilename must be provided")
+    } else if (is.null(sss_filename) || is.null(csv_filename)) {
+        stop("If zip_filename is NULL, both sss_filename and csv_filename must be provided")
     }
 
-    read_sss(sssFilename = sssFilename, csvFilename = csvFilename)
+    print("-- processing data", quote = F)
+    output_df = read_sss(sss_filename = sss_filename, csv_filename = csv_filename)
+
+
+    if (add_total_duration) {
+        print("-- adding 'total_duration_mins'", quote = F)
+        output_df = addTotalDuration(output_df)
+    }
+
+    return(output_df)
 }
