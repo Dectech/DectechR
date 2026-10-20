@@ -282,3 +282,18 @@ loadIntelliSurveyTripleS = function(zip_filename = NULL,
 
     return(output_df)
 }
+
+
+getQuestionTable <- function(df) {
+    return(attr(df,"var.labels"))
+}
+
+getQuestionLabel <- function(df, var_name, use_internal_name = FALSE) {
+    var_column = "var_name"
+    if (use_internal_name) {
+        var_column = "internal_var_name"
+    }
+    var_labels = attr(df,"var.labels")
+    this_label = var_labels$label[match(var_name, var_labels[,var_column])]
+    return(this_label)
+}
