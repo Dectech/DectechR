@@ -2,6 +2,8 @@ standardIntelliRecoding <- function(df_raw,
                                     delete_if_flagged = TRUE,
                                     replace_missing_with_NA = TRUE,
                                     convert_char_to_binary = TRUE,
+                                    remove_incompletes = TRUE,
+                                    remove_test_ids = TRUE,
                                     trim_factor_whitespace = TRUE,
                                     showChangedVariables = FALSE) {
 
@@ -111,6 +113,46 @@ standardIntelliRecoding <- function(df_raw,
     }
 
 
+    #---- ...[4] remove incompletes... -------------------------------.
+    if (remove_incompletes) {
+        print("  -- Dropping incomplete rows", quote = F)
+
+        is_complete = (df_raw$status %in% "Completed")
+
+        num_incomplete_to_drop = nrow(df_raw) - sum(is_complete)
+
+        if (num_incomplete_to_drop > 0) {
+
+            # keep only completes
+            df_raw = df_raw[is_complete,]
+
+            #
+            print(paste0("     --> ", num_incomplete_to_drop, " incompletes dropped"), quote = F)
+        } else {
+            print(paste0("     --> No incompletes to drop"), quote = F)
+        }
+    }
+
+    #---- ...[4] remove test responses... -------------------------------.
+    if (remove_test_ids) {
+        print("  -- Dropping test ids", quote = F)
+
+        is_non_test_id = (df_raw$testmode %in% "No")
+
+        num_test_to_drop = nrow(df_raw) - sum(is_non_test_id)
+
+        if (num_test_to_drop > 0) {
+
+            # keep only the non-test ids
+            df_raw = df_raw[is_non_test_id,]
+
+            #
+            print(paste0("     --> ", num_test_to_drop, " test ids dropped"), quote = F)
+        } else {
+            print(paste0("     --> No test ids to drop"), quote = F)
+        }
+
+    }
 
     #---- ...[4] replace any leading or trailing white space in factor levels ---------------.
     if (trim_factor_whitespace) {
@@ -122,4 +164,48 @@ standardIntelliRecoding <- function(df_raw,
     }
 
     return(df_raw)
+}
+
+replaceFactorLevelWhiteSpace <- function(data,
+                                         exclude_vars = NULL,
+                                         print_changed_var_names = FALSE) {
+    # Replace any leading or trailing white space in factor levels
+
+    # Ideally we would avoid these when writing labels in EFS
+    # ...but sometimes they are hard to avoid
+    # ...so this will remove from every factor variable in data set
+
+    factor_vars = names(data)[sapply(data, is.factor)]
+
+    # if any excluded vars, then remove them from the list:
+    if (is.null(exclude_vars) == FALSE) {
+        factor_vars = factor_vars[(factor_vars %in% exclude_vars) == FALSE]
+    }
+
+
+    # loop through all factor vars...
+    trim_white_space_result = list()
+    for (this_fac_var in factor_vars) {
+        # get the old levels
+        old_levels = levels(data[,this_fac_var])
+        #...trim the white space
+        new_levels = trimws(old_levels)
+
+        # if there's a difference, use the new levels
+        if (any(old_levels != new_levels)) {
+            trim_white_space_result[[this_fac_var]] = list("old_levels" = old_levels,
+                                                           "new_levels" = new_levels)
+
+            levels(data[,this_fac_var]) = new_levels
+        }
+
+    }
+
+    print(paste0("     --> ", length(trim_white_space_result), " variables changed"), quote = F)
+
+    if (print_changed_var_names == TRUE) {
+        print(names(trim_white_space_result))
+    }
+
+    return(data)
 }
