@@ -2,13 +2,14 @@ standardIntelliRecoding <- function(df_raw,
                                     delete_if_flagged = TRUE,
                                     replace_missing_with_NA = TRUE,
                                     convert_char_to_binary = TRUE,
+                                    convert_char_to_numeric = FALSE,
                                     remove_incompletes = TRUE,
                                     remove_test_ids = TRUE,
                                     trim_factor_whitespace = TRUE,
                                     showChangedVariables = FALSE) {
 
 
-    #--- ...[1] remove any flagged as DELETE ---------------.
+    #--- ...[1] remove any flagged as DELETE ---------------
     if (delete_if_flagged) {
 
         # Sometimes we end up outputing variables that weren't used (e.g. if some questions about a different industry where left in, but hidden from respondent)
@@ -43,7 +44,7 @@ standardIntelliRecoding <- function(df_raw,
 
 
 
-    #---- ...[2] replace missing with NA... -------------------------------.
+    #---- ...[2] replace missing with NA... -------------------------------
     if (replace_missing_with_NA) {
         print("  -- Replacing blank entries (\"\") with NA", quote = F)
 
@@ -74,7 +75,7 @@ standardIntelliRecoding <- function(df_raw,
     }
 
 
-    #---- ...[3] replace quoted/not quoted  with 0/1... -------------------------------.
+    #---- ...[3] replace binary 0/1 stored as characters... -------------------------------
     if (convert_char_to_binary) {
         # when data loaded as XML binary responses are recorded as "not quoted"/"quoted"...
         # ...so lets replace these with 0/1
@@ -112,8 +113,43 @@ standardIntelliRecoding <- function(df_raw,
         }
     }
 
+    #---- ...[4] replace numeric stores as character... -------------------------------
 
-    #---- ...[4] remove incompletes... -------------------------------.
+    if (convert_char_to_numeric) {
+        print("  -- converting character vars to numeric if all non-NA values are numbers", quote = F)
+
+        is_character = sapply(df_raw, function(x) {class(x) %in% c("character")})
+
+        # check which character variables have only numeric-like non-NA responses
+        is_all_numeric = sapply(df_raw, function(x) {
+            if (!is.character(x)) return(FALSE)
+
+            all_unique = unique(x[is.na(x) == F])
+            all_unique = all_unique[trimws(all_unique) != ""]   # treat blanks as missing
+
+            # return true if it has non-na values
+            # ...and all of those values can be parsed as numbers
+            return(length(all_unique) > 0 && all(!is.na(parse_numeric_strings(all_unique))))
+        })
+
+        vars_to_convert = names(df_raw)[is_all_numeric & is_character]
+
+        if (length(vars_to_convert) > 0) {
+
+            for (this_var in vars_to_convert) {
+                df_raw[ ,this_var] = parse_numeric_strings(df_raw[ ,this_var])
+            }
+        }
+
+        print(paste0("     --> ", length(vars_to_convert), " variables changed"), quote = F)
+
+        if (showChangedVariables & length(vars_to_convert) > 0) {
+            cat(paste0("    ", paste0(vars_to_convert, collapse = "\n    ")), "\n")
+        }
+    }
+
+
+    #---- ...[5] remove incompletes... -------------------------------
     if (remove_incompletes) {
         print("  -- Dropping incomplete rows", quote = F)
 
@@ -133,7 +169,7 @@ standardIntelliRecoding <- function(df_raw,
         }
     }
 
-    #---- ...[4] remove test responses... -------------------------------.
+    #---- ...[6] remove test responses... -------------------------------
     if (remove_test_ids) {
         print("  -- Dropping test ids", quote = F)
 
@@ -154,7 +190,7 @@ standardIntelliRecoding <- function(df_raw,
 
     }
 
-    #---- ...[4] replace any leading or trailing white space in factor levels ---------------.
+    #---- ...[7] replace any leading or trailing white space in factor levels ---------------
     if (trim_factor_whitespace) {
         print("  -- Replacing any leading/trailing white space from factor levels e.g. 'Strongly Agree  '", quote = F)
         # Ideally we would avoid these when writing labels in EFS
@@ -209,3 +245,21 @@ replaceFactorLevelWhiteSpace <- function(data,
 
     return(data)
 }
+
+parse_numeric_strings = function(x) {
+    x = trimws(x)
+
+    # only strip commas when they look like valid thousands separators
+    # e.g. "1,000,123.2" but not "4,31" or "1,00"
+    valid_commas = grepl("^[+-]?[0-9]{1,3}(,[0-9]{3})+(\\.[0-9]*)?$", x)
+    x[valid_commas] = gsub(",", "", x[valid_commas])
+
+    # strict check, so as.numeric() doesn't quietly accept "Inf", "0x1A" etc.
+    looks_numeric = grepl("^[+-]?([0-9]+\\.?[0-9]*|\\.[0-9]+)([eE][+-]?[0-9]+)?$", x)
+
+    out = rep(NA_real_, length(x))
+    out[looks_numeric] = as.numeric(x[looks_numeric])
+    return(out)
+}
+
+
