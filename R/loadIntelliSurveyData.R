@@ -209,7 +209,7 @@ read_sss = function(sss_filename, csv_filename, sep = "_") {
 }
 
 
-addTotalDuration <- function(df, start_time = "resp_start_ts", end_time = "resp_last_ts") {
+getDurationFromStartEndTime <- function(df, start_time = "resp_start_ts", end_time = "resp_last_ts") {
 
 
     #--- check that the variables exist in the df
@@ -277,7 +277,8 @@ loadIntelliSurveyTripleS = function(zip_filename = NULL,
 
     if (add_total_duration) {
         print("-- adding 'total_duration_mins'", quote = F)
-        output_df = addTotalDuration(output_df)
+        #output_df = getDurationFromStartEndTime(output_df)
+        output_df$total_duration_mins = as.numeric(output_df$elapsed) / 60
     }
 
     return(output_df)
