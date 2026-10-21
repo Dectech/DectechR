@@ -47,8 +47,9 @@ Keith Simpson
 }
 
 \seealso{
-    See also \code{\link{read.csv}}, for reading csv files, and the "foreign" package for reading SPSS and Stata data files.
-}
+\code{\link{standardIntelliRecoding}},
+\code{\link{getQuestionTable}}
+},
 \examples{
 
 \dontrun{

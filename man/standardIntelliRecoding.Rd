@@ -77,9 +77,10 @@ selected options. Assign the return value to keep the changes.
 }
 \author{Keith Simpson}
 \seealso{
-\code{\link{loadIntelliSurveyTripleS}} for importing IntelliSurvey TripleS
-exports.
-}
+\code{\link{loadIntelliSurveyTripleS}},
+\code{\link{getQuestionTable}}
+},
+
 \examples{
 \dontrun{
 df_raw = loadIntelliSurveyTripleS("data.zip")
